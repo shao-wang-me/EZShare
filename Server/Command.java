@@ -1,5 +1,7 @@
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +76,19 @@ public class Command {
 				}				
 			}
 		}
+		return toReturn;
+	}
+	
+	//TODO "missing resourceTemplate"
+	public Map<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
+		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
+		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
+			try {
+				InetAddress ip = InetAddress.getByName(serverRecord.getKey());
+				localList.put(serverRecord.getKey(), serverRecord.getValue());
+			} catch (UnknownHostException e) {}
+		}
+		toReturn.put(true, "success");
 		return toReturn;
 	}
 	
