@@ -83,7 +83,7 @@ public class Command {
 	
 	public Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
 		Map<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
-		if () {//TODO the resourceTemplate is invalid.
+		if (!resource.uriValid()) {//TODO the resourceTemplate is invalid. URI not correct?
 			toReturn.put(false, null);
 		} else {
 			for (Resource r: resourceMap.values()) {
@@ -102,6 +102,7 @@ public class Command {
 			}
 			toReturn.put(true, resourceMap);
 		}
+		return toReturn;
 	}
 	
 	public Map<Boolean, Resource> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
