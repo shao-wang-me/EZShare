@@ -3,7 +3,9 @@ import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Command {
 
@@ -75,6 +77,39 @@ public class Command {
 					toReturn.put(false, "cannot share resource");
 				}				
 			}
+		}
+		return toReturn;
+	}
+	
+	public Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
+		Map<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
+		if () {//TODO the resourceTemplate is invalid.
+			toReturn.put(false, null);
+		} else {
+			for (Resource r: resourceMap.values()) {
+				if (r.getChannel() != resource.getChannel() 
+						|| (resource.getOwner() != "" && r.getOwner() != resource.getOwner()) 
+						|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
+						|| (resource.getUri() != "" && r.getUri() != resource.getUri())
+						|| (
+								(resource.getName() != "" && !r.getName().contains(resource.getName()))
+								&& (resource.getDescription() != "" && !r.getDescription().contains(resource.getDescription()))
+								&& (resource.getDescription() != "" || resource.getName() != "")
+								)
+						) {
+					resourceMap.remove(r.getKey());//TODO 不确定能不能在这里直接remove掉，会不会把原来的直接remove了
+				}
+			}
+			toReturn.put(true, resourceMap);
+		}
+	}
+	
+	public Map<Boolean, Resource> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
+		Map<Boolean, Resource> toReturn = new HashMap<Boolean, Resource>();
+		if ((resource.isValid() || (!resource.isValid() && resource.cleanString(resource.getOwner()) == "*")) && resource.isFile()) {
+			toReturn.put(true, resourceMap.get(resource.getKey()));
+		} else {
+			toReturn.put(false, null);
 		}
 		return toReturn;
 	}
