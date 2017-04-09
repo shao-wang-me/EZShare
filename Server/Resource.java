@@ -1,105 +1,123 @@
-import java.io.File;
-import java.net.InetAddress;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public class Command {
+/**This class simply represent resources.*/
+public class Resource {
+	
+	private String name;
+	private String description;
+	private List<String> tags;
+	private String uri;
+	private String channel;
+	private String owner;
+	private String ezServer;
+	
+	public Resource(String name, String description, List<String> tags, String uri, String channel, String owner, String ezServer) {
+		this.name = cleanString(name);
+		this.description = cleanString(description);
+		for (int i = 0; i < tags.size(); i++) {
+			tags.set(i, cleanString(tags.get(i)));
+		}
+		this.tags = tags;
+		this.uri = cleanString(uri);//TODO URIs may not need to be cleaned.
+		this.channel = cleanString(channel);
+		owner = owner.replace("*", "");
+		this.owner = cleanString(owner);
+		this.ezServer = cleanString(ezServer);
+	}	
+	
+	/**
+	 * Invalid resource:
+	 * 1. URI is empty.
+	 * 2. Owner is "*".
+	 * 3. URI not official.
+	 * 4. URI not absolute.
+	 */
+	public boolean isValid() {
+		if (uri == "" || owner == "*") {
+			return false;
+		}
+		try {
+			URI dummyUri = new URI(uri);
+			if (!dummyUri.isAbsolute()) {
+				return false;
+			}
+			uri = dummyUri.toString();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
+	}
+	
+	public String cleanString(String string) {
+		if (string == null) {
+			return string;
+		}
+		string = string.replace("\0", "");
+		if (string.charAt(0) == ' ') {
+			string = string.substring(1);
+		}
+		if (string.charAt(string.length() - 1) == ' ') {
+			string = string.substring(0, string.length() - 1);
+		}
+		return string;
+	}
+	
+	public boolean isFile() throws URISyntaxException {
+		URI dummyUri = new URI(uri);
+		if (dummyUri.getScheme() == "file") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean uriValid() {
+		try {
+			URI dummyURI = new URI(uri);
+			return true;
+		} catch (URISyntaxException e) {
+			return false;
+		}		
+	}
+	
+	public URI getURI() throws URISyntaxException {
+		URI dummyUri = new URI(uri);
+		return dummyUri;
+	}
 
-	//Map<key(channel, URI), Resource>
-	public Map<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
-		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		if (!resource.isValid()) {
-			toReturn.put(false, "invalid resource");
-		} else {
-			/**
-			 * Cannot publish resource:
-			 * 1. The resource is a file.
-			 * 2. Same channel, same URI, different owner.
-			 */
-			if (resource.isFile() || 
-					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
-					) {
-				toReturn.put(false, "cannot publish resource");
-			} else {
-				/**Now we should be able to add or update the resource.*/
-				resourceMap.put(resource.getKey(), resource);
-				toReturn.put(true, "success");
-			}
-		}
-		return toReturn;
+	public String getKey() {
+		return channel + "," + uri;
 	}
 	
-	public Map<Boolean, String> remove(Resource resource, Map<String, Resource> resourceMap) {
-		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		if (!resource.isValid()) {
-			toReturn.put(false, "invalid resource");
-		} else {
-			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner() == resource.getOwner()) {
-				resourceMap.remove(resource.getKey());//The remove operation.
-				toReturn.put(true, "success");
-			} else {
-				/**Cannot remove resource: the resource did not exist.*/
-				toReturn.put(false, "cannot remove resource");
-			}
-		}
-		return toReturn;
+	public String getName() {
+		return name;
 	}
-	
-	public Map<Boolean, String> share(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
-		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		if (!resource.isValid()) {
-			toReturn.put(false, "invalid resource");
-		} else {
-			/**
-			 * Cannot publish resource:
-			 * 1. The resource is not a file.
-			 * 2. Same channel, same URI, different owner.
-			 * 3. Not pointing to a file on the local file system.
-			 * 4. Cannot be read as a file.
-			 */
-			if (!resource.isFile() || 
-					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
-					) {
-				toReturn.put(false, "cannot share resource");
-			} else {
-				File file = new File(resource.getURI());
-				if (file.canRead()) {
-					/**Now we should be able to add or update the resource.*/
-					resourceMap.put(resource.getKey(), resource);
-					toReturn.put(true, "success");
-				} else {
-					toReturn.put(false, "cannot share resource");
-				}				
-			}
-		}
-		return toReturn;
+
+	public String getDescription() {
+		return description;
 	}
-	
-	public Map<Boolean, Resource> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
-		Map<Boolean, Resource> toReturn = new HashMap<Boolean, Resource>();
-		if ((resource.isValid() || (!resource.isValid() && resource.cleanString(resource.getOwner()) == "*")) && resource.isFile()) {
-			toReturn.put(true, resourceMap.get(resource.getKey()));
-		} else {
-			toReturn.put(false, null);
-		}
-		return toReturn;
+
+	public List<String> getTags() {
+		return tags;
 	}
-	
-	//TODO "missing resourceTemplate"
-	public Map<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
-		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
-			try {
-				InetAddress ip = InetAddress.getByName(serverRecord.getKey());
-				localList.put(serverRecord.getKey(), serverRecord.getValue());
-			} catch (UnknownHostException e) {}
-		}
-		toReturn.put(true, "success");
-		return toReturn;
+
+	public String getUri() {
+		return uri;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public String getEzServer() {
+		return ezServer;
 	}
 	
 }
