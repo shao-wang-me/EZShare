@@ -3,9 +3,7 @@ import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Command {
 
@@ -82,11 +80,12 @@ public class Command {
 	}
 	
 	public Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
+		Map<String, Resource> resourceMapFiltered = resourceMap;
 		Map<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
-		if (!resource.uriValid()) {//TODO the resourceTemplate is invalid. URI not correct?
+		if (!resource.uriValid()) {
 			toReturn.put(false, null);
 		} else {
-			for (Resource r: resourceMap.values()) {
+			for (Resource r: resourceMapFiltered.values()) {
 				if (r.getChannel() != resource.getChannel() 
 						|| (resource.getOwner() != "" && r.getOwner() != resource.getOwner()) 
 						|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
@@ -97,10 +96,10 @@ public class Command {
 								&& (resource.getDescription() != "" || resource.getName() != "")
 								)
 						) {
-					resourceMap.remove(r.getKey());//TODO 不确定能不能在这里直接remove掉，会不会把原来的直接remove了
+					resourceMapFiltered.remove(r.getKey());
 				}
 			}
-			toReturn.put(true, resourceMap);
+			toReturn.put(true, resourceMapFiltered);
 		}
 		return toReturn;
 	}
@@ -120,7 +119,7 @@ public class Command {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
 			try {
-				InetAddress ip = InetAddress.getByName(serverRecord.getKey());
+				InetAddress.getByName(serverRecord.getKey());
 				localList.put(serverRecord.getKey(), serverRecord.getValue());
 			} catch (UnknownHostException e) {}
 		}
