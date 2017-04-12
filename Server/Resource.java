@@ -45,7 +45,6 @@ public class Resource {
 			}
 			uri = dummyUri.toString();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			return false;
 		}
 		return true;
@@ -76,7 +75,7 @@ public class Resource {
 	
 	public boolean uriValid() {
 		try {
-			URI dummyURI = new URI(uri);
+			new URI(uri);
 			return true;
 		} catch (URISyntaxException e) {
 			return false;
