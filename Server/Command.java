@@ -7,14 +7,6 @@ import java.util.Map;
 
 public class Command {
 	
-	/**
-	 * Publish
-	 * 
-	 * 
-	 */
-	
-	
-
 	//Map<key(channel, URI), Resource>
 	public Map<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
@@ -120,7 +112,12 @@ public class Command {
 	
 	public Map<Boolean, Resource> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		Map<Boolean, Resource> toReturn = new HashMap<Boolean, Resource>();
-		if ((resource.isValid() || (!resource.isValid() && resource.cleanString(resource.getOwner()) == "*")) && resource.isFile()) {
+		/**
+		 * Success:
+		 * 1. Valid URI;
+		 * 2. URI is file.
+		 */
+		if (resource.isFile() && resource.uriValid()) {
 			toReturn.put(true, resourceMap.get(resource.getKey()));
 		} else {
 			toReturn.put(false, null);
