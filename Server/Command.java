@@ -5,9 +5,22 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Static methods for commands: PUBLISH, REMOVE, SHARE, QUERY, FETCH, EXCHANGE.
+ * Resources are stored in Map<String, Resource>. The string is a composite key (channel, owner).
+ * For example, if channel is "LPL S7", owner is "Shao Wang", the key is "LPL S7,Shao Wang". Refer Resource.getKey();
+ * @author Shao Wang
+ *
+ */
 public class Command {
 	
 	//Map<key(channel, URI), Resource>
+	/**
+	 * @param resource: A raw resource.
+	 * @param resourceMap: Stored resources.
+	 * @return Map<Boolean, String>: Boolean: success or failed. String: response the server should give.
+	 * @throws URISyntaxException
+	 */
 	public Map<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -20,7 +33,7 @@ public class Command {
 			 */
 			if (resource.isFile() || 
 					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
+							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
 					) {
 				toReturn.put(false, "cannot publish resource");
 			} else {
@@ -32,6 +45,7 @@ public class Command {
 		return toReturn;
 	}
 	
+	//TODO Upload
 	public Map<Boolean, String> remove(Resource resource, Map<String, Resource> resourceMap) {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		/**
@@ -40,10 +54,10 @@ public class Command {
 		 * 2. Invalid URI;
 		 * 3. Owner = "*";
 		 */
-		if (!resource.uriValid() || resource.getOwner() == "*") {
+		if (!resource.uriValid() || resource.getOwner().equals("*")) {
 			toReturn.put(false, "invalid resource");
 		} else {
-			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner() == resource.getOwner()) {
+			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner())) {
 				resourceMap.remove(resource.getKey());//The remove operation.
 				toReturn.put(true, "success");
 			} else {
@@ -54,6 +68,7 @@ public class Command {
 		return toReturn;
 	}
 	
+	//Not tested
 	public Map<Boolean, String> share(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -68,7 +83,7 @@ public class Command {
 			 */
 			if (!resource.isFile() || 
 					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
+							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
 					) {
 				toReturn.put(false, "cannot share resource");
 			} else {
@@ -85,36 +100,52 @@ public class Command {
 		return toReturn;
 	}
 	
+	//TODO Upload
 	public Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
+		/**
+		 * 1. Copy the resourceMap.
+		 * 2. Remove resources that do not match.
+		 * 3. Return the copied map.
+		 */
 		Map<String, Resource> resourceMapFiltered = resourceMap;
 		Map<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
-		if (!resource.uriValid()) {
-			toReturn.put(false, null);
-		} else {
-			for (Resource r: resourceMapFiltered.values()) {
-				if (r.getChannel() != resource.getChannel() 
-						|| (resource.getOwner() != "" && r.getOwner() != resource.getOwner()) 
-						|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
-						|| (resource.getUri() != "" && r.getUri() != resource.getUri())
-						|| (
-								(resource.getName() != "" && !r.getName().contains(resource.getName()))
-								&& (resource.getDescription() != "" && !r.getDescription().contains(resource.getDescription()))
-								&& (resource.getDescription() != "" || resource.getName() != "")
-								)
-						) {
-					resourceMapFiltered.remove(r.getKey());
-				}
+		/**
+		 * Remove conditions:
+		 * 	  Channel not matching.
+		 * || Owner is not empty && owner not matching.
+		 * || Tags (in query) not contained (in resource).
+		 * || URI is not empty && URI not matching.
+		 * || (
+		 * 		   Name is not empty && name not contained.
+		 *    	&& Description is not empty && description not contained. 
+		 *    	&& (!) Description is empty && name is empty.
+		 *    )
+		 */
+		for (Resource r: resourceMapFiltered.values()) {
+			if (	   (!r.getChannel().equals(resource.getChannel()))
+					|| (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner()))
+					|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
+					|| (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri()))
+					|| (
+							   (!resource.getName().isEmpty() && !r.getName().contains(resource.getName()))
+							&& (!resource.getDescription().isEmpty() && !r.getDescription().contains(resource.getDescription()))
+							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
+							)
+					) {
+				resourceMapFiltered.remove(r.getKey());
 			}
-			toReturn.put(true, resourceMapFiltered);
 		}
+		toReturn.put(true, resourceMapFiltered);
+		
 		return toReturn;
 	}
 	
+	//Upload
 	public Map<Boolean, Resource> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		Map<Boolean, Resource> toReturn = new HashMap<Boolean, Resource>();
 		/**
 		 * Success:
-		 * 1. Valid URI;
+		 * 1. Valid URI.
 		 * 2. URI is file.
 		 */
 		if (resource.isFile() && resource.uriValid()) {
@@ -125,7 +156,8 @@ public class Command {
 		return toReturn;
 	}
 	
-	//TODO "missing resourceTemplate"
+	//Not tested
+	//TODO What is "missing resourceTemplate"?
 	public Map<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
 		Map<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
