@@ -126,7 +126,7 @@ public class Function {
 	}
 	
 	//TODO "missing resourceTemplate"
-	public static HashMap<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
+	public static synchronized HashMap<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
 			try {
