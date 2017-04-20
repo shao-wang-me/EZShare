@@ -11,21 +11,7 @@ import java.util.stream.Collectors;
 
 public class Function {
 
-
-
-
-
-
-
-
-
-
 	//Map<key(channel, URI), Resource>
-
-
-
-
-
 
 	public static HashMap<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
@@ -109,25 +95,8 @@ public class Function {
 
 	public static Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
 		Map<String, Resource> resourceMapFiltered = new HashMap<String, Resource>();
-
-
-
-
-
 		resourceMapFiltered = resourceMap;
 		HashMap<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
-
-
-
-
-
-
-
-
-
-
-
-
 
 		for (Resource r: resourceMapFiltered.values()) {
 			if (	   (!r.getChannel().equals(resource.getChannel()))
@@ -139,27 +108,18 @@ public class Function {
 							   (!resource.getName().isEmpty() && !r.getName().contains(resource.getName()))
 							&& (!resource.getDescription().isEmpty() && !r.getDescription().contains(resource.getDescription()))
 							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
-
-
 							)
 					) {
 				resourceMapFiltered.remove(r.getKey());
-
 			}
-
 		}
 		toReturn.put(true, resourceMapFiltered);
 		
 		return toReturn;
 	}
 	
-
 	public static HashMap<Boolean, String> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
-
-
-
-
 
 		if (resource.isFile() && resource.uriValid()) {
 			toReturn.put(true, resource.getKey());
@@ -169,8 +129,7 @@ public class Function {
 		return toReturn;
 	}
 	
-
-	//TODO "missing resourceTemplate"
+	//TODO what is "missing resourceTemplate"
 	public static HashMap<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
