@@ -11,7 +11,22 @@ import java.util.stream.Collectors;
 
 public class Function {
 
+
+
+
+
+
+
+
+
+
 	//Map<key(channel, URI), Resource>
+
+
+
+
+
+
 	public static HashMap<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -24,7 +39,7 @@ public class Function {
 			 */
 			if (resource.isFile() || 
 					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
+							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
 					) {
 				toReturn.put(false, "cannot publish resource");
 			} else {
@@ -36,6 +51,7 @@ public class Function {
 		return toReturn;
 	}
 	
+
 	public static HashMap<Boolean, String> remove(Resource resource, Map<String, Resource> resourceMap) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		/**
@@ -47,7 +63,7 @@ public class Function {
 		if (!resource.uriValid() || resource.getOwner().equals("*")) {
 			toReturn.put(false, "invalid resource");
 		} else {
-			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner() == resource.getOwner()) {
+			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner())) {
 				resourceMap.remove(resource.getKey());//The remove operation.
 				toReturn.put(true, "success");
 			} else {
@@ -58,6 +74,7 @@ public class Function {
 		return toReturn;
 	}
 	
+
 	public static HashMap<Boolean, String> share(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -72,7 +89,7 @@ public class Function {
 			 */
 			if (!resource.isFile() || 
 					(resourceMap.containsKey(resource.getKey()) && 
-							resourceMap.get(resource.getKey()).getOwner() != resource.getOwner())
+							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
 					) {
 				toReturn.put(false, "Not a file");
 			} else {
@@ -89,34 +106,61 @@ public class Function {
 		return toReturn;
 	}
 	
+
 	public static Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
 		Map<String, Resource> resourceMapFiltered = new HashMap<String, Resource>();
+
+
+
+
+
 		resourceMapFiltered = resourceMap;
 		HashMap<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
-		if (!resource.uriValid()) {
-			toReturn.put(false, null);
-		} else {
-			for (Resource r: resourceMapFiltered.values()) {
-				if (r.getChannel() != resource.getChannel() 
-						|| (resource.getOwner() != "" && r.getOwner() != resource.getOwner()) 
-						|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
-						|| (resource.getUri() != "" && r.getUri() != resource.getUri())
-						|| (
-								(resource.getName() != "" && !r.getName().contains(resource.getName()))
-								&& (resource.getDescription() != "" && !r.getDescription().contains(resource.getDescription()))
-								&& (resource.getDescription() != "" || resource.getName() != "")
-								)
-						) {
-					resourceMapFiltered.remove(r.getKey());
-				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+		for (Resource r: resourceMapFiltered.values()) {
+			if (	   (!r.getChannel().equals(resource.getChannel()))
+					|| (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner()))
+					|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
+					|| (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri()))
+
+					|| (
+							   (!resource.getName().isEmpty() && !r.getName().contains(resource.getName()))
+							&& (!resource.getDescription().isEmpty() && !r.getDescription().contains(resource.getDescription()))
+							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
+
+
+							)
+					) {
+				resourceMapFiltered.remove(r.getKey());
+
 			}
-			toReturn.put(true, resourceMapFiltered);
+
 		}
+		toReturn.put(true, resourceMapFiltered);
+		
 		return toReturn;
 	}
 	
+
 	public static HashMap<Boolean, String> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
+
+
+
+
+
 		if (resource.isFile() && resource.uriValid()) {
 			toReturn.put(true, resource.getKey());
 		} else {
@@ -125,6 +169,7 @@ public class Function {
 		return toReturn;
 	}
 	
+
 	//TODO "missing resourceTemplate"
 	public static HashMap<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
