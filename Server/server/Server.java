@@ -3,18 +3,22 @@ package server;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.json.JSONObject;
 
 
 public class Server {
@@ -23,9 +27,9 @@ public class Server {
 	private String hostname = "Justin_Sever";
 	private String port  = " 20006";
 	private String interval = "600";
-	private int  intervalLimit = 600;
+	private int  intervalLimit = 30;
 	private String secret = "123";//RandomStringUtils.randomAlphanumeric(20);
-	private Map<String, Resource> resourceList;
+	private ConcurrentHashMap<String, Resource> resourceList;
 	private List<Host> serverList;
 	
 	public static void main(String[] args)throws Exception{
@@ -40,7 +44,7 @@ public class Server {
 		//HashMap<String, Map> K = new HashMap<String, Map>();
 		resourceList =
 				new ConcurrentHashMap<String, Resource>();
-		serverList = new ArrayList<Host>();
+		serverList = Collections.synchronizedList(new ArrayList<Host>());
 		
 		try{
 			//test 
@@ -124,6 +128,28 @@ public class Server {
 			
 			ServerSocket server = new ServerSocket(Integer.parseInt(getPort()));
 			
+			//time schedule thread pool
+			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+			
+			exec.scheduleAtFixedRate(new Runnable() {
+	            public void run() {            	
+	                System.out.println("Exchange: ");
+	                //random choose a server
+	                int index = (int) (Math.random()*serverList.size());
+	                Host h = serverList.get(index);
+	                //send exchange command to it 
+	                JSONObject update = new JSONObject();
+	                serverUpdate s =  new serverUpdate(serverList);
+	                update = s.update(h.getHostname(), h.getPort());
+	                if(update.getString("response").equals("error")){
+	                	serverList.remove(index);
+	                }
+	                //return ressult
+	                
+	            }
+	        }, 0, getIntervalLimit() , TimeUnit.MILLISECONDS);
+			
+			//thread pool to increase efficiency
 			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 			//Socket client = new Socket();
 			Boolean f = true ;
@@ -134,7 +160,7 @@ public class Server {
 				executor.execute(s);
 			}
 			executor.shutdown();
-			
+			server.close();
 			
 		}
 		catch(Exception e){

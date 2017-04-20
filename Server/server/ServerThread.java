@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.commons.cli.CommandLine;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -25,14 +27,14 @@ public class ServerThread implements Runnable {
 	
 	private String secret;
 	
-	private Map<String, Resource> resourceList;
+	private ConcurrentHashMap<String, Resource> resourceList;
 	
 	private List<Host> serverList;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			Map<String, Resource> resourceList, List<Host> serverList){
+			ConcurrentHashMap<String, Resource> resourceList, List<Host> serverList){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
