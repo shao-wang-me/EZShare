@@ -24,10 +24,10 @@ public class Function {
 		System.out.println(file.canRead());
 		System.out.println(uri.getPath());
 		ArrayList<String> list = new ArrayList<String>();
-        list.add("web");
-        list.add("html");
+		System.out.println(list);
 		Resource test = new Resource("steven","this is a test2", 
-         		list, "file:C:\\Users\\shaow1\\Desktop\\1.jpg", "cctv", "justin", "justin's server");
+         		list, "file:/C:/Users/shaow1/Desktop/1.jpeg", "cctv", "justin", "justin's server");
+		Resource r = new Resource("", "")
 		resourceList l = new resourceList();
 		l.initialResourceList();
 		l.add(test);
@@ -117,39 +117,30 @@ public class Function {
 
 	public static HashMap<Boolean, resourceList> query(Resource resource, resourceList resourceList)	{
 		resourceList resourceListFiltered = new resourceList();
-		resourceList.initialResourceList();
-		resourceListFiltered = resourceList;
+		resourceListFiltered.initialResourceList();
 		HashMap<Boolean, resourceList> toReturn = new HashMap<Boolean, resourceList>();
-
-		for (Resource r: resourceListFiltered.getResourceList()) {
+		System.out.println(resourceList.getResourceList().size());
+		for (Resource r: resourceList.getResourceList()) {
 			System.out.println("r: " + r.getUri());
 			System.out.println("resource: " + resource.getUri());
-			if 
-			(
-					(resource.getChannel().equals(r.getChannel()))
-				&&	(!resource.getOwner().isEmpty() && r.getOwner().equals(resource.getOwner()))
-				&&	(!resource.getTags().isEmpty() && r.getTags().containsAll(resource.getTags()))
-				&&	(!resource.getUri().isEmpty()) && r.getUri().equals(resource.getUri())
-				&&	(
-							(!resource.getName().isEmpty() && r.getName().contains(resource.getName()))
-						||	(!resource.getDescription().isEmpty() && r.getDescription().contains(resource.getDescription()))
-						||	(resource.getName().isEmpty() && resource.getDescription().isEmpty())
-					)
-			)
-				
-			/*(	   (!r.getChannel().equals(resource.getChannel()))
-					|| (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner()))
-					|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
-					|| (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri()))
-
-					|| (
-							   (!resource.getName().isEmpty() && !r.getName().contains(resource.getName()))
-							&& (!resource.getDescription().isEmpty() && !r.getDescription().contains(resource.getDescription()))
-							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
-							)
-					)*/ 
-			{
-				resourceListFiltered.delete(r);
+			boolean match = true;
+			if (!resource.getChannel().equals(r.getChannel())) {
+				match = false;
+			}
+			if (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner())) {
+				match = false;
+			}
+			if (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags())) {
+				match = false;
+			}
+			if (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri())) {
+				match = false;
+			}
+			if (!resource.getDescription().isEmpty() && !resource.getName().isEmpty() && !r.getName().contains(resource.getName()) && !r.getDescription().contains(resource.getDescription())) {
+				match = false;
+			}
+			if (match) {
+				resourceListFiltered.add(r);
 			}
 		}
 		toReturn.put(true, resourceListFiltered);
