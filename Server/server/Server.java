@@ -33,7 +33,7 @@ public class Server {
 	private String secret = "123";//RandomStringUtils.randomAlphanumeric(20);
 	private resourceList resourceList;
 	private serverList serverList;
-	private Boolean debug = false;
+	private Boolean debug = true;
 	
 	public static void main(String[] args)throws Exception{
 		Server server = new Server();

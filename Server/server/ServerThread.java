@@ -214,8 +214,7 @@ public class ServerThread implements Runnable {
 									        System.out.println(info);
 									        if(new JSONObject(info).get("response").equals("success")){
 									        	success = true;
-									        	out.writeUTF(info);
-									        	
+									        	//out.writeUTF(info);									        	
 									        }
 									        if(success){
 										        if(info.contains("resultSize")){
@@ -251,6 +250,7 @@ public class ServerThread implements Runnable {
 							//relay = false 
 							if(result.containsKey(true)){
 								//query succeed => return result
+								System.out.println("result,,,"+result.get(true).getResourceList().size());
 								reply.put("response", "success");
 								out.writeUTF(reply.toString());
 								int num = 0;
@@ -410,7 +410,7 @@ public class ServerThread implements Runnable {
         
 		Logger log = Logger.getLogger(Server.class.getName());
 		log.setUseParentHandlers(false);
-		log.addHandler(handler);
+		//log.addHandler(handler);
 		log.setLevel(Level.FINE);
 		this.log = log;
 	}
