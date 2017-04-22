@@ -9,15 +9,37 @@ public class resourceList {
 	
 	
 	public synchronized void add(Resource r){
-		
+		if (!contains(r)) {
+			resourceList.add(r);
+		} else {
+			resourceList.remove(getSameResource(r));
+			resourceList.add(r);
+		}
 	}
 	
 	public synchronized void delete(Resource r){
-		
+		resourceList.remove(getSameResource(r));
 	}
 	
-	public Boolean equals(Resource r){
-		return true;
+	public Boolean contains(Resource r){
+		String key = r.getKey();
+		boolean contains = false;
+		for (Resource c : resourceList) {
+			if (c.getKey().equals(key)) {
+				contains = true;
+			}
+		}
+		return contains;
+	}
+	
+	public Resource getSameResource(Resource r) {
+		String key = r.getKey();
+		for (Resource c : resourceList) {
+			if (c.getKey().equals(key)) {
+				return c;
+			}
+		}
+		return null;
 	}
 	
 	public void initialResourceList(){
