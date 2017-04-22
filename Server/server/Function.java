@@ -2,8 +2,11 @@ package server;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +15,24 @@ import java.util.stream.Collectors;
 public class Function {
 
 	//Map<key(channel, URI), Resource>
+	
+	/*public static void main(String[] args) throws URISyntaxException {
+		URI uri = new URI("file:/C:/Users/shaow1/Desktop/1.jpeg");
+		//File file = new File("C:\\Users\\shaow1\\Desktop\\1.jpeg");
+		File file = new File(uri.getPath());
+		System.out.println(file.exists());
+		System.out.println(file.canRead());
+		System.out.println(uri.getPath());
+		ArrayList<String> list = new ArrayList<String>();
+        list.add("web");
+        list.add("html");
+		Resource test = new Resource("steven","this is a test2", 
+         		list, "file:C:\\Users\\shaow1\\Desktop\\1.jpg", "cctv", "justin", "justin's server");
+		resourceList l = new resourceList();
+		l.initialResourceList();
+		l.add(test);
+	}*/
+
 
 	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
@@ -101,7 +122,22 @@ public class Function {
 		HashMap<Boolean, resourceList> toReturn = new HashMap<Boolean, resourceList>();
 
 		for (Resource r: resourceListFiltered.getResourceList()) {
-			if (	   (!r.getChannel().equals(resource.getChannel()))
+			System.out.println("r: " + r.getUri());
+			System.out.println("resource: " + resource.getUri());
+			if 
+			(
+					(resource.getChannel().equals(r.getChannel()))
+				&&	(!resource.getOwner().isEmpty() && r.getOwner().equals(resource.getOwner()))
+				&&	(!resource.getTags().isEmpty() && r.getTags().containsAll(resource.getTags()))
+				&&	(!resource.getUri().isEmpty()) && r.getUri().equals(resource.getUri())
+				&&	(
+							(!resource.getName().isEmpty() && r.getName().contains(resource.getName()))
+						||	(!resource.getDescription().isEmpty() && r.getDescription().contains(resource.getDescription()))
+						||	(resource.getName().isEmpty() && resource.getDescription().isEmpty())
+					)
+			)
+				
+			/*(	   (!r.getChannel().equals(resource.getChannel()))
 					|| (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner()))
 					|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
 					|| (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri()))
@@ -111,7 +147,8 @@ public class Function {
 							&& (!resource.getDescription().isEmpty() && !r.getDescription().contains(resource.getDescription()))
 							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
 							)
-					) {
+					)*/ 
+			{
 				resourceListFiltered.delete(r);
 			}
 		}
@@ -138,7 +175,10 @@ public class Function {
 			try {
 				InetAddress ip = InetAddress.getByName(h.getHostname());
 				localList.add(h);
-			} catch (UnknownHostException e) {}
+			} catch (UnknownHostException e) {
+				toReturn.put(false, "missing or invalid server list");
+				return toReturn;
+			}
 		}
 		toReturn.put(true, "success");
 		return toReturn;
