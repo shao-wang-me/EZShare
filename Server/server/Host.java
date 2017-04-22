@@ -21,4 +21,15 @@ public class Host {
 	public void setPort(int port) {
 		this.port = port;
 	} 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Host) {
+			if (this.getHostname().equals(((Host) obj).getHostname()) && this.getPort() == ((Host) obj).getPort()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	        return (this == obj);
+	}
 }
