@@ -29,8 +29,8 @@ public class Server {
 	private String interval = "600";
 	private int  intervalLimit = 30;
 	private String secret = "123";//RandomStringUtils.randomAlphanumeric(20);
-	private ConcurrentHashMap<String, Resource> resourceList;
-	private List<Host> serverList;
+	private resourceList resourceList;
+	private serverList serverList;
 	
 	public static void main(String[] args)throws Exception{
 		Server server = new Server();
@@ -42,9 +42,10 @@ public class Server {
 		
 		//HashMap<String, Resource> V = new HashMap<String, Resource>();
 		//HashMap<String, Map> K = new HashMap<String, Map>();
-		resourceList =
-				new ConcurrentHashMap<String, Resource>();
-		serverList = Collections.synchronizedList(new ArrayList<Host>());
+		resourceList = new resourceList();
+		resourceList.initialResourceList();
+		serverList = new serverList();
+		serverList.initialserverList();
 		
 		try{
 			//test 
@@ -55,24 +56,24 @@ public class Server {
             		list, "http://www.unimelb.edu.au", "cctv", "justin", "justin's server");
             //V.put(test.getOwner(), test);
             //K.put(test.getUri(), V);
-            String key = test.getChannel()+","+test.getUri();
-            resourceList.put(key,test);
+            //String key = test.getChannel()+","+test.getUri();
+            resourceList.add(test);
             
              test = new Resource("steven","this is a test2", 
             		list, "http://www.google.com", "", "", null);
              //V.put(test.getOwner(), test);
              //K.put(test.getUri(), V);
-             key = test.getChannel()+","+test.getUri();
-             resourceList.put(key,test);
+             //key = test.getChannel()+","+test.getUri();
+             resourceList.add(test);;
              
              test = new Resource("steven","this is a test2", 
              		list, "file:/Users/xutianyu/Pictures/logo.jpg", "cctv", "justin", "justin's server");
               //V.put(test.getOwner(), test);
               //K.put(test.getUri(), V);
-              key = test.getChannel()+","+test.getUri();
-              resourceList.put(key,test);
+              //key = test.getChannel()+","+test.getUri();
+              resourceList.add(test);
              
-             Host h1 = new Host("192.168.1.1", 3001);
+             Host h1 = new Host("10.13.111.7", 20006);
              Host h2 = new Host("192.168.1.2", 3002);
              serverList.add(h1);
              serverList.add(h2);           
@@ -135,19 +136,19 @@ public class Server {
 	            public void run() {            	
 	                System.out.println("Exchange: ");
 	                //random choose a server
-	                int index = (int) (Math.random()*serverList.size());
-	                Host h = serverList.get(index);
+	                int index = (int) (Math.random()*serverList.getServerList().size());
+	                Host h = serverList.getServerList().get(index);
 	                //send exchange command to it 
 	                JSONObject update = new JSONObject();
 	                serverUpdate s =  new serverUpdate(serverList);
 	                update = s.update(h.getHostname(), h.getPort());
 	                if(update.getString("response").equals("error")){
-	                	serverList.remove(index);
+	                	serverList.delete(h);;
 	                }
 	                //return ressult
 	                
 	            }
-	        }, 0, getIntervalLimit() , TimeUnit.MILLISECONDS);
+	        }, getIntervalLimit() , getIntervalLimit() , TimeUnit.SECONDS);
 			
 			//thread pool to increase efficiency
 			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();

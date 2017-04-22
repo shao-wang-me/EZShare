@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 
 public class serverUpdate {
 	
-	private List<Host> serverList; 
-	serverUpdate(List<Host> serverList){
+	private serverList serverList; 
+	serverUpdate(serverList serverList){
 		this.setServerList(serverList);
 	}
 
@@ -72,11 +72,11 @@ public class serverUpdate {
 		
 	}
 
-	public List<Host> getServerList() {
+	public serverList getServerList() {
 		return serverList;
 	}
 
-	public void setServerList(List<Host> serverList) {
+	public void setServerList(serverList serverList) {
 		this.serverList = serverList;
 	}
 	

@@ -27,14 +27,14 @@ public class ServerThread implements Runnable {
 	
 	private String secret;
 	
-	private ConcurrentHashMap<String, Resource> resourceList;
+	private resourceList resourceList;
 	
-	private List<Host> serverList;
+	private serverList serverList;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			ConcurrentHashMap<String, Resource> resourceList, List<Host> serverList){
+			resourceList resourceList, serverList serverList){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
@@ -188,6 +188,7 @@ public class ServerThread implements Runnable {
 							        forward.writeUTF(str);
 							        while(f){
 								        String info = in.readUTF();
+								        System.out.println(info);
 								        if(info.contains("\"success\"")){
 								        	success = true;
 								        	out.writeUTF(info);
@@ -299,7 +300,7 @@ public class ServerThread implements Runnable {
 					JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
 					Host[] host = gson.fromJson(array, Host[].class);
 					for(Host h : host){
-						if( !serverList.contains(h)){
+						if( !serverList.getServerList().contains(h)){
 							serverList.add(h);
 							System.out.println("add a new server");
 						}
