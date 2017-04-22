@@ -13,7 +13,7 @@ public class Function {
 
 	//Map<key(channel, URI), Resource>
 
-	public static HashMap<Boolean, String> publish(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
+	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -24,13 +24,14 @@ public class Function {
 			 * 2. Same channel, same URI, different owner.
 			 */
 			if (resource.isFile() || 
-					(resourceMap.containsKey(resource.getKey()) && 
-							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
-					) {
+					(resourceList.contains(resource) && 
+							!resourceList.getSameResource(resource).getOwner().equals(resource.getOwner())
+					)
+				) {
 				toReturn.put(false, "cannot publish resource");
 			} else {
 				/**Now we should be able to add or update the resource.*/
-				resourceMap.put(resource.getKey(), resource);
+				resourceList.add(resource);
 				toReturn.put(true, "success");
 			}
 		}
@@ -38,7 +39,7 @@ public class Function {
 	}
 	
 
-	public static HashMap<Boolean, String> remove(Resource resource, Map<String, Resource> resourceMap) {
+	public static HashMap<Boolean, String> remove(Resource resource, resourceList resourceList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		/**
 		 * Invalid resource:
@@ -49,8 +50,8 @@ public class Function {
 		if (!resource.uriValid() || resource.getOwner().equals("*")) {
 			toReturn.put(false, "invalid resource");
 		} else {
-			if (resourceMap.containsKey(resource.getKey()) && resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner())) {
-				resourceMap.remove(resource.getKey());//The remove operation.
+			if (resourceList.contains(resource) && resourceList.getSameResource(resource).getOwner().equals(resource.getOwner())) {
+				resourceList.delete(resource);//The remove operation.
 				toReturn.put(true, "success");
 			} else {
 				/**Cannot remove resource: the resource did not exist.*/
@@ -61,7 +62,7 @@ public class Function {
 	}
 	
 
-	public static HashMap<Boolean, String> share(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
+	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -74,15 +75,15 @@ public class Function {
 			 * 4. Cannot be read as a file.
 			 */
 			if (!resource.isFile() || 
-					(resourceMap.containsKey(resource.getKey()) && 
-							!resourceMap.get(resource.getKey()).getOwner().equals(resource.getOwner()))
+					(resourceList.contains(resource) && 
+							!resourceList.getSameResource(resource).getOwner().equals(resource.getOwner()))
 					) {
 				toReturn.put(false, "Not a file");
 			} else {
 				File file = new File(resource.getURI().getPath());
 				if (file.canRead()) {
 					/**Now we should be able to add or update the resource.*/
-					resourceMap.put(resource.getKey(), resource);
+					resourceList.add(resource);
 					toReturn.put(true, "success");
 				} else {
 					toReturn.put(false, "cannot share resource");
@@ -93,12 +94,13 @@ public class Function {
 	}
 	
 
-	public static Map<Boolean, Map<String, Resource>> query(Resource resource, Map<String, Resource> resourceMap)	{
-		Map<String, Resource> resourceMapFiltered = new HashMap<String, Resource>();
-		resourceMapFiltered = resourceMap;
-		HashMap<Boolean, Map<String, Resource>> toReturn = new HashMap<Boolean, Map<String, Resource>>();
+	public static Map<Boolean, resourceList> query(Resource resource, resourceList resourceList)	{
+		resourceList resourceListFiltered = new resourceList();
+		resourceList.initialResourceList();
+		resourceListFiltered = resourceList;
+		HashMap<Boolean, resourceList> toReturn = new HashMap<Boolean, resourceList>();
 
-		for (Resource r: resourceMapFiltered.values()) {
+		for (Resource r: resourceListFiltered.getResourceList()) {
 			if (	   (!r.getChannel().equals(resource.getChannel()))
 					|| (!resource.getOwner().isEmpty() && !r.getOwner().equals(resource.getOwner()))
 					|| (!resource.getTags().isEmpty() && !r.getTags().containsAll(resource.getTags()))
@@ -110,15 +112,15 @@ public class Function {
 							&& !(resource.getDescription().isEmpty() && resource.getName().isEmpty())
 							)
 					) {
-				resourceMapFiltered.remove(r.getKey());
+				resourceListFiltered.delete(r);
 			}
 		}
-		toReturn.put(true, resourceMapFiltered);
+		toReturn.put(true, resourceListFiltered);
 		
 		return toReturn;
 	}
 	
-	public static HashMap<Boolean, String> fetch(Resource resource, Map<String, Resource> resourceMap) throws URISyntaxException {
+	public static HashMap<Boolean, String> fetch(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 
 		if (resource.isFile() && resource.uriValid()) {
@@ -130,12 +132,12 @@ public class Function {
 	}
 	
 	//TODO what is "missing resourceTemplate"
-	public static HashMap<Boolean, String> exchange(Map<String, Integer> receivedList, Map<String, Integer> localList) {
+	public static HashMap<Boolean, String> exchange(serverList receivedList, serverList localList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		for (Map.Entry<String, Integer> serverRecord : receivedList.entrySet()) {
+		for (Host h : receivedList.getServerList()) {
 			try {
-				InetAddress ip = InetAddress.getByName(serverRecord.getKey());
-				localList.put(serverRecord.getKey(), serverRecord.getValue());
+				InetAddress ip = InetAddress.getByName(h.getHostname());
+				localList.add(h);
 			} catch (UnknownHostException e) {}
 		}
 		toReturn.put(true, "success");
@@ -143,3 +145,4 @@ public class Function {
 	}
 	
 }
+
