@@ -2,35 +2,38 @@ package server;
 
 import java.io.IOException;
 import java.net.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.Date;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
+
+import support.LogFormatter;
 
 
 public class Server {
 	private static final Logger LOGGER = Logger.getLogger( Server.class.getName() );
 	
 	private String hostname = "Justin_Sever";
-	private String port  = " 20006";
+	private String port  = "20006";
 	private String interval = "600";
 	private int  intervalLimit = 30;
 	private String secret = "123";//RandomStringUtils.randomAlphanumeric(20);
 	private resourceList resourceList;
 	private serverList serverList;
+	private Boolean debug = false;
 	
 	public static void main(String[] args)throws Exception{
 		Server server = new Server();
@@ -74,9 +77,8 @@ public class Server {
               resourceList.add(test);
              
              Host h1 = new Host("10.13.111.7", 20006);
-             Host h2 = new Host("192.168.1.2", 3002);
              serverList.add(h1);
-             serverList.add(h2);           
+           
             
             
 			
@@ -88,7 +90,7 @@ public class Server {
 			options.addOption("e", "exchangeinterval",true,"exchange interval in seconds");
 			options.addOption("p" ,"port",true,"server port, an integer");
 			options.addOption("s", "secret",true,"secret");
-			options.addOption("d", "debug",true,"print debug information");
+			options.addOption("d", "debug",false,"print debug information");
 			
 			
 			
@@ -112,20 +114,26 @@ public class Server {
 			if( cmd.hasOption("secret")){
 				setSecret(cmd.getOptionValue("secret"));
 			}
+			if( cmd.hasOption("debug")){
+				setDebug(true);
+			}
 
 			 
-			
+			//Print log Info
 			System.out.println("Port number:"+getPort()+"time: "+getInterval()+" secret: "+getSecret());
+	        LogFormatter formatter = new LogFormatter();
+	        ConsoleHandler handler = new ConsoleHandler();
+	        handler.setFormatter(formatter);
+	        
 			Logger log = Logger.getLogger(Server.class.getName());
+			log.setUseParentHandlers(false);
+			log.addHandler(handler);
 			log.setLevel(Level.INFO); 
 			log.info("- Starting the EZShare Server");
 			log.info("- using secret:"+secret);
 			log.info("- using advertised hostname:"+hostname);
 			log.info("- bound to port"+port);
 			log.info("- started");
-			
-			System.out.println("Welcome to the server!");
-			System.out.println(new Date());
 			
 			ServerSocket server = new ServerSocket(Integer.parseInt(getPort()));
 			
@@ -134,7 +142,6 @@ public class Server {
 			
 			exec.scheduleAtFixedRate(new Runnable() {
 	            public void run() {            	
-	                System.out.println("Exchange: ");
 	                //random choose a server
 	                int index = (int) (Math.random()*serverList.getServerList().size());
 	                Host h = serverList.getServerList().get(index);
@@ -143,7 +150,7 @@ public class Server {
 	                serverUpdate s =  new serverUpdate(serverList);
 	                update = s.update(h.getHostname(), h.getPort());
 	                if(update.getString("response").equals("error")){
-	                	serverList.delete(h);;
+	                	serverList.delete(h);
 	                }
 	                //return ressult
 	                
@@ -157,7 +164,7 @@ public class Server {
 			while(f){
 				Socket client = server.accept();
 				System.out.println("connection succeed !");
-				ServerThread s = new ServerThread(client, getSecret(), resourceList, serverList);
+				ServerThread s = new ServerThread(client, getSecret(), resourceList, serverList, getDebug());
 				executor.execute(s);
 			}
 			executor.shutdown();
@@ -209,6 +216,14 @@ public class Server {
 
 	public void setSecret(String secret) {
 		this.secret = secret;
+	}
+
+	public Boolean getDebug() {
+		return debug;
+	}
+
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
 	}
 
 }

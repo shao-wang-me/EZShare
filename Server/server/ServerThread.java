@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeoutException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.json.JSONObject;
@@ -19,6 +23,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import support.LogFormatter;
+
 public class ServerThread implements Runnable {
 	
 	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE;} 
@@ -30,15 +36,21 @@ public class ServerThread implements Runnable {
 	private resourceList resourceList;
 	
 	private serverList serverList;
+	
+	private Boolean debug = true;
+	
+	private Logger log ;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			resourceList resourceList, serverList serverList){
+			resourceList resourceList, serverList serverList, Boolean debug){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
 		this.serverList = serverList;
+		this.debug = debug;
+		this.setLog();
 	}
 
 	@Override
@@ -57,10 +69,13 @@ public class ServerThread implements Runnable {
 			//parseJson(reader);
 			Boolean flag = true ;
 			
+			
 			//client.setSoTimeout(100);
 			try {
 				while(flag){
 					String str = buf.readUTF();
+					printDebug('r',str, debug );
+
 					if(str == null || "".equals(str)){
 						flag = false ;
 					}
@@ -112,6 +127,7 @@ public class ServerThread implements Runnable {
 						System.out.println(reply.toString());
 					}
 					out.writeUTF(reply.toString());
+					printDebug('s',reply.toString(), debug );
 					break;
 				}
 				case REMOVE:{
@@ -129,6 +145,7 @@ public class ServerThread implements Runnable {
 						System.out.println(reply.toString());
 					}
 					out.writeUTF(reply.toString());
+					printDebug('s',reply.toString(), debug );
 					break;
 				} 
 				case SHARE:{
@@ -139,11 +156,15 @@ public class ServerThread implements Runnable {
 						System.out.println("share: "+message);
 						response = Function.share(resource, resourceList);
 						out.writeUTF(response.toString());
+						printDebug('s',reply.toString(), debug );
+
 					}
 					else{
 						reply.put("response", "error");
 						reply.put("errorMessage", "incorrect secret");
 						out.writeUTF(reply.toString());
+						printDebug('s',reply.toString(), debug );
+
 					}
 					
 					break;
@@ -187,26 +208,38 @@ public class ServerThread implements Runnable {
 							        DataInputStream in = new DataInputStream(agent.getInputStream());
 							        Boolean f = true;
 							        forward.writeUTF(str);
-							        while(f){
-								        String info = in.readUTF();
-								        System.out.println(info);
-								        if(info.contains("\"success\"")){
-								        	success = true;
-								        	out.writeUTF(info);
-								        }
-								        if(success){
-									        if(info.contains("resultSize")){
-									        	f = false;
+							        try{
+								        while(f){
+									        String info = in.readUTF();
+									        System.out.println(info);
+									        if(new JSONObject(info).get("response").equals("success")){
+									        	success = true;
 									        	out.writeUTF(info);
 									        	
 									        }
-									        else{
-									        	out.writeUTF(info);
+									        if(success){
+										        if(info.contains("resultSize")){
+										        	f = false;
+										        	out.writeUTF(info);
+										        	
+										        }
+										        else{
+										        	out.writeUTF(info);
+										        }
 									        }
+
 								        }
-								        
+							        	
+							        }catch(SocketTimeoutException t){
+										reply.put("response", "success");
+										//query failed => return error message
+										out.writeUTF(reply.toString());
+										printDebug('s',reply.toString(), debug );
+										out.writeUTF(new JSONObject().put("resultSize",0).toString());
+										printDebug('s',new JSONObject().put("resultSize",0).toString(), debug );
 
 							        }
+
 							        forward.close();
 							        in.close();
 							        agent.close();
@@ -218,7 +251,7 @@ public class ServerThread implements Runnable {
 							//relay = false 
 							if(result.containsKey(true)){
 								//query succeed => return result
-								reply.put("response", "sucess");
+								reply.put("response", "success");
 								out.writeUTF(reply.toString());
 								int num = 0;
 								for(Resource entry : result.get(true).getResourceList()){
@@ -226,19 +259,26 @@ public class ServerThread implements Runnable {
 									num++;
 								}
 								out.writeUTF(new JSONObject().put("resultSize", num).toString());
-								
+								printDebug('s',new JSONObject().put("resultSize",num).toString(), debug );
+
 							}
 							else{
 								reply.put("response", "error");
 								reply.put("errorMessage", "invalid ResourceTemplate");
 								//query failed => return error message
-								out.writeUTF(reply.toString());;
+								out.writeUTF(reply.toString());
+								printDebug('s',reply.toString(), debug );
+
 							}
 						}
 					}
 					else{
 						reply.put("response", "error");
-						reply.put("errorMessage", "missing ResourceTemplate");					}
+						reply.put("errorMessage", "missing ResourceTemplate");
+						out.writeUTF(reply.toString());
+						printDebug('s',reply.toString(), debug );
+
+					}
 					
 					break;
 				}
@@ -254,7 +294,7 @@ public class ServerThread implements Runnable {
 						System.out.println(resource.getKey()+" "+response);
 						if(response.containsKey(true)){
 							out.writeUTF(new JSONObject().put("response", "success").toString());
-							File f = new File(resource.getUri().split(":")[1]);
+							File f = new File(resource.getURI().getPath());
 							fileSize = f.length();
 							
 							System.out.println(f);
@@ -262,6 +302,8 @@ public class ServerThread implements Runnable {
 							JSONObject temp = new JSONObject(str);
 							reply = temp.put("resourceSize", fileSize);
 							out.writeUTF(reply.toString());
+							printDebug('s',reply.toString(), debug );
+							
 							System.out.println("after: "+reply.toString());
 						
 							//read data from local disk
@@ -286,11 +328,15 @@ public class ServerThread implements Runnable {
 						else{
 							reply.put("response", "error");
 							reply.put("errorMessage", "invalid resourceTemplate");
+							out.writeUTF(reply.toString());
 						}
 					}
 					else{
 						reply.put("response", "error");
 						reply.put("errorMessage", "missing resourceTemplate");
+						out.writeUTF(reply.toString());
+						printDebug('s',reply.toString(), debug );
+
 					}				
 					// return file size
 
@@ -306,19 +352,23 @@ public class ServerThread implements Runnable {
 						}
 					}
 					System.out.println("exchange: "+host[0].getHostname());
-					
+					reply.put("response", "success");
+					out.writeUTF(reply.toString());
+					printDebug('s',reply.toString(), debug );
+
 					break;
 				}
 				default:{				
 					reply.put("response", "error");
 					reply.put("errorMessage", "invalid Command");
+					out.writeUTF(reply.toString());
+					printDebug('s',reply.toString(), debug );
+
 					break;
 				}
 				
 			}
-			
-			
-			
+					
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -326,6 +376,44 @@ public class ServerThread implements Runnable {
 	
 			
 		}
+
+	public Boolean getDebug() {
+		return debug;
+	}
+
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
+	}
+	
+	public void printDebug (char op, String str, Boolean debug){
+        if(debug){
+
+    		if(op=='s'){
+    			
+    			log.info("SENT:"+str);
+    		}
+    		else{
+    			log.info("RECEIVED:"+str);
+    		}
+    		
+        }
+	}
+
+	public Logger getLog() {
+		return log;
+	}
+
+	public void setLog() {
+    	LogFormatter formatter = new LogFormatter();
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(formatter);
+        
+		Logger log = Logger.getLogger(Server.class.getName());
+		log.setUseParentHandlers(false);
+		log.addHandler(handler);
+		log.setLevel(Level.FINE);
+		this.log = log;
+	}
 		
 	}
 
