@@ -94,7 +94,7 @@ public class Function {
 	}
 	
 
-	public static Map<Boolean, resourceList> query(Resource resource, resourceList resourceList)	{
+	public static HashMap<Boolean, resourceList> query(Resource resource, resourceList resourceList)	{
 		resourceList resourceListFiltered = new resourceList();
 		resourceList.initialResourceList();
 		resourceListFiltered = resourceList;

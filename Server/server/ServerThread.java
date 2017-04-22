@@ -151,7 +151,8 @@ public class ServerThread implements Runnable {
 				case QUERY:{
 					Boolean relay = root.getAsJsonObject().get("relay").getAsBoolean();
 					Boolean flag = false;
-					Map<Boolean, Map<String, Resource>> result = new HashMap<Boolean, Map<String, Resource>>();
+					HashMap<Boolean, resourceList> result = new HashMap<Boolean, resourceList>();
+					
 					
 					if(root.getAsJsonObject().has("resourceTemplate")){
 						JsonObject object = root.getAsJsonObject().get("resourceTemplate").getAsJsonObject();
@@ -160,12 +161,12 @@ public class ServerThread implements Runnable {
 						result = Function.query(resource, resourceList);
 						
 						if(relay){
-							if(result.containsKey(true)){
+							if(result.containsKey(true) && result.get(true).getResourceList().size() != 0){
 								reply.put("response", "sucess");
 								out.writeUTF(reply.toString());
 								int num = 0;
-								for(Map.Entry<String, Resource> entry : result.get(true).entrySet()){
-									out.writeUTF(gson.toJson(entry.getValue()).toString());
+								for(Resource entry : result.get(true).getResourceList()){							
+									out.writeUTF(gson.toJson(entry).toString());
 									num++;
 								}
 								out.writeUTF(new JSONObject().put("resultSize", num).toString());
@@ -178,7 +179,7 @@ public class ServerThread implements Runnable {
 								String str = trans.toString();
 								// new query used to broadcast
 								Boolean success = false;
-								for(Host h: serverList){
+								for(Host h: serverList.getServerList()){
 							        Socket agent = new Socket(h.getHostname(), h.getPort());  
 							        //Socket 输出流， 转发查询
 							        DataOutputStream forward = new DataOutputStream(agent.getOutputStream());
@@ -220,8 +221,8 @@ public class ServerThread implements Runnable {
 								reply.put("response", "sucess");
 								out.writeUTF(reply.toString());
 								int num = 0;
-								for(Map.Entry<String, Resource> entry : result.get(true).entrySet()){
-									out.writeUTF(gson.toJson(entry.getValue()).toString());
+								for(Resource entry : result.get(true).getResourceList()){
+									out.writeUTF(gson.toJson(entry).toString());
 									num++;
 								}
 								out.writeUTF(new JSONObject().put("resultSize", num).toString());
@@ -262,8 +263,7 @@ public class ServerThread implements Runnable {
 							reply = temp.put("resourceSize", fileSize);
 							out.writeUTF(reply.toString());
 							System.out.println("after: "+reply.toString());
-
-							
+						
 							//read data from local disk
 							DataInputStream input = new DataInputStream
 									(new BufferedInputStream(new FileInputStream(f)));
@@ -302,15 +302,14 @@ public class ServerThread implements Runnable {
 					for(Host h : host){
 						if( !serverList.getServerList().contains(h)){
 							serverList.add(h);
-							System.out.println("add a new server");
+							//System.out.println("add a new server");
 						}
 					}
 					System.out.println("exchange: "+host[0].getHostname());
 					
 					break;
 				}
-				default:{
-					
+				default:{				
 					reply.put("response", "error");
 					reply.put("errorMessage", "invalid Command");
 					break;
