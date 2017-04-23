@@ -24,13 +24,12 @@ import support.LogFormatter;
 
 
 public class Server {
-	private static final Logger LOGGER = Logger.getLogger( Server.class.getName() );
-	
-	private String hostname = "Justin_Sever";
+	// initial parameters
+	private String hostname = "Awesome_Sever";
 	private String port  = "20006";
 	private String interval = "600";
 	private int  intervalLimit = 30;
-	private String secret = "123";//RandomStringUtils.randomAlphanumeric(20);
+	private String secret = RandomStringUtils.randomAlphanumeric(10);
 	private resourceList resourceList;
 	private serverList serverList;
 	private Boolean debug = true;
@@ -120,7 +119,6 @@ public class Server {
 
 			 
 			//Print log Info
-			System.out.println("Port number:"+getPort()+"time: "+getInterval()+" secret: "+getSecret());
 	        LogFormatter formatter = new LogFormatter();
 	        ConsoleHandler handler = new ConsoleHandler();
 	        handler.setFormatter(formatter);
@@ -140,26 +138,15 @@ public class Server {
 			//time schedule thread pool
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 			
-			exec.scheduleAtFixedRate(new Runnable() {
-	            public void run() {            	
-	                //random choose a server
-	                int index = (int) (Math.random()*serverList.getServerList().size());
-	                Host h = serverList.getServerList().get(index);
-	                //send exchange command to it 
-	                JSONObject update = new JSONObject();
-	                serverUpdate s =  new serverUpdate(serverList);
-	                update = s.update(h.getHostname(), h.getPort());
-	                if(update.getString("response").equals("error")){
-	                	serverList.delete(h);
-	                }
-	                //return ressult
-	                
-	            }
-	        }, getIntervalLimit() , getIntervalLimit() , TimeUnit.SECONDS);
+			TimerTask timerTask = new TimerTask(serverList, resourceList);
+			
+			exec.scheduleAtFixedRate(timerTask,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			
 			//thread pool to increase efficiency
 			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 			//Socket client = new Socket();
+			
+			//create multiple threads to build connections
 			Boolean f = true ;
 			while(f){
 				Socket client = server.accept();

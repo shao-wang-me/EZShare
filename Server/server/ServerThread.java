@@ -94,7 +94,7 @@ public class ServerThread implements Runnable {
 			client.close();
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			
 		}
 	}
 	
@@ -371,7 +371,6 @@ public class ServerThread implements Runnable {
 					
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
 		}
 	
 			
