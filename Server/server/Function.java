@@ -14,26 +14,6 @@ import java.util.stream.Collectors;
 
 public class Function {
 
-	//Map<key(channel, URI), Resource>
-	
-	/*public static void main(String[] args) throws URISyntaxException {
-		URI uri = new URI("file:/C:/Users/shaow1/Desktop/1.jpeg");
-		//File file = new File("C:\\Users\\shaow1\\Desktop\\1.jpeg");
-		File file = new File(uri.getPath());
-		System.out.println(file.exists());
-		System.out.println(file.canRead());
-		System.out.println(uri.getPath());
-		ArrayList<String> list = new ArrayList<String>();
-		System.out.println(list);
-		Resource test = new Resource("steven","this is a test2", 
-         		list, "file:/C:/Users/shaow1/Desktop/1.jpeg", "cctv", "justin", "justin's server");
-		Resource r = new Resource("", "")
-		resourceList l = new resourceList();
-		l.initialResourceList();
-		l.add(test);
-	}*/
-
-
 	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -43,6 +23,7 @@ public class Function {
 			 * Cannot publish resource:
 			 * 1. The resource is a file.
 			 * 2. Same channel, same URI, different owner.
+			 * 3. URI missing 
 			 */
 			if (resource.isFile() || 
 					(resourceList.contains(resource) && 
@@ -99,7 +80,7 @@ public class Function {
 					(resourceList.contains(resource) && 
 							!resourceList.getSameResource(resource).getOwner().equals(resource.getOwner()))
 					) {
-				toReturn.put(false, "Not a file");
+				toReturn.put(false, "invalid resource");
 			} else {
 				File file = new File(resource.getURI().getPath());
 				if (file.canRead()) {
@@ -115,14 +96,16 @@ public class Function {
 	}
 	
 
-	public static HashMap<Boolean, resourceList> query(Resource resource, resourceList resourceList)	{
+	public static HashMap<Boolean, resourceList> query(Resource resource, resourceList resourceList,
+			String hostname, int port)	{
 		resourceList resourceListFiltered = new resourceList();
 		resourceListFiltered.initialResourceList();
 		HashMap<Boolean, resourceList> toReturn = new HashMap<Boolean, resourceList>();
-		System.out.println(resourceList.getResourceList().size());
+		//System.out.println(resourceList.getResourceList().size());
+		//boolean match = true;
 		for (Resource r: resourceList.getResourceList()) {
-			System.out.println("r: " + r.getUri());
-			System.out.println("resource: " + resource.getUri());
+			//System.out.println("r: " + r.getUri());
+			//System.out.println("resource: " + resource.getUri());
 			boolean match = true;
 			if (!resource.getChannel().equals(r.getChannel())) {
 				match = false;
@@ -140,7 +123,10 @@ public class Function {
 				match = false;
 			}
 			if (match) {
-				resourceListFiltered.add(r);
+				Resource temp = new Resource(
+						r.getName(), r.getDescription(), r.getTags(),r.getUri(),
+						r.getChannel(), "*", hostname+":"+port);
+				resourceListFiltered.add(temp);
 			}
 		}
 		toReturn.put(true, resourceListFiltered);
@@ -160,16 +146,24 @@ public class Function {
 	}
 	
 	//TODO what is "missing resourceTemplate"
-	public static HashMap<Boolean, String> exchange(serverList receivedList, serverList localList) {
+	public static HashMap<Boolean, String> exchange(serverList serverList, Host[] host) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
-		for (Host h : receivedList.getServerList()) {
-			try {
-				InetAddress ip = InetAddress.getByName(h.getHostname());
-				localList.add(h);
-			} catch (UnknownHostException e) {
-				toReturn.put(false, "missing or invalid server list");
-				return toReturn;
-			}
+		for (Host h : host) {
+				try {
+					boolean flag = true;
+					for(Host s : serverList.getServerList()){
+						InetAddress ip = InetAddress.getByName(h.getHostname());
+						if(s.getHostname().equals(h.getHostname()) && s.getPort()==h.getPort()){
+							flag = false;
+						}
+					}
+					if(flag == true){
+						serverList.add(h);
+					}
+				} catch (UnknownHostException e) {
+					toReturn.put(false, "invalid server");
+					return toReturn;
+				}
 		}
 		toReturn.put(true, "success");
 		return toReturn;

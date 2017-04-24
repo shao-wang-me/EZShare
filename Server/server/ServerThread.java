@@ -13,14 +13,18 @@ import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.json.JSONObject;
+import org.json.JSONPointerException;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import support.LogFormatter;
@@ -40,17 +44,24 @@ public class ServerThread implements Runnable {
 	private Boolean debug = true;
 	
 	private Logger log ;
+	
+	private String hostname;
+	
+	private int port;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			resourceList resourceList, serverList serverList, Boolean debug){
+			resourceList resourceList, serverList serverList, Boolean debug, 
+			String hostname, int port ){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
 		this.serverList = serverList;
 		this.debug = debug;
 		this.setLog();
+		this.hostname = hostname;
+		this.port = port;
 	}
 
 	@Override
@@ -85,14 +96,13 @@ public class ServerThread implements Runnable {
 						parseJson(str, out);
 					}
 				}
-			} catch (EOFException e) {
+			} catch (Exception e) {
 				// TODO: handle exception
-
 			}
-
-			out.close();
-			client.close();
-			
+			finally{
+				out.close();
+				client.close();
+			}
 		}catch(Exception e){
 			
 		}
@@ -103,70 +113,127 @@ public class ServerThread implements Runnable {
 		ArrayList<String> list = new ArrayList<String>();
 		Resource resource = new Resource("", "", list, "", "", "", "");
 		//String operation = null;
+		JSONObject reply = new JSONObject();
+
 		try {
-			JsonElement root = new JsonParser().parse(message);
-			JSONObject reply = new JSONObject();
-			HashMap<Boolean, String> response = new HashMap<Boolean, String>();
 			
+			//initialize variables
+			JsonElement root = new JsonParser().parse(message);
+			HashMap<Boolean, String> response = new HashMap<Boolean, String>();
 			Gson gson = new Gson();
 			String commandName = root.getAsJsonObject().get("command").getAsString();
 			Operation operation = Operation.valueOf(commandName);
-			switch(operation){
+			
+			//check command and call corresponding method
+			 switch(operation){
 				case PUBLISH:{
-					JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
-					//Map map = gson.fromJson(message, Map.class);
-					resource = gson.fromJson(object, Resource.class);
-					System.out.println("publish: "+message);
-					response = Function.publish(resource, resourceList);
-					if(response.containsKey(true)){
-						reply.put("response", "success");
+					//check resource field exists
+					if(root.getAsJsonObject().has("resource")){ 
+
+						try{
+							JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
+							//Map map = gson.fromJson(message, Map.class);
+							try{
+								resource = gson.fromJson(object, Resource.class);
+							}catch(JsonSyntaxException j){
+								reply.put("response", "error");
+								reply.put("errorMessage", "invalid resource");
+								out.writeUTF(reply.toString());
+								printDebug('s',reply.toString(), debug );
+							}
+							//System.out.println("publish: "+message);
+							response = Function.publish(resource, resourceList);
+							if(response.containsKey(true)){
+								reply.put("response", "success");
+							}
+							else{
+								reply.put("response", "error");
+								reply.put("errorMessage", response.get(false));
+								//System.out.println(reply.toString());
+							}
+						}catch(JsonSyntaxException j){
+							reply.put("response", "error");
+							reply.put("errorMessage", "missing resource");
+						}
 					}
 					else{
 						reply.put("response", "error");
-						reply.put("errorMessage", response.get(false));
-						System.out.println(reply.toString());
+						reply.put("errorMessage", "missing resource");
 					}
 					out.writeUTF(reply.toString());
 					printDebug('s',reply.toString(), debug );
 					break;
 				}
 				case REMOVE:{
-					JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
-					resource = gson.fromJson(object, Resource.class);
-					System.out.println("remove: "+message);
-					response = Function.remove(resource, resourceList);
-					//out.writeUTF(response.toString());
-					if(response.containsKey(true)){
-						reply.put("response", "success");
+					//check resource field exists
+					if(root.getAsJsonObject().has("resource")){
+							JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
+							
+							//resource check
+							try{
+								resource = gson.fromJson(object, Resource.class);
+							}catch(JsonSyntaxException j){
+								reply.put("response", "error");
+								reply.put("errorMessage", "invalid resource");
+								out.writeUTF(reply.toString());
+								printDebug('s',reply.toString(), debug );
+							}							
+							//System.out.println("remove: "+message);
+							response = Function.remove(resource, resourceList);
+							//out.writeUTF(response.toString());
+							if(response.containsKey(true)){
+								reply.put("response", "success");
+							}
+							else{
+								reply.put("response", "error");
+								reply.put("errorMessage", response.get(false));
+								System.out.println(reply.toString());
+							}
+	
+						
 					}
 					else{
 						reply.put("response", "error");
-						reply.put("errorMessage", response.get(false));
-						System.out.println(reply.toString());
+						reply.put("errorMessage", "missing resource");
 					}
+					
 					out.writeUTF(reply.toString());
 					printDebug('s',reply.toString(), debug );
 					break;
 				} 
 				case SHARE:{
-					String secret = root.getAsJsonObject().get("secret").getAsString();
-					if(secret.equals(this.secret)){
-						JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
-						resource = gson.fromJson(object, Resource.class);
-						System.out.println("share: "+message);
-						response = Function.share(resource, resourceList);
-						out.writeUTF(response.toString());
-						printDebug('s',reply.toString(), debug );
-
+					
+					if(root.getAsJsonObject().has("resource") && root.getAsJsonObject().has("secret")){
+						String secret = root.getAsJsonObject().get("secret").getAsString();
+						if(secret.equals(this.secret)){
+							try{
+								JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
+								resource = gson.fromJson(object, Resource.class);
+								//System.out.println("share: "+message);
+								response = Function.share(resource, resourceList);
+								if(response.containsKey(true)){
+									reply.put("response", "success");
+								}
+								else{
+									reply.put("response", "error");
+									reply.put("errorMessage", response.get(false));
+								}
+							}catch(JsonSyntaxException j){
+								reply.put("response", "error");
+								reply.put("errorMessage", "missing resource and/or secret");
+							}
+						}
+						else{
+							reply.put("response", "error");
+							reply.put("errorMessage", "incorrect secret");
+						}
 					}
 					else{
 						reply.put("response", "error");
-						reply.put("errorMessage", "incorrect secret");
-						out.writeUTF(reply.toString());
-						printDebug('s',reply.toString(), debug );
-
+						reply.put("errorMessage", "missing resource and/or secret");
 					}
-					
+					out.writeUTF(reply.toString());
+					printDebug('s',reply.toString(), debug );
 					break;
 				}
 				case QUERY:{
@@ -177,9 +244,18 @@ public class ServerThread implements Runnable {
 					
 					if(root.getAsJsonObject().has("resourceTemplate")){
 						JsonObject object = root.getAsJsonObject().get("resourceTemplate").getAsJsonObject();
-						resource = gson.fromJson(object, Resource.class);
-						System.out.println("query: "+message);
-						result = Function.query(resource, resourceList);
+						
+						//resource check
+						try{
+							resource = gson.fromJson(object, Resource.class);
+						}catch(JsonSyntaxException j){
+							reply.put("response", "error");
+							reply.put("errorMessage", "invalid resourceTemplate");
+							out.writeUTF(reply.toString());
+							printDebug('s',reply.toString(), debug );
+						}
+						//System.out.println("query: "+message);
+						result = Function.query(resource, resourceList, getHostname(), getPort());
 						
 						if(relay){
 							if(result.containsKey(true) && result.get(true).getResourceList().size() != 0){
@@ -195,54 +271,78 @@ public class ServerThread implements Runnable {
 							}
 							else{
 								//relay = true & query failed => broadcast to server list
-								JSONObject trans = new JSONObject(message);
-								trans.put("relay", false);
-								String str = trans.toString();
-								// new query used to broadcast
-								Boolean success = false;
-								for(Host h: serverList.getServerList()){
-							        Socket agent = new Socket(h.getHostname(), h.getPort());  
-							        //Socket 输出流， 转发查询
-							        DataOutputStream forward = new DataOutputStream(agent.getOutputStream());
-							        //获取Socket的输入流，用来接收从服务端发送过来的数据    
-							        DataInputStream in = new DataInputStream(agent.getInputStream());
-							        Boolean f = true;
-							        forward.writeUTF(str);
-							        try{
-								        while(f){
-									        String info = in.readUTF();
-									        System.out.println(info);
-									        if(new JSONObject(info).get("response").equals("success")){
-									        	success = true;
-									        	//out.writeUTF(info);									        	
-									        }
-									        if(success){
-										        if(info.contains("resultSize")){
-										        	f = false;
-										        	out.writeUTF(info);
-										        	
+									JSONObject trans = new JSONObject(message);
+									trans.put("relay", false);
+									String str = trans.toString();
+									// new query used to broadcast
+									Boolean success = false;
+									for(Host h: serverList.getServerList()){
+								        Socket agent = new Socket(h.getHostname(), h.getPort());  
+								        //Socket 输出流， 转发查询
+								        DataOutputStream forward = new DataOutputStream(agent.getOutputStream());
+								        //获取Socket的输入流，用来接收从服务端发送过来的数据    
+								        DataInputStream in = new DataInputStream(agent.getInputStream());
+								        Boolean f = true;
+								        forward.writeUTF(str);
+								        try{
+									        while(f){
+										        String info = in.readUTF();
+										        //System.out.println(info);
+										        JSONObject Info = new JSONObject(info);
+										        if(Info.has("response")){
+											        if(new JSONObject(info).get("response").equals("success")){
+											        	success = true;
+											        	//out.writeUTF(info);									        	
+											        }
+											        if(new JSONObject(info).get("response").equals("error")){
+											        	out.writeUTF(info);
+
+											        }
+											        if(success ){
+												        if(info.contains("resultSize")){
+												        	f = false;
+												        	out.writeUTF(info);
+												        	
+												        }
+												        else{
+												        	out.writeUTF(info);
+												        }
+											        }
 										        }
 										        else{
-										        	out.writeUTF(info);
+										        	f = false;
+													reply.put("response", "success");
+													//query failed => return error message
+													out.writeUTF(reply.toString());
+													printDebug('s',reply.toString(), debug );
+													out.writeUTF(new JSONObject().put("resultSize",0).toString());
+													printDebug('s',new JSONObject().put("resultSize",0).toString(), debug );
 										        }
+
 									        }
+								        	
+								        }catch(JSONException j){
+											reply.put("response", "success");
+											//query failed => return error message
+											out.writeUTF(reply.toString());
+											printDebug('s',reply.toString(), debug );
+											out.writeUTF(new JSONObject().put("resultSize",0).toString());
+											printDebug('s',new JSONObject().put("resultSize",0).toString(), debug );
+								        }catch(SocketTimeoutException t){
+											reply.put("response", "success");
+											//query failed => return error message
+											out.writeUTF(reply.toString());
+											printDebug('s',reply.toString(), debug );
+											out.writeUTF(new JSONObject().put("resultSize",0).toString());
+											printDebug('s',new JSONObject().put("resultSize",0).toString(), debug );
 
 								        }
-							        	
-							        }catch(SocketTimeoutException t){
-										reply.put("response", "success");
-										//query failed => return error message
-										out.writeUTF(reply.toString());
-										printDebug('s',reply.toString(), debug );
-										out.writeUTF(new JSONObject().put("resultSize",0).toString());
-										printDebug('s',new JSONObject().put("resultSize",0).toString(), debug );
-
-							        }
-
-							        forward.close();
-							        in.close();
-							        agent.close();
-								}		
+								        finally{
+								        	forward.close();
+								        	in.close();
+								        	agent.close();
+								        }
+									}	
 							}
 							
 						}
@@ -287,8 +387,14 @@ public class ServerThread implements Runnable {
 
 					if(object.has("resourceTemplate")){
 						object = object.get("resourceTemplate").getAsJsonObject();
-						resource = gson.fromJson(object, Resource.class);
-						System.out.println("fetch: "+message);
+						try{
+							resource = gson.fromJson(object, Resource.class);
+						}catch(JsonSyntaxException j){
+							reply.put("response", "error");
+							reply.put("errorMessage", "invalid resourceTemplate");
+							out.writeUTF(reply.toString());
+							printDebug('s',reply.toString(), debug );
+						}						//System.out.println("fetch: "+message);
 						long fileSize = 0;
 						response = Function.fetch(resource, resourceList);
 						System.out.println(resource.getKey()+" "+response);
@@ -343,16 +449,32 @@ public class ServerThread implements Runnable {
 					break;
 				}
 				case EXCHANGE:{
-					JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
-					Host[] host = gson.fromJson(array, Host[].class);
-					for(Host h : host){
-						if( !serverList.getServerList().contains(h)){
-							serverList.add(h);
-							//System.out.println("add a new server");
+					
+					if(root.getAsJsonObject().has("serverList")){
+						try{
+							JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
+							Host[] host = gson.fromJson(array, Host[].class);
+							response = Function.exchange(serverList, host);
+							//System.out.println("exchange: "+host[0].getHostname());
+							if(response.containsKey(true)){
+								reply.put("response", "success");							
+							}
+							else{
+								reply.put("response", "error");
+								reply.put("errorMessage", response.get(false));
+
+							}
+						}catch(Exception e){
+							reply.put("response", "error");
+							reply.put("errorMessage", "missing or invalid serverList");
+							out.writeUTF(reply.toString());
+							printDebug('s',reply.toString(), debug );
 						}
 					}
-					System.out.println("exchange: "+host[0].getHostname());
-					reply.put("response", "success");
+					else{
+						reply.put("response", "error");
+						reply.put("errorMessage", "missing or invalid serverList");
+					}
 					out.writeUTF(reply.toString());
 					printDebug('s',reply.toString(), debug );
 
@@ -369,8 +491,25 @@ public class ServerThread implements Runnable {
 				
 			}
 					
-		} catch (Exception e) {
+		} catch (JsonParseException e) {
 			// TODO: handle exception
+			reply.put("response", "error");
+			reply.put("errorMessage", "missing or incorrect type for command");
+			try {
+				out.writeUTF(reply.toString());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+			}
+			printDebug('s',reply.toString(), debug );
+		}catch (Exception e){
+			reply.put("response", "error");
+			reply.put("errorMessage", "missing or incorrect type for command");
+			try {
+				out.writeUTF(reply.toString());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+			}
+			printDebug('s',reply.toString(), debug );
 		}
 	
 			
@@ -412,6 +551,22 @@ public class ServerThread implements Runnable {
 		//log.addHandler(handler);
 		log.setLevel(Level.FINE);
 		this.log = log;
+	}
+
+	public String getHostname() {
+		return hostname;
+	}
+
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 		
 	}

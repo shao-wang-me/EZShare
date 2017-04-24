@@ -26,10 +26,10 @@ import support.LogFormatter;
 public class Server {
 	// initial parameters
 	private String hostname = "Awesome_Sever";
-	private String port  = "20006";
+	private int port  = 20006;
 	private String interval = "600";
-	private int  intervalLimit = 30;
-	private String secret = RandomStringUtils.randomAlphanumeric(10);
+	private int  intervalLimit = 1000;
+	private String secret = RandomStringUtils.randomAlphanumeric(20);
 	private resourceList resourceList;
 	private serverList serverList;
 	private Boolean debug = true;
@@ -102,10 +102,10 @@ public class Server {
 				setHostname(cmd.getOptionValue("advertisedhostname"));
 			}
 			if( cmd.hasOption("connectionintervallimit")){
-				setIntervalLimit(Integer.parseInt( cmd.getOptionValue("connectionintervallimit")));
+				setIntervalLimit(Integer.parseInt( cmd.getOptionValue("connectionintervallimit"))*1000);
 			}
 			if(cmd.hasOption("port")){
-				setPort(cmd.getOptionValue("port"));
+				setPort(Integer.parseInt(cmd.getOptionValue("port")));
 			}
 			if( cmd.hasOption("exchangeinterval")){
 				setInterval(cmd.getOptionValue("exchangeinterval"));
@@ -133,7 +133,7 @@ public class Server {
 			log.info("- bound to port"+port);
 			log.info("- started");
 			
-			ServerSocket server = new ServerSocket(Integer.parseInt(getPort()));
+			ServerSocket server = new ServerSocket(getPort());
 			
 			//time schedule thread pool
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
@@ -150,9 +150,17 @@ public class Server {
 			Boolean f = true ;
 			while(f){
 				Socket client = server.accept();
-				System.out.println("connection succeed !");
-				ServerThread s = new ServerThread(client, getSecret(), resourceList, serverList, getDebug());
-				executor.execute(s);
+				//System.out.println("connection succeed !");
+				Thread.sleep(getIntervalLimit());
+				if(client.isConnected()){
+					ServerThread s = new ServerThread(client, getSecret(), 
+							resourceList, serverList, getDebug(), getHostname(), getPort());
+
+					executor.execute(s);
+				}
+				else{
+					client.close();
+				}
 			}
 			executor.shutdown();
 			server.close();
@@ -173,11 +181,11 @@ public class Server {
 		this.hostname = hostname;
 	}
 
-	public String getPort() {
+	public int getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 
