@@ -1,4 +1,4 @@
-package server;
+package variable;
 
 import java.net.URI;
 import java.net.URISyntaxException;

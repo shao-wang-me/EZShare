@@ -1,4 +1,4 @@
-package server;
+package variable;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,4 @@
-package server;
-
-import server.Resource;
+package variable;
 
 public class Command {
 	

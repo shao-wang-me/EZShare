@@ -1,4 +1,4 @@
-package server;
+package variable;
 
 public class Host {
 	private String hostname;

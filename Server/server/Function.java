@@ -1,16 +1,15 @@
 package server;
 
+import variable.Host;
+import variable.Resource;
+import variable.resourceList;
+import variable.serverList;
+
 import java.io.File;
 import java.net.InetAddress;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Function {
 

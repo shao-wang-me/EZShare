@@ -2,18 +2,16 @@ package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.List;
 
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
+import variable.serverList;
 
 public class serverUpdate {
 	
-	private serverList serverList; 
+	private variable.serverList serverList;
 	serverUpdate(serverList serverList){
 		this.setServerList(serverList);
 	}
@@ -60,9 +58,9 @@ public class serverUpdate {
 			client.close();
 	        return result;
 	
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
             JSONObject error = new JSONObject();
             error.put("errorMessage", "Timeout");
             error.put("response", "error");

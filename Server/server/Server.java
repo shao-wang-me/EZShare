@@ -1,13 +1,7 @@
 package server;
 
-import java.io.IOException;
 import java.net.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -15,12 +9,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Date;
+
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.json.JSONObject;
 
 import support.LogFormatter;
+import variable.Host;
+import variable.Resource;
+import variable.resourceList;
+import variable.serverList;
 
 
 public class Server {
@@ -30,8 +27,8 @@ public class Server {
 	private String interval = "600";
 	private int  intervalLimit = 1000;
 	private String secret = RandomStringUtils.randomAlphanumeric(20);
-	private resourceList resourceList;
-	private serverList serverList;
+	private variable.resourceList resourceList;
+	private variable.serverList serverList;
 	private Boolean debug = true;
 	
 	public static void main(String[] args)throws Exception{
@@ -54,7 +51,7 @@ public class Server {
             ArrayList<String> list = new ArrayList<String>();
             list.add("web");
             list.add("html");
-            Resource test = new Resource("justin","this is a description", 
+            Resource test = new Resource("justin","this is a description",
             		list, "http://www.unimelb.edu.au", "cctv", "justin", "justin's server");
             //V.put(test.getOwner(), test);
             //K.put(test.getUri(), V);
@@ -77,6 +74,9 @@ public class Server {
              
              Host h1 = new Host("10.13.111.7", 20006);
              serverList.add(h1);
+
+             Host h2 = new Host("sunrise.cis.unimelb.edu.au", 3780);
+			 serverList.add(h2);
            
             
             

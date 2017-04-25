@@ -1,11 +1,14 @@
 package server;
 
 import org.json.JSONObject;
+import variable.Host;
+import variable.resourceList;
+import variable.serverList;
 
 public class TimerTask implements Runnable{
 	
-	private serverList serverList;
-	private resourceList resourceList;
+	private variable.serverList serverList;
+	private variable.resourceList resourceList;
 	
 	public TimerTask(serverList serverList, resourceList resourceList){
 		this.resourceList = resourceList;
