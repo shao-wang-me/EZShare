@@ -1,10 +1,12 @@
+# Test
+
 	sunrise.cis.unimelb.edu.au:3780
 
 ## PUBLISH
 
-##### error: invalid command (直接发JSON)
-##### error: missing or incorrect type for command (直接发JSON)
-##### success
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success
 
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "baidu" -uri http://www.baidu.com -debug
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -debug
@@ -14,7 +16,7 @@ overwrite
 
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -description "bilibili" -debug
 
-##### error: cannot publish resource
+### error: cannot publish resource
 
 resource is a file
 
@@ -30,7 +32,7 @@ URI missing (不确定能不能在client测)
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -debug
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -debug
 
-##### error: invalid resource
+### error: invalid resource
 
 URI is empty (不确定能不能在client测)
 
@@ -51,7 +53,7 @@ URI not absolute
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri //www.internet.com/
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri about.html
 
-##### error: missing resource (直接发JSON)
+### error: missing resource (直接发JSON)
 
 # SHARE #
 
