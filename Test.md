@@ -38,13 +38,20 @@ URI is empty (不确定能不能在client测)
 
 owner is "*"
 
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri http://www.dubai.com -owner * -debug
+
 URI not official
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri www.melb.com
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri abc
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri 分布式系统
 
 URI not absolute
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri //www.internet.com/
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri about.html
 
-##### error: missing resource
+##### error: missing resource (直接发JSON)
 
 # SHARE #
 
