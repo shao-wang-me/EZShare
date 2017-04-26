@@ -3,8 +3,11 @@
 1. error: invalid command
 2. error: missing or incorrect type for command
 3. success
+
 `java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name website -uri http://www.baidu.com`
+
 `java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name bilibili -uri http://www.bilibili.com -channel `
+
 4. error: invalid resource
 5. error: missing resource
 
