@@ -1,5 +1,7 @@
 # Test
 
+要按照顺序测~
+
 	sunrise.cis.unimelb.edu.au:3780
 
 ## PUBLISH
@@ -38,61 +40,61 @@ URI is empty (不确定能不能在client测)
 
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri -debug
 
-owner is "*"
+owner is "*" (不确定能不能在client测)
 
 	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri http://www.dubai.com -owner * -debug
 
 URI not official
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri www.melb.com
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri abc
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri 分布式系统
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri www.melb.com -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri abc -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri 分布式系统 -debug
 
 URI not absolute
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri //www.internet.com/
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri about.html
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri //www.internet.com/ -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri about.html -debug
 
 ### error: missing resource (直接发JSON)
 
-# SHARE #
+## SHARE
 
-1. error: invalid command
-2. error: missing or incorrect type for command
-3. success
-4. error: cannot share resource
-5. error: incorrect secret
-6. error: missing resource and\/or secret
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success
+### error: cannot share resource
+### error: incorrect secret
+### error: missing resource and\/or secret
 
-# REMOVE #
+## REMOVE
 
-1. error: invalid command
-2. error: missing or incorrect type for command
-3. success
-4. error: cannot remove resource
-5. error: invalid resource
-6. error: missing resource
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success
+### error: cannot remove resource
+### error: invalid resource
+### error: missing resource
 
-# QUERY #
+## QUERY
 
-1. error: invalid command
-2. error: missing or incorrect type for command
-3. success [RESOURCE] resultSize:*
-4. error: invalid resourceTemplate
-5. error: missing resourceTemplate
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success [RESOURCE] resultSize:*
+### error: invalid resourceTemplate
+### error: missing resourceTemplate
 
-# FETCH #
+## FETCH
 
-1. error: invalid command
-2. error: missing or incorrect type for command
-3. success [RESOURCE] resultSize:1
-4. error: invalid resourceTemplate
-5. error: missing resourceTemplate
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success [RESOURCE] resultSize:1
+### error: invalid resourceTemplate
+### error: missing resourceTemplate
 
-# EXCHANGE #
+## EXCHANGE
 
-1. error: invalid command
-2. error: missing or incorrect type for command
-3. success
-4. error: missing resourceTemplate
-5. error: missing or invalid server list
+### error: invalid command (直接发JSON)
+### error: missing or incorrect type for command (直接发JSON)
+### success
+### error: missing resourceTemplate
+### error: missing or invalid server list
