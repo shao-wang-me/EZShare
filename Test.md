@@ -1,31 +1,50 @@
+	sunrise.cis.unimelb.edu.au:3780
+
 ## PUBLISH
 
-#### error: invalid command
-#### error: missing or incorrect type for command
-#### success
+##### error: invalid command (直接发JSON)
+##### error: missing or incorrect type for command (直接发JSON)
+##### success
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name website -uri http://www.baidu.com -debug
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name bilibili -uri http://www.bilibili.com -channel blbl -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "baidu" -uri http://www.baidu.com -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner DF -descrition "Daring Fireball: Markdown Syntax Documentation" -debug
   
-Overwrite:
+overwrite
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name bilibili -uri http://www.bilibili.com -channel blbl -description good website -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -description "bilibili" -debug
 
-#### error: cannot publish resource
+##### error: cannot publish resource
 
-#### resource is a file
+resource is a file
 
-	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri file://users/aaaa.java -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri file://users/abc.java -debug
 
-#### Same channel, same URI, different owner
+same channel, same URI, different owner
 
-`java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name bilibili -uri http://www.bilibili.com -channel blbl -description good website -owner bilibili -debug`
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -description "BILIBILI" -owner bilibili -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner github -descrition "Daring Fireball: Markdown Syntax Documentation" -debug
 
-URI missing:
+URI missing (不确定能不能在client测)
 
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -debug
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -debug
 
-5. error: invalid resource
-6. error: missing resource
+##### error: invalid resource
+
+URI is empty (不确定能不能在client测)
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish -name "bilibili" -uri -debug
+
+owner is "*"
+
+URI not official
+
+URI not absolute
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -publish
+
+##### error: missing resource
 
 # SHARE #
 
