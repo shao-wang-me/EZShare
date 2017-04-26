@@ -62,7 +62,35 @@ URI not absolute
 ### error: invalid command (直接发JSON)
 ### error: missing or incorrect type for command (直接发JSON)
 ### success
+
+找一个电脑上确实有的文件！
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri file://***
+
+overwrite
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri file://*** -name "file"
+
 ### error: cannot share resource
+
+not a file
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri http://baidu.com
+
+same channel, same URI, different owner
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri file://*** -owner shaowang
+
+not pointing to a file on the local file system
+
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri file://users/aaaaaaaaaaaa.txt
+	(Pointing to a directory: Windows only)
+	java -jar client.jar -host 10.13.44.164 -port 20006 -debug -share -uri file://C:/
+
+cannot be read as a file
+
+
+
 ### error: incorrect secret
 ### error: missing resource and\/or secret
 
