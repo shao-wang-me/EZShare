@@ -157,8 +157,8 @@ Owner不对
 ### error: invalid resourceTemplate
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -fetch -uri http://C:/Users/shaow1/Desktop/1.jpeg
-	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -fetch -uri file://C:/Users/shaow1/Desktop/2.jpeg
 	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -fetch -uri http://www.baidu.com
+	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -fetch -uri www.baidu.com
 
 ### error: missing resourceTemplate (直接发JSON)
 
