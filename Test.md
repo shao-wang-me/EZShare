@@ -5,7 +5,7 @@
 	sunrise.cis.unimelb.edu.au:3780
 	sunrise.cis.unimelb.edu.au:3781
 
-	java -jar EZShare.jar -debug -serect 123
+	java -jar EZShare.jar -debug -secret 123
 
 ## PUBLISH
 
