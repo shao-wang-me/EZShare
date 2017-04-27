@@ -38,7 +38,7 @@ public class Function {
 		}
 		return toReturn;
 	}
-	
+
 
 	public static HashMap<Boolean, String> remove(Resource resource, resourceList resourceList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
@@ -46,11 +46,8 @@ public class Function {
 		 * Invalid resource:
 		 * 1. Missing URI;
 		 * 2. Invalid URI;
-		 * 3. Owner = "*";
 		 */
-		if (!resource.uriValid() || resource.getOwner().equals("*")) {
-			toReturn.put(false, "invalid resource");
-		} else {
+		if (resource.isValid() || (!resource.isValid() && resource.getOwner().equals("*"))) {
 			if (resourceList.contains(resource) && resourceList.getSameResource(resource).getOwner().equals(resource.getOwner())) {
 				resourceList.delete(resource);//The remove operation.
 				toReturn.put(true, "success");
@@ -58,10 +55,13 @@ public class Function {
 				/**Cannot remove resource: the resource did not exist.*/
 				toReturn.put(false, "cannot remove resource");
 			}
+
+		} else {
+			toReturn.put(false, "invalid resource");
 		}
 		return toReturn;
 	}
-	
+
 
 	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
@@ -79,10 +79,10 @@ public class Function {
 					(resourceList.contains(resource) && 
 							!resourceList.getSameResource(resource).getOwner().equals(resource.getOwner()))
 					) {
-				toReturn.put(false, "invalid resource");
+				toReturn.put(false, "cannot share resource");
 			} else {
 				File file = new File(resource.getURI().getPath());
-				if (file.canRead()) {
+				if (file.canRead() && !file.isDirectory()) {
 					/**Now we should be able to add or update the resource.*/
 					resourceList.add(resource);
 					toReturn.put(true, "success");
@@ -118,7 +118,7 @@ public class Function {
 			if (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri())) {
 				match = false;
 			}
-			if (!((resource.getDescription().isEmpty() && resource.getName().isEmpty()) || r.getName().contains(resource.getName()) || r.getDescription().contains(resource.getDescription()))) {
+			if (!resource.getDescription().isEmpty() && !resource.getName().isEmpty() && !r.getName().contains(resource.getName()) && !r.getDescription().contains(resource.getDescription())) {
 				match = false;
 			}
 			if (match) {
@@ -135,12 +135,18 @@ public class Function {
 	
 	public static HashMap<Boolean, String> fetch(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
+		toReturn.put(true, null);
 
-		if (resource.isFile() && resource.uriValid()) {
-			toReturn.put(true, resource.getKey());
-		} else {
-			toReturn.put(false, null);
+		for(Resource r: resourceList.getResourceList()){
+			if (r.getChannel().equals(resource.getChannel())&& r.getUri().equals(resource.getUri())){
+				if (resource.isFile() && resource.uriValid()) {
+					toReturn.put(true, resource.getKey());
+				} else {
+					toReturn.put(true, null);
+				}
+			}
 		}
+
 		return toReturn;
 	}
 	

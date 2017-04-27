@@ -142,7 +142,7 @@ public class Resource {
 	
 	public boolean isFile() throws URISyntaxException {
 		URI dummyUri = new URI(uri);
-		System.out.println(dummyUri.getScheme());
+		//System.out.println(dummyUri.getScheme());
 		if (dummyUri.getScheme().equals("file") ){
 			return true;
 		} else {

@@ -29,7 +29,7 @@ public class Server {
 	private String secret = RandomStringUtils.randomAlphanumeric(20);
 	private variable.resourceList resourceList;
 	private variable.serverList serverList;
-	private Boolean debug = true;
+	private Boolean debug = false;
 	
 	public static void main(String[] args)throws Exception{
 		Server server = new Server();
@@ -71,25 +71,19 @@ public class Server {
               //K.put(test.getUri(), V);
               //key = test.getChannel()+","+test.getUri();
               resourceList.add(test);
-             
-             Host h1 = new Host("10.13.111.7", 20006);
-             serverList.add(h1);
-
-             Host h2 = new Host("sunrise.cis.unimelb.edu.au", 3780);
-			 serverList.add(h2);
-           
+			
             
             
 			
 			//build new command line options
 			Options options = new Options();
 			//options.addOption("t", false, "display current time");
-			options.addOption("a", "advertisedhostname",true,"advertised hostname");
-			options.addOption("c", "connectionintervallimit",true,"connection interval limit in seconds");
-			options.addOption("e", "exchangeinterval",true,"exchange interval in seconds");
-			options.addOption("p" ,"port",true,"server port, an integer");
-			options.addOption("s", "secret",true,"secret");
-			options.addOption("d", "debug",false,"print debug information");
+			options.addOption("advertisedhostname",true,"advertised hostname");
+			options.addOption("connectionintervallimit",true,"connection interval limit in seconds");
+			options.addOption("exchangeinterval",true,"exchange interval in seconds");
+			options.addOption("port",true,"server port, an integer");
+			options.addOption("secret",true,"secret");
+			options.addOption("debug",false,"print debug information");
 			
 			
 			
@@ -132,13 +126,16 @@ public class Server {
 			log.info("- using advertised hostname:"+hostname);
 			log.info("- bound to port"+port);
 			log.info("- started");
+			if(debug){
+				log.info("- setting debug on`");
+			}
 			
 			ServerSocket server = new ServerSocket(getPort());
 			
 			//time schedule thread pool
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 			
-			TimerTask timerTask = new TimerTask(serverList, resourceList);
+			TimerTask timerTask = new TimerTask(serverList, resourceList, debug, log);
 			
 			exec.scheduleAtFixedRate(timerTask,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			

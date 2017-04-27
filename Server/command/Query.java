@@ -33,6 +33,10 @@ public class Query
         int resultSize = 0;
         HashMap<Boolean, variable.resourceList> result ;
         Boolean relay = true;
+        resourceList resultList = new resourceList();
+        resultList.initialResourceList();
+
+
         try{
 
             if(root.getAsJsonObject().has("resourceTemplate")
@@ -42,53 +46,50 @@ public class Query
                     JsonObject object = root.getAsJsonObject().get("resourceTemplate").getAsJsonObject();
                     relay = root.getAsJsonObject().get("relay").getAsBoolean();
                     resource = gson.fromJson(object, Resource.class);
+                    if(relay) {
+                        //JSONObject trans = new JSONObject(message);
+                        JsonObject trans = new JsonObject();
+                        trans = root.getAsJsonObject();
+                        trans.remove("relay");
+                        trans.addProperty("relay", false);
+
+                        for (Host host : serverList.getServerList()) {
+                            resourceList tempList = new resourceList();
+                            tempList.initialResourceList();
+                            tempList = Forward.forward(trans.toString(), host, debug, log);
+                            if (tempList.getResourceList().size() != 0) {
+                                for (Resource r : tempList.getResourceList()) {
+                                    resultList.add(r);
+                                }
+                            }
+                        }
+
+
+                    }
+                    result = Function.query(resource,resourceList, h.getHostname(), h.getPort());
+
+                    reply.put("response", "success");
+                    out.writeUTF(reply.toString());
+                    resultSize = resultList.getResourceList().size();
+                    for(Resource entry : result.get(true).getResourceList()){
+                        resultList.add(entry);
+                        resultSize++;
+                    }
+                    if(resultList.getResourceList().size() != 0){
+                        for(Resource entry : resultList.getResourceList()){
+                            String temp = gson.toJson(entry);
+                            out.writeUTF(gson.toJson(entry));
+                            Debug.printDebug('s',temp , debug, log);
+                        }
+                    }
+                    out.writeUTF(new JSONObject().put("resultSize", resultSize).toString());
+                    Debug.printDebug('s',new JSONObject().put("resultSize",resultSize).toString(), debug, log);
+
                 }catch(JsonSyntaxException j){
                     reply.put("response", "error");
                     reply.put("errorMessage", "invalid resourceTemplate");
                     out.writeUTF(reply.toString());
-                    Debug.printDebug('s',reply.toString(), debug , log);
                 }
-
-                resourceList resultList = new resourceList();
-                resultList.initialResourceList();
-                if(relay) {
-                    //JSONObject trans = new JSONObject(message);
-                    JsonObject trans = new JsonObject();
-                    trans = root.getAsJsonObject();
-                    trans.remove("relay");
-                    trans.addProperty("relay", false);
-
-                    for (Host host : serverList.getServerList()) {
-                        resourceList tempList = new resourceList();
-                        tempList.initialResourceList();
-                        tempList = Forward.forward(trans.toString(), host, debug, log);
-                        if (tempList.getResourceList().size() != 0) {
-                            for (Resource r : tempList.getResourceList()) {
-                                resultList.add(r);
-                            }
-                        }
-                    }
-
-
-                }
-                result = Function.query(resource,resourceList, h.getHostname(), h.getPort());
-
-                reply.put("response", "success");
-                out.writeUTF(reply.toString());
-                resultSize = resultList.getResourceList().size();
-                for(Resource entry : result.get(true).getResourceList()){
-                    resultList.add(entry);
-                    resultSize++;
-                }
-                if(resultList.getResourceList().size() != 0){
-                    for(Resource entry : resultList.getResourceList()){
-                        String temp = gson.toJson(entry);
-                        out.writeUTF(gson.toJson(entry));
-                        Debug.printDebug('s',temp , debug, log);
-                    }
-                }
-                out.writeUTF(new JSONObject().put("resultSize", resultSize).toString());
-                Debug.printDebug('s',new JSONObject().put("resultSize",resultSize).toString(), debug, log);
 
 
             }
@@ -119,6 +120,7 @@ public class Query
 
 
     }
+
 
 
 }

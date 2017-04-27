@@ -54,7 +54,7 @@ public class Remove {
                 else{
                     reply.put("response", "error");
                     reply.put("errorMessage", response.get(false));
-                    System.out.println(reply.toString());
+                    //System.out.println(reply.toString());
                 }
 
 

@@ -37,54 +37,62 @@ public class Fetch {
             if(object.has("resourceTemplate")){
                 object = object.get("resourceTemplate").getAsJsonObject();
                 try{
-                    resource = gson.fromJson(object, Resource.class);
+
+                    Resource template = gson.fromJson(object, Resource.class);
+                    if(template != null){
+                        resource.setChannel(template.getChannel());
+                        resource.setUri(template.getUri());
+                    }
+
+                    long fileSize = 0;
+                    response = Function.fetch(resource, resourceList);
+                    if(response.containsKey(true) && response.get(true) != null ){
+                        out.writeUTF(new JSONObject().put("response", "success").toString());
+                        File f = new File(resource.getURI().getPath());
+                        fileSize = f.length();
+
+                        String str = gson.toJson(object);
+                        JSONObject temp = new JSONObject(str);
+                        reply = temp.put("resourceSize", fileSize);
+                        out.writeUTF(reply.toString());
+                        Debug.printDebug('s',reply.toString(), debug,log);
+
+                        //read data from local disk
+                        DataInputStream input = new DataInputStream
+                                (new BufferedInputStream(new FileInputStream(f)));
+                        int bufferSize = (int)fileSize;
+                        byte[] buf = new byte[bufferSize];
+                        int num =0;
+                        //input.read(buf);
+                        //out.write(buf);
+                        //num=input.read(buf);
+                        while((num=input.read(buf))!=-1){
+                            out.write(buf, 0, num);
+                        }
+                        out.flush();
+                        input.close();
+                        Debug.printDebug('s',"File Transfer Success".toString(), debug, log );
+                        out.writeUTF(new JSONObject().put("resultSize", 1).toString());
+                        Debug.printDebug('s',new JSONObject().put("resultSize", 1).toString(), debug, log );
+
+                    }
+                    else{
+                        //reply.put("response", "error");
+                        //reply.put("errorMessage", "invalid resourceTemplate");
+                        //out.writeUTF(reply.toString());
+                        //Debug.printDebug('s',reply.toString(), debug, log );
+                        reply.put("response", "success");
+                        out.writeUTF(reply.toString());
+                        Debug.printDebug('s',reply.toString(), debug, log );
+                        out.writeUTF(new JSONObject().put("resultSize", 0).toString());
+                        Debug.printDebug('s',new JSONObject().put("resultSize", 0).toString(), debug, log );
+
+                    }
                 }catch(JsonSyntaxException j){
                     reply.put("response", "error");
                     reply.put("errorMessage", "invalid resourceTemplate");
-                    out.writeUTF(reply.toString());
-                    Debug.printDebug('s',reply.toString(),debug, log );
-                }						//System.out.println("fetch: "+message);
-                long fileSize = 0;
-                response = Function.fetch(resource, resourceList);
-                System.out.println(resource.getKey()+" "+response);
-                if(response.containsKey(true)){
-                    out.writeUTF(new JSONObject().put("response", "success").toString());
-                    File f = new File(resource.getURI().getPath());
-                    fileSize = f.length();
-
-                    System.out.println(f);
-                    String str = gson.toJson(object);
-                    JSONObject temp = new JSONObject(str);
-                    reply = temp.put("resourceSize", fileSize);
-                    out.writeUTF(reply.toString());
-                    Debug.printDebug('s',reply.toString(), debug,log);
-
-                    System.out.println("after: "+reply.toString());
-
-                    //read data from local disk
-                    DataInputStream input = new DataInputStream
-                            (new BufferedInputStream(new FileInputStream(f)));
-                    int bufferSize = (int)fileSize;
-                    byte[] buf = new byte[bufferSize];
-                    int num =0;
-                    System.out.println(bufferSize);
-                    //input.read(buf);
-                    //out.write(buf);
-                    //num=input.read(buf);
-                    while((num=input.read(buf))!=-1){
-                        System.out.println("num: "+num);
-                        out.write(buf, 0, num);
-                    }
-                    out.flush();
-                    System.out.println("文件发送成功！");
-                    input.close();
-                    out.writeUTF(new JSONObject().put("resultSize", 1).toString());
                 }
-                else{
-                    reply.put("response", "error");
-                    reply.put("errorMessage", "invalid resourceTemplate");
-                    out.writeUTF(reply.toString());
-                }
+
             }
             else{
                 reply.put("response", "error");
@@ -99,16 +107,14 @@ public class Fetch {
 
         }catch(JsonSyntaxException j){
             reply.put("response", "error");
-            reply.put("errorMessage", "missing resourcetemplate");
+            reply.put("errorMessage", "missing resourceTemplate");
             try {
                 out.writeUTF(reply.toString());
-            } catch (IOException e) {
-
-            }finally{
                 Debug.printDebug('s',reply.toString(), debug, log );
 
-            }
+            } catch (IOException e) {
 
+            }
         }catch(Exception e){
 
         }

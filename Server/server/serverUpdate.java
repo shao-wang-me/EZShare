@@ -4,19 +4,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.logging.Logger;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import support.Debug;
 import variable.serverList;
 
 public class serverUpdate {
 	
-	private variable.serverList serverList;
-	serverUpdate(serverList serverList){
-		this.setServerList(serverList);
-	}
 
-	public JSONObject update(String Hostname, int port) {
+	public static JSONObject update(serverList serverList, String Hostname, int port, boolean debug, Logger log) {
 		// TODO Auto-generated method stub
 		
 
@@ -30,17 +29,20 @@ public class serverUpdate {
 			JSONObject result = new JSONObject();
 	        
 	        boolean flag = true;  
-	        while(flag){  
+	        while(flag){
 	            JSONObject temp = new JSONObject();
-	            temp.put("serverList", serverList);
 	            temp.put("command", "EXCHANGE");
+				JSONArray array = new JSONArray(serverList.getServerList());
+				temp.put("serverList", array);
 	            String str = temp.toString();
 	                  
 	            //send exchange command to selected server    
-	            out.writeUTF(str); 
+	            out.writeUTF(str);
+				Debug.printDebug('s',str, debug, log);
 	            try{
-	            	String echo = buf.readUTF(); 
-		            temp = new JSONObject(echo);
+	            	String echo = buf.readUTF();
+					Debug.printDebug('r',str, debug, log);
+					temp = new JSONObject(echo);
 		            if(temp.has("response")){
 		            	result = temp;
 		            	flag = false;
@@ -48,9 +50,11 @@ public class serverUpdate {
 	            	
 	            }catch(SocketTimeoutException f){
 	                JSONObject error = new JSONObject();
-	                error.put("errorMessage", "Timeout");
+	                error.put("errorMessage", "Exchange Timeout");
 	                error.put("response", "error");
 	    			result = error;
+	    			flag = false;
+
 	            }
 	            
 	        }
@@ -62,7 +66,7 @@ public class serverUpdate {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
             JSONObject error = new JSONObject();
-            error.put("errorMessage", "Timeout");
+            error.put("errorMessage", "Exchange Timeout");
             error.put("response", "error");
 			return error;
 		}
@@ -70,13 +74,7 @@ public class serverUpdate {
 		
 	}
 
-	public serverList getServerList() {
-		return serverList;
-	}
 
-	public void setServerList(serverList serverList) {
-		this.serverList = serverList;
-	}
 	
 	
 

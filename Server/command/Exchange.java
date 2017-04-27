@@ -28,13 +28,15 @@ public class Exchange {
         ArrayList<String> list = new ArrayList<String>();
         JSONObject reply = new JSONObject();
         Gson gson = new Gson();
-        HashMap<Boolean, String> response ;
+        HashMap<Boolean, String> response = new HashMap<Boolean, String>();
 
         try{
             if(root.getAsJsonObject().has("serverList")){
                 JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
                 Host[] host = gson.fromJson(array, Host[].class);
-                response = Function.exchange(serverList, host);
+                if(host.length != 0){
+                    response = Function.exchange(serverList, host);
+                }
                 //System.out.println("exchange: "+host[0].getHostname());
                 if(response.containsKey(true)){
                     reply.put("response", "success");
@@ -64,8 +66,17 @@ public class Exchange {
             } catch (IOException e) {
 
             }
-        }catch(Exception e){
+        }catch(IllegalStateException i){
+            reply.put("response", "error");
+            reply.put("errorMessage", "missing or invalid serverList");
+            try {
+                out.writeUTF(reply.toString());
+                Debug.printDebug('s',reply.toString(), debug, log );
+            } catch (IOException e) {
 
+            }
+        }
+        catch(Exception e){
         }
     }
 }

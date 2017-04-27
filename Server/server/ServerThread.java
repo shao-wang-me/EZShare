@@ -81,7 +81,7 @@ public class ServerThread implements Runnable {
 					String str = buf.readUTF();
 					Debug.printDebug('r',str, debug, log);
 
-					if(str == null || "".equals(str)){
+					if(str == null ){
 						flag = false ;
 					}
 					else{

@@ -5,14 +5,20 @@ import variable.Host;
 import variable.resourceList;
 import variable.serverList;
 
+import java.util.logging.Logger;
+
 public class TimerTask implements Runnable{
 	
-	private variable.serverList serverList;
-	private variable.resourceList resourceList;
+	private serverList serverList;
+	private resourceList resourceList;
+	private boolean debug ;
+	private Logger log;
 	
-	public TimerTask(serverList serverList, resourceList resourceList){
+	public TimerTask(serverList serverList, resourceList resourceList, boolean debug, Logger log){
 		this.resourceList = resourceList;
 		this.serverList = serverList;
+		this.debug = debug;
+		this.log = log;
 	}
 	
 	@Override
@@ -24,8 +30,7 @@ public class TimerTask implements Runnable{
 	        Host h = serverList.getServerList().get(index);
 	        //send exchange command to it 
 	        JSONObject update = new JSONObject();
-	        serverUpdate s =  new serverUpdate(serverList);
-	        update = s.update(h.getHostname(), h.getPort());
+	        update = serverUpdate.update(serverList, h.getHostname(), h.getPort(), debug, log);
 	        if(update.getString("response").equals("error")){
 	        	serverList.delete(h);
 	        }

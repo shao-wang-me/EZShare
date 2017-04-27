@@ -70,6 +70,9 @@ public class Forward {
             }catch(SocketTimeoutException t){
                 return r;
             }
+            catch(Exception t){
+                return r;
+            }
             finally{
                 forward.close();
                 in.close();
