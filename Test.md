@@ -5,6 +5,8 @@
 	sunrise.cis.unimelb.edu.au:3780
 	sunrise.cis.unimelb.edu.au:3781
 
+	java -jar EZShare.jar -debug -serect 123
+
 ## PUBLISH
 
 ### error: invalid command (直接发JSON)
@@ -13,7 +15,7 @@
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "baidu" -uri http://www.baidu.com -debug
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -debug
-	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner DF -descrition "Daring Fireball: Markdown Syntax Documentation" -debug
+	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner DF -description "Daring Fireball: Markdown Syntax Documentation" -debug
   
 overwrite
 
@@ -28,20 +30,20 @@ resource is a file
 same channel, same URI, different owner
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "bilibili" -uri http://www.bilibili.com -channel carton -description "BILIBILI" -owner bilibili -debug
-	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner github -descrition "Daring Fireball: Markdown Syntax Documentation" -debug
+	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -uri http://daringfireball.net/projects/markdown/syntax -channel markdown -owner github -description "Daring Fireball: Markdown Syntax Documentation" -debug
 
-URI missing (不确定能不能在client测)
+URI missing
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "bilibili" -debug
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "bilibili" -debug
 
 ### error: invalid resource
 
-URI is empty (不确定能不能在client测)
+URI is empty (直接发JSON)
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -name "bilibili" -uri -debug
 
-owner is "*" (不确定能不能在client测)
+owner is "*" (直接发JSON)
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -publish -uri http://www.dubai.com -owner * -debug
 
@@ -93,7 +95,7 @@ not pointing to a file on the local file system
 cannot be read as a file
 找一个没有权限打开的文件，如：其他用户的文件 / Lab电脑上面的Users/config文件夹
 
-	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -share -secret 123 -uri file://C:Users/Test/abc.java
+	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -share -secret 123 -uri file://C:/Users/Test/abc.java
 
 ### error: invalid resource
 
@@ -103,7 +105,7 @@ cannot be read as a file
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -share -uri file://C:/Users/shaow1/Desktop/1.jpeg -secret 12313123
 
-### error: missing resource and\/or secret (可能要直接发JSON)
+### error: missing resource and\/or secret (直接发JSON)
 
 	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -share -uri file://C:/Users/shaow1/Desktop/1.jpeg
 	java -jar client.jar -host 10.13.126.138 -port 20006 -debug -share -secret 123
