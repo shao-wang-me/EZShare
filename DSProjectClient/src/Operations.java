@@ -1,10 +1,10 @@
-import java.io.*;
-import java.net.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.cli.*;
 import org.json.*;
+
 public class Operations {
 	
 	private static String getName(CommandLine cmd) {
@@ -104,8 +104,7 @@ public class Operations {
 		
 		sentJSON.put("command", "PUBLISH");
 		sentJSON.put("resource", resource);
-		System.out.println(sentJSON.toString());
-		c.sendJSON(sentJSON,cmd.hasOption("debug"));
+		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 		
 		
 	}
@@ -117,7 +116,7 @@ public class Operations {
 		sentJSON.put("resourceTemplate", resource);
 		sentJSON.put("relay", true);
 		sentJSON.put("command", "QUERY");
-		c.sendJSON(sentJSON,cmd.hasOption("debug"));
+		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
 	public static void Remove(CommandLine cmd,Client c) throws JSONException {
@@ -126,7 +125,7 @@ public class Operations {
 		
 		sentJSON.put("command", "REMOVE");
 		sentJSON.put("resource", resource);
-		c.sendJSON(sentJSON,cmd.hasOption("debug"));
+		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
 	public static void Share(CommandLine cmd,Client c) throws JSONException {
@@ -135,7 +134,7 @@ public class Operations {
 		sentJSON.put("command", "SHARE");
 		sentJSON.put("secret", getSecret(cmd));
 		sentJSON.put("resource", resource);
-		c.sendJSON(sentJSON,cmd.hasOption("debug"));
+		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
 	public static void Fetch(CommandLine cmd,Client c) throws JSONException {
@@ -143,10 +142,10 @@ public class Operations {
 		JSONObject resource = getResource(cmd);
 		sentJSON.put("command", "FETCH");
 		sentJSON.put("resourceTemplate", resource);
-		c.fetch(sentJSON);
+		c.fetch(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
-	public static void Exchange(CommandLine cmd,Client c) throws JSONException {
+	public static void Exchange(CommandLine cmd,Client c) throws JSONException,ArrayIndexOutOfBoundsException {
 		JSONObject sentJSON = new JSONObject("{}");
 		List<JSONObject> servers = new ArrayList<JSONObject>();
 		String serverInfo = getServers(cmd);
@@ -161,6 +160,13 @@ public class Operations {
 		}
 		sentJSON.put("command", "EXCHANGE");
 		sentJSON.put("serverList", servers);
-		c.sendJSON(sentJSON,cmd.hasOption("debug"));
+		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
+	}
+	public static String getCurrentTime() {
+		long millis = System.currentTimeMillis();
+		Date now = new Date(millis); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String time = dateFormat.format(now);
+		return time + "." + millis % 1000;
 	}
 }
