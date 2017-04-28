@@ -32,19 +32,21 @@ public class Query
         Gson gson = new Gson();
         int resultSize = 0;
         HashMap<Boolean, variable.resourceList> result ;
-        Boolean relay = true;
+        Boolean relay = false;
         resourceList resultList = new resourceList();
         resultList.initialResourceList();
 
 
         try{
 
-            if(root.getAsJsonObject().has("resourceTemplate")
-                    && root.getAsJsonObject().has("relay")){
+            if(root.getAsJsonObject().has("resourceTemplate")){
                 //resource check
+
                 try{
                     JsonObject object = root.getAsJsonObject().get("resourceTemplate").getAsJsonObject();
-                    relay = root.getAsJsonObject().get("relay").getAsBoolean();
+                    if(root.getAsJsonObject().has("relay")){
+                        relay = root.getAsJsonObject().get("relay").getAsBoolean();
+                    }
                     resource = gson.fromJson(object, Resource.class);
                     if(relay) {
                         //JSONObject trans = new JSONObject(message);

@@ -127,7 +127,7 @@ public class Server {
 			log.info("- bound to port"+port);
 			log.info("- started");
 			if(debug){
-				log.info("- setting debug on`");
+				log.info("- setting debug on");
 			}
 			
 			ServerSocket server = new ServerSocket(getPort());
