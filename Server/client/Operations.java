@@ -98,7 +98,7 @@ public class Operations {
 	
 	//The first version, all the msgs received from servers will be 
 	//printed out on the console
-	public static void Publish(CommandLine cmd,Client c) throws JSONException {
+	public static void Publish(CommandLine cmd,clientObject c) throws JSONException {
 		
 		
 		JSONObject sentJSON = new JSONObject("{}");
@@ -111,7 +111,7 @@ public class Operations {
 		
 	}
 	
-	public static void Query(CommandLine cmd,Client c) throws JSONException {
+	public static void Query(CommandLine cmd,clientObject c) throws JSONException {
 		JSONObject sentJSON = new JSONObject("{}");
 		JSONObject resource = getResource(cmd);
 		
@@ -121,7 +121,7 @@ public class Operations {
 		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
-	public static void Remove(CommandLine cmd,Client c) throws JSONException {
+	public static void Remove(CommandLine cmd,clientObject c) throws JSONException {
 		JSONObject sentJSON = new JSONObject("{}");
 		JSONObject resource = getResource(cmd);
 		
@@ -130,7 +130,7 @@ public class Operations {
 		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
-	public static void Share(CommandLine cmd,Client c) throws JSONException {
+	public static void Share(CommandLine cmd,clientObject c) throws JSONException {
 		JSONObject sentJSON = new JSONObject("{}");
 		JSONObject resource = getResource(cmd);
 		sentJSON.put("command", "SHARE");
@@ -139,7 +139,7 @@ public class Operations {
 		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
-	public static void Fetch(CommandLine cmd,Client c) throws JSONException {
+	public static void Fetch(CommandLine cmd,clientObject c) throws JSONException {
 		JSONObject sentJSON = new JSONObject("{}");
 		JSONObject resource = getResource(cmd);
 		sentJSON.put("command", "FETCH");
@@ -147,7 +147,7 @@ public class Operations {
 		c.fetch(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
 	
-	public static void Exchange(CommandLine cmd,Client c) throws JSONException,ArrayIndexOutOfBoundsException {
+	public static void Exchange(CommandLine cmd,clientObject c) throws JSONException,ArrayIndexOutOfBoundsException {
 		JSONObject sentJSON = new JSONObject("{}");
 		List<JSONObject> servers = new ArrayList<JSONObject>();
 		String serverInfo = getServers(cmd);
