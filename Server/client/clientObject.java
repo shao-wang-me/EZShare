@@ -20,7 +20,7 @@ public class clientObject {
 		LogFormatter formatter = new LogFormatter();
        ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(formatter);
-		Logger logIni = Logger.getLogger(Main.class.getName());
+		Logger logIni = Logger.getLogger(Client.class.getName());
 		logIni.setUseParentHandlers(false);
 		logIni.setLevel(Level.INFO);
 		logIni.info("setting debug on");
@@ -38,7 +38,7 @@ public class clientObject {
         ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(formatter);
         
-		Logger log = Logger.getLogger(Main.class.getName());
+		Logger log = Logger.getLogger(Client.class.getName());
 		log.setUseParentHandlers(false);
 		log.addHandler(handler);
 		log.setLevel(Level.FINE);
