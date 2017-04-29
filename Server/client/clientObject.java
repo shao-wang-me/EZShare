@@ -45,26 +45,24 @@ public class clientObject {
 		this.log = log;
 	}
 	
+	//Given the situation that in client side, all the operations except fetch are almost the same. So, 
+	//we can just implement these functions with one method
 	public void sendJSON(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
 		try {
-			
 			DataInputStream input = new DataInputStream(s.getInputStream());
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
 
 			if (ifDebug) {
-				//log.info(j.getString("command").toLowerCase() + "ing to " + host + ":" + port);
 				log.info("SENT:" + j.toString());
-
 			}
-			
 			output.writeUTF(j.toString());
 			output.flush();
-			
-			
 
 			String message = "";
 			long startTime = System.currentTimeMillis();
 			long currentTime = 0;
+			
+			//Setting a time limit of 5 mins, and keep receiving msgs from the server 
 			while ((currentTime = System.currentTimeMillis()) - startTime <= 5*60*1000) {
 				JSONObject msgGet = null;
 				if (input.available() > 0) {
@@ -93,7 +91,6 @@ public class clientObject {
 			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (IOException e) {
-			//Do something
 			System.out.println(e.getMessage());
 			System.exit(-1);
 		} 
@@ -111,7 +108,6 @@ public class clientObject {
 				log.info("fetching from " + host + ":" + port);
 				log.info("SENT:" + j.toString());
 			}
-
 			output.writeUTF(j.toString());
 			output.flush();
 
@@ -129,7 +125,6 @@ public class clientObject {
 				}
 
 				// fetch the file using the uri and resource size
-
 				if (msgGet != null && msgGet.has("resourceSize")) {
 					resourceSize = msgGet.getInt("resourceSize");
 					if (Runtime.getRuntime().maxMemory() < resourceSize) {
@@ -141,29 +136,29 @@ public class clientObject {
 					String filename = uri.split("/")[uri.split("/").length - 1];
 					
 					int bytesRead = 0;
-				    int current = 0;
+				        int current = 0;
 					
 					byte [] mybytearray  = new byte [resourceSize];
 					File file = new File(filename);
 					if(!file.exists())
 						file.createNewFile();
-				      InputStream is = s.getInputStream();
-				      FileOutputStream fos = new FileOutputStream(file);
-				      BufferedOutputStream bos = new BufferedOutputStream(fos);
-				      bytesRead = is.read(mybytearray,0,mybytearray.length);
-				      current = bytesRead;
+				        InputStream is = s.getInputStream();
+				        FileOutputStream fos = new FileOutputStream(file);
+				        BufferedOutputStream bos = new BufferedOutputStream(fos);
+				        bytesRead = is.read(mybytearray,0,mybytearray.length);
+				        current = bytesRead;
 
-				      do {
-				         bytesRead =
+				        do {
+				            bytesRead =
 				            is.read(mybytearray, current, (mybytearray.length-current));
-				         if(bytesRead >= 0) current += bytesRead;
-				      } while(bytesRead > 0);
+				            if(bytesRead >= 0) current += bytesRead;
+				        } while(bytesRead > 0);
 
-				      bos.write(mybytearray, 0 , current);
-				      bos.flush();
+				        bos.write(mybytearray, 0 , current);
+				        bos.flush();
 		
-				      if (fos != null) fos.close();
-				      if (bos != null) bos.close();
+				        if (fos != null) fos.close();
+				        if (bos != null) bos.close();
 				    
 				} else if (msgGet != null && msgGet.has("resultSize")) {
 					break;
