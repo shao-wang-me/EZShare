@@ -146,7 +146,6 @@ public class Function {
 		return toReturn;
 	}
 	
-	//TODO what is "missing resourceTemplate"
 	public static HashMap<Boolean, String> exchange(serverList serverList, Host[] host) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Host h : host) {
