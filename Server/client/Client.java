@@ -67,6 +67,7 @@ public class Client {
 			System.out.println("-share                share resource on server");
 			System.out.println("-tags <args>          resource tags, tag1,tag2,tag3,...");
 			System.out.println("-uri <args>           resource URI");
+			System.exit(0);
 		}
 		
 		if (cmd.hasOption("host")) {
