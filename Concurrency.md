@@ -2,11 +2,11 @@
 
 ## 3.1 Concurrency Challenge
 
-Concurrency means that "any object that represents a shared resource in a distributed system must be responsible for ensuring that it operates correctly in a concurrent environment". **(Cite the book!)**
+Concurrency means that "any object that represents a shared resource in a distributed system must be responsible for ensuring that it operates correctly in a concurrent environment" (Coulouris, Dollimore, and Kindberg). 
 
 Subject to the protocol, the concurrency challenge mainly occurs when several commands are processed simultaneously on a server, the data of resource and resourceList need to be concurrent.
 
-**An Example: Race Condition**
+**An Example: *Race Condition***
 
 A simplified process of PUBLISH is:
 
@@ -30,8 +30,14 @@ Moreover, if the system supports more advanced features, such as *file replicati
 
 ## 3.2 Revisions to Protocol
 
-Concurrency is closely related to system performance. In current protocol, if many clients connect to a single server (e.g., sunrise.cis.unimelb.edu.au:3781). The cost of ensuring concurrency could be high. Supporting more advanced features (e.g., *file replication*, *distributed transactions*) can improve the performance.
+Concurrency is closely related to system performance. In current protocol, if many clients connect to a single server (e.g., `sunrise.cis.unimelb.edu.au:3781`). The cost of ensuring concurrency could be high. Supporting more advanced features (e.g., *file replication*, *distributed transactions*) can improve the performance.
 
-As for concurrency control. All 'write' commands, i.e., PUBLISH, SHARE, REMOVE, all requires small system resource to process, the possibility of conflict is rather low too, so *optimistic concurrency control* is suitable.
+As for concurrency control. All 'write' commands, i.e., PUBLISH, SHARE, REMOVE, all requires small system resource to process, the possibility of conflict is rather low too, so *optimistic concurrency control* is suitable (Haritsa, Carey, and Livny).
 
 Files stored on the server machine could be manually deleted. Therefore, the resource URI is pointing to an invalid file. We can lock the file to avoid such situation.
+
+# References
+
+Coulouris, George F., Jean Dollimore, and Tim Kindberg. Distributed Systems: Concepts and Design. pearson education, 2005. Print.
+
+Haritsa, Jayant R., Michael J. Carey, and Miron Livny. “Dynamic Real-Time Optimistic Concurrency Control.” Real-Time Systems Symposium, 1990. Proceedings., 11th. IEEE, 1990. 94–103. Print.
