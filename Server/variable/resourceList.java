@@ -14,7 +14,6 @@ public class resourceList {
 		} else {
 			Resource sameResource = getSameResource(r);
 			if (r.getOwner().equals(sameResource.getOwner())) {
-				break;
 			} else {
 				resourceList.remove(sameResource);
 				resourceList.add(r);
