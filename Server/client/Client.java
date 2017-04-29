@@ -13,10 +13,10 @@ import org.json.*;
 public class Client {
 
 	public static void main(String[] args) throws JSONException {
-		Integer serverPort = 10000;
-		String serverIP = "localhost";
 		
-
+		//This is the default host host and port number
+		Integer serverPort = 20006;
+		String serverIP = "localhost";
 
 		Options option = new Options();
 		option.addOption("channel", true, "channel");
@@ -41,7 +41,6 @@ public class Client {
 		CommandLine cmd = null;
 
 		try {
-			// get the host name and port number
 			cmd = parser.parse(option, args);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
@@ -58,22 +57,18 @@ public class Client {
 		clientObject c = new clientObject(serverIP, serverPort);
 
 		if (cmd.hasOption("publish")) {
-			// publish command
 			try {
 				Operations.Publish(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
 		}
 
 		if (cmd.hasOption("query")) {
-			// publish command
 			try {
 				Operations.Query(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -83,7 +78,6 @@ public class Client {
 			try {
 				Operations.Remove(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -93,7 +87,6 @@ public class Client {
 			try {
 				Operations.Share(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -103,7 +96,6 @@ public class Client {
 			try {
 				Operations.Fetch(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -113,7 +105,6 @@ public class Client {
 			try {
 				Operations.Exchange(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			} catch (ArrayIndexOutOfBoundsException e) {
