@@ -138,7 +138,7 @@ public class Function {
 			if (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri())) {
 				match = false;
 			}
-			if (!(resource.getName().isEmpty && resource.getDescription().isEmpty())) {
+			if (!(resource.getName().isEmpty() && resource.getDescription().isEmpty())) {
 				if (!r.getName().contains(resource.getName())) {
 					match = false;
 				}
@@ -151,7 +151,7 @@ public class Function {
 						r.getName(), r.getDescription(), r.getTags(),r.getUri(),
 						r.getChannel(), "*", hostname+":"+port);
 				//Except public (owner), owner is shown as "*".
-				if (!r.getOwner().isEmpty) {
+				if (!r.getOwner().isEmpty()) {
 					temp.setOwner("*");
 				}
 				resourceListFiltered.add(temp);
