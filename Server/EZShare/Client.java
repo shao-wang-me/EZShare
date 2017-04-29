@@ -7,20 +7,21 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import client.Operations;
-import client.clientObject;
 import org.apache.commons.cli.*;
 import org.json.*;
 
 public class Client {
 
 	public static void main(String[] args) throws JSONException {
-		Integer serverPort = 10000;
+		
+		//This is the default host host and port number
+		Integer serverPort = 20006;
 		String serverIP = "localhost";
 		
-
+		HelpFormatter formatter = new HelpFormatter();
 
 		Options option = new Options();
+		option.addOption("h","help",false,"help documentation");
 		option.addOption("channel", true, "channel");
 		option.addOption("debug", false, "print debug information");
 		option.addOption("description", true, "resource description");
@@ -43,13 +44,17 @@ public class Client {
 		CommandLine cmd = null;
 
 		try {
-			// get the host name and port number
 			cmd = parser.parse(option, args);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
-
+		
+		if (cmd.hasOption("help") || cmd.hasOption("h")) { 
+			    formatter.printHelp("Help Documentation",option);
+			    System.exit(0);
+		}
+		
 		if (cmd.hasOption("host")) {
 			serverIP = cmd.getOptionValue("host");
 		}
@@ -60,22 +65,18 @@ public class Client {
 		clientObject c = new clientObject(serverIP, serverPort);
 
 		if (cmd.hasOption("publish")) {
-			// publish command
 			try {
 				Operations.Publish(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
 		}
 
 		if (cmd.hasOption("query")) {
-			// publish command
 			try {
 				Operations.Query(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -85,7 +86,6 @@ public class Client {
 			try {
 				Operations.Remove(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -95,7 +95,6 @@ public class Client {
 			try {
 				Operations.Share(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -105,7 +104,6 @@ public class Client {
 			try {
 				Operations.Fetch(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
@@ -115,7 +113,6 @@ public class Client {
 			try {
 				Operations.Exchange(cmd, c);
 			} catch (JSONException e) {
-				// Do something
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			} catch (ArrayIndexOutOfBoundsException e) {
