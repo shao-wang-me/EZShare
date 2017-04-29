@@ -118,7 +118,7 @@ public class Function {
 			if (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri())) {
 				match = false;
 			}
-			if (!resource.getDescription().isEmpty() && !resource.getName().isEmpty() && !r.getName().contains(resource.getName()) && !r.getDescription().contains(resource.getDescription())) {
+			if (!((resource.getDescription().isEmpty() && resource.getName().isEmpty()) || r.getName().contains(resource.getName()) || r.getDescription().contains(resource.getDescription()))) {
 				match = false;
 			}
 			if (match) {
