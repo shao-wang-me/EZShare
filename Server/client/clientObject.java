@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.*;
+
+import EZShare.Client;
 import support.LogFormatter;
 
 
@@ -15,7 +17,7 @@ public class clientObject {
 	private Socket s = null;
 	private Logger log = null;
 
-	clientObject(String serverIP, int serverPort) {
+	public clientObject(String serverIP, int serverPort) {
 		this.setLog();
 		LogFormatter formatter = new LogFormatter();
        ConsoleHandler handler = new ConsoleHandler();
