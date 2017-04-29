@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import org.apache.commons.cli.*;
 import org.json.*;
 
+import client.*;
+
 public class Client {
 
 	public static void main(String[] args) throws JSONException {
