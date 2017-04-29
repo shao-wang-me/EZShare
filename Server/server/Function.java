@@ -11,10 +11,17 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-/** This class contains static methods handling each type of command. */
+/**
+ * This class contains static methods handling each type of command.
+ */
 public class Function {
-
-	/* publish */
+	
+	/**
+	 * @param resource dummy resource represents JSON resource information
+	 * @param resourceList server maintained resourceList
+	 * @return success or error information, and the error message if applicable
+	 * @throws URISyntaxException
+	 */
 	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -41,7 +48,11 @@ public class Function {
 		return toReturn;
 	}
 
-
+	/**
+	 * @param resource dummy resource represents JSON resource information
+	 * @param resourceList server maintained resourceList
+	 * @return success or error information, and the error message if applicable
+	 */
 	public static HashMap<Boolean, String> remove(Resource resource, resourceList resourceList) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		/**
@@ -64,7 +75,12 @@ public class Function {
 		return toReturn;
 	}
 
-
+	/**
+	 * @param resource dummy resource represents JSON resource information
+	 * @param resourceList server maintained resourceList
+	 * @return success or error information, and the error message if applicable
+	 * @throws URISyntaxException
+	 */
 	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
@@ -95,8 +111,14 @@ public class Function {
 		}
 		return toReturn;
 	}
-	
 
+	/** 
+	 * @param resource dummy resource represents JSON resource information
+	 * @param resourceList server maintained resourceList
+	 * @param hostname host
+	 * @param port
+	 * @return resources that meet the query requirement
+	 */
 	public static HashMap<Boolean, resourceList> query(Resource resource, resourceList resourceList,
 			String hostname, int port)	{
 		resourceList resourceListFiltered = new resourceList();
@@ -128,15 +150,23 @@ public class Function {
 				Resource temp = new Resource(
 						r.getName(), r.getDescription(), r.getTags(),r.getUri(),
 						r.getChannel(), "*", hostname+":"+port);
-				temp.setOwner("*");
+				//Except public (owner), owner is shown as "*".
+				if (!r.getOwner().isEmpty) {
+					temp.setOwner("*");
+				}
 				resourceListFiltered.add(temp);
 			}
 		}
 		toReturn.put(true, resourceListFiltered);
-		
 		return toReturn;
 	}
-	
+
+	/**
+	 * @param resource dummy resource represents JSON resource information
+	 * @param resourceList server maintained resourceList
+	 * @return success or error information. And primary key of the resource if found, or null if not found.
+	 * @throws URISyntaxException
+	 */
 	public static HashMap<Boolean, String> fetch(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		toReturn.put(true, null);
@@ -153,7 +183,13 @@ public class Function {
 
 		return toReturn;
 	}
-	
+
+	/**
+	 * 
+	 * @param serverList system maintained serverList
+	 * @param host received new host
+	 * @return success or error information, and the error message if applicable
+	 */
 	public static HashMap<Boolean, String> exchange(serverList serverList, Host[] host) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Host h : host) {
@@ -178,4 +214,3 @@ public class Function {
 	}
 	
 }
-
