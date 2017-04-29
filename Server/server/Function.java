@@ -114,13 +114,19 @@ public class Function {
 			if (!resource.getUri().isEmpty() && !r.getUri().equals(resource.getUri())) {
 				match = false;
 			}
-			if (!((resource.getDescription().isEmpty() && resource.getName().isEmpty()) || r.getName().contains(resource.getName()) || r.getDescription().contains(resource.getDescription()))) {
-				match = false;
+			if (!(resource.getName().isEmpty && resource.getName().isEmpty())) {
+				if (!r.getName().contains(resource.getName())) {
+					match = false;
+				}
+				if (!r.getDescription().contains(resource.getDescription())) {
+					match = false;
+				}
 			}
 			if (match) {
 				Resource temp = new Resource(
 						r.getName(), r.getDescription(), r.getTags(),r.getUri(),
 						r.getChannel(), "*", hostname+":"+port);
+				temp.setOwner("*");
 				resourceListFiltered.add(temp);
 			}
 		}
