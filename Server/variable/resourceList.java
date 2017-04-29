@@ -12,8 +12,13 @@ public class resourceList {
 		if (!contains(r)) {
 			resourceList.add(r);
 		} else {
-			resourceList.remove(getSameResource(r));
-			resourceList.add(r);
+			Resource sameResource = getSameResource(r);
+			if (r.getOwner().equals(sameResource.getOwner())) {
+				break;
+			} else {
+				resourceList.remove(sameResource);
+				resourceList.add(r);
+			}
 		}
 	}
 	
