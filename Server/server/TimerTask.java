@@ -7,6 +7,13 @@ import variable.serverList;
 
 import java.util.logging.Logger;
 
+/**
+ * Created by xutianyu on 4/25/17.
+ * Server list  update  class
+ * test a random server from server list every interval
+ *
+ */
+
 public class TimerTask implements Runnable{
 	
 	private serverList serverList;

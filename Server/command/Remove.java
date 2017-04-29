@@ -20,6 +20,9 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * @JsonElement root, DataOutputStream out, resourceList resourceList,
+        serverList serverList, Host h, boolean debug , Logger log
+ * remove operation
  */
 public class Remove {
 
@@ -45,18 +48,14 @@ public class Remove {
                     out.writeUTF(reply.toString());
                     Debug.printDebug('s',reply.toString(), debug,log );
                 }
-                //System.out.println("remove: "+message);
                 response = Function.remove(resource, resourceList);
-                //out.writeUTF(response.toString());
                 if(response.containsKey(true)){
                     reply.put("response", "success");
                 }
                 else{
                     reply.put("response", "error");
                     reply.put("errorMessage", response.get(false));
-                    //System.out.println(reply.toString());
                 }
-
 
             }
             else{

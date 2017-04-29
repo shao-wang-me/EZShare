@@ -2,10 +2,17 @@ package variable;
 
 import java.util.ArrayList;
 
+/**
+ * Created by xutianyu on 4/25/17.
+ * server list object
+ * used for store servers & keep concurrency
+ */
+
+
 public class serverList {
 	
 	private Host hostTemplate ;
-	private ArrayList<Host> serverList;
+	private volatile ArrayList<Host> serverList;
 	
 	public void initialserverList(){
 		ArrayList<Host> serverList = new ArrayList<Host>();

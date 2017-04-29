@@ -4,7 +4,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
- 
+
+/**
+ * Created by xutianyu on 4/25/17.
+ * log  class
+ * set Log journal
+ *
+ */
 
 public class LogFormatter extends Formatter {
     // Create a DateFormat to format the logger timestamp.

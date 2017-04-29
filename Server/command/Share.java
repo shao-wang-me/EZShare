@@ -19,6 +19,9 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * @ JsonElement root, DataOutputStream out, resourceList resourceList,
+    serverList serverList, Host h, boolean debug , Logger log, String secret
+ * share operation
  */
 public class Share {
 
@@ -31,12 +34,15 @@ public class Share {
         try{
             if(root.getAsJsonObject().has("resource") && root.getAsJsonObject().has("secret")){
                 String str = root.getAsJsonObject().get("secret").getAsString();
+
+                // check secret
                 if(str.equals(secret)){
                     try{
                         JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
                         resource = gson.fromJson(object, Resource.class);
-                        //System.out.println("share: "+message);
                         response = Function.share(resource, resourceList);
+
+                        // share result check & print
                         if(response.containsKey(true)){
                             reply.put("response", "success");
                         }
@@ -45,11 +51,13 @@ public class Share {
                             reply.put("errorMessage", response.get(false));
                         }
                     }catch(JsonSyntaxException j){
+                        // json parse error
                         reply.put("response", "error");
                         reply.put("errorMessage", "missing resource and/or secret");
                     }
                 }
                 else{
+                    // secret error
                     reply.put("response", "error");
                     reply.put("errorMessage", "incorrect secret");
                 }
@@ -63,6 +71,7 @@ public class Share {
         }catch(IOException i){
 
         }catch(JsonSyntaxException j){
+            // json parse error
             reply.put("response", "error");
             reply.put("errorMessage", "missing resource and\\/or secret");
             try {

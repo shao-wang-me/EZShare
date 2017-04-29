@@ -19,6 +19,10 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * @ param JsonElement root, DataOutputStream out, resourceList resourceList,
+ *         serverList serverList, Host h, boolean debug , Logger log
+ * @ exchange operation
+ *
  */
 public class Exchange {
 
@@ -30,6 +34,7 @@ public class Exchange {
         Gson gson = new Gson();
         HashMap<Boolean, String> response = new HashMap<Boolean, String>();
 
+        // exchange received server list with own server list
         try{
             if(root.getAsJsonObject().has("serverList")){
                 JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
@@ -58,6 +63,7 @@ public class Exchange {
         }catch(IOException i){
 
         }catch(JsonSyntaxException j){
+            //parse json error
             reply.put("response", "error");
             reply.put("errorMessage", "missing or invalid serverList");
             try {
@@ -67,6 +73,8 @@ public class Exchange {
 
             }
         }catch(IllegalStateException i){
+
+            // json array parse error
             reply.put("response", "error");
             reply.put("errorMessage", "missing or invalid serverList");
             try {

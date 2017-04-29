@@ -19,6 +19,10 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * @ param JsonElement root, DataOutputStream out, resourceList resourceList,
+ serverList serverList, Host h, boolean debug , Logger log
+ *  fetch operation
+ *
  */
 public class Fetch {
 
@@ -34,6 +38,7 @@ public class Fetch {
         try{
             JsonObject object = root.getAsJsonObject();
 
+            // parse json message
             if(object.has("resourceTemplate")){
                 object = object.get("resourceTemplate").getAsJsonObject();
                 try{
@@ -43,9 +48,11 @@ public class Fetch {
                         resource.setChannel(template.getChannel());
                         resource.setUri(template.getUri());
                     }
-
+                    // check whether it is valid or not
                     long fileSize = 0;
                     response = Function.fetch(resource, resourceList);
+
+                    // If resource valid， start transmitting
                     if(response.containsKey(true) && response.get(true) != null ){
                         out.writeUTF(new JSONObject().put("response", "success").toString());
                         File f = new File(resource.getURI().getPath());
@@ -77,10 +84,7 @@ public class Fetch {
 
                     }
                     else{
-                        //reply.put("response", "error");
-                        //reply.put("errorMessage", "invalid resourceTemplate");
-                        //out.writeUTF(reply.toString());
-                        //Debug.printDebug('s',reply.toString(), debug, log );
+                        // query no result
                         reply.put("response", "success");
                         out.writeUTF(reply.toString());
                         Debug.printDebug('s',reply.toString(), debug, log );
@@ -89,6 +93,7 @@ public class Fetch {
 
                     }
                 }catch(JsonSyntaxException j){
+                    // json parse error
                     reply.put("response", "error");
                     reply.put("errorMessage", "invalid resourceTemplate");
                 }
@@ -106,6 +111,7 @@ public class Fetch {
         }catch(IOException i){
 
         }catch(JsonSyntaxException j){
+            // resource template missing
             reply.put("response", "error");
             reply.put("errorMessage", "missing resourceTemplate");
             try {

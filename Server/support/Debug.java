@@ -4,6 +4,9 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * debug class
+ * print debug info
+ *
  */
 public class Debug {
 

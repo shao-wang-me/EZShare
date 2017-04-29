@@ -28,7 +28,9 @@ public class serverUpdate {
 	        
 			JSONObject result = new JSONObject();
 	        
-	        boolean flag = true;  
+	        boolean flag = true;
+
+	        // send exchange command to verify whether server works
 	        while(flag){
 	            JSONObject temp = new JSONObject();
 	            temp.put("command", "EXCHANGE");
@@ -41,7 +43,7 @@ public class serverUpdate {
 				Debug.printDebug('s',str, debug, log);
 	            try{
 	            	String echo = buf.readUTF();
-					Debug.printDebug('r',str, debug, log);
+					Debug.printDebug('r',echo, debug, log);
 					temp = new JSONObject(echo);
 		            if(temp.has("response")){
 		            	result = temp;
@@ -65,6 +67,7 @@ public class serverUpdate {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
+			// any exception return error message
             JSONObject error = new JSONObject();
             error.put("errorMessage", "Exchange Timeout");
             error.put("response", "error");

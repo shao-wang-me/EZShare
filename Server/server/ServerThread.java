@@ -6,6 +6,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import EZShare.Server;
 import command.*;
 import org.json.JSONObject;
 
@@ -23,17 +24,24 @@ import variable.Resource;
 import variable.resourceList;
 import variable.serverList;
 
+
+/**
+ * Created by xutianyu on 4/25/17.
+ * Main server thread  class implement runnable
+ *
+ */
+
 public class ServerThread implements Runnable {
 	
 	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE;} 
 
-	private Socket client = null;
+	private Socket client ;
 	
 	private String secret;
 	
-	private variable.resourceList resourceList;
+	private resourceList resourceList;
 	
-	private variable.serverList serverList;
+	private serverList serverList;
 	
 	private Boolean debug = true;
 	
@@ -43,11 +51,13 @@ public class ServerThread implements Runnable {
 	
 	private int port;
 
+	private int intervalLimit;
+
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
 			resourceList resourceList, serverList serverList, Boolean debug, 
-			String hostname, int port ){
+			String hostname, int port, int intervalLimit ){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
@@ -56,52 +66,64 @@ public class ServerThread implements Runnable {
 		this.setLog();
 		this.hostname = hostname;
 		this.port = port;
+		this.intervalLimit = intervalLimit;
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		try{
-		
-			//PrintStream out = new PrintStream(client.getOutputStream());
-	        DataOutputStream out = new DataOutputStream(client.getOutputStream());
+            Thread.sleep(getIntervalLimit());
+            if(!client.isClosed()){
 
-			//BufferedReader buf = new BufferedReader(new InputStreamReader(client.getInputStream()));
-	        DataInputStream buf = new DataInputStream(client.getInputStream());
+                //PrintStream out = new PrintStream(client.getOutputStream());
+                DataOutputStream out = new DataOutputStream(client.getOutputStream());
 
-			//parse jaon messsage 
-			JsonReader reader = new JsonReader(new InputStreamReader(client.getInputStream()));
-			//parseJson(reader);
-			Boolean flag = true ;
-			
-			
-			//client.setSoTimeout(100);
-			try {
-				while(flag){
-					String str = buf.readUTF();
-					Debug.printDebug('r',str, debug, log);
+                //BufferedReader buf = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                DataInputStream buf = new DataInputStream(client.getInputStream());
 
-					if(str == null ){
-						flag = false ;
-					}
-					else{
-						//out.writeUTF(str);
-						//System.out.println("from server :"+str);
-						parseJson(str, out);
-					}
-				}
-			} catch (IOException i) {
-				// TODO: handle exception
-			}
-			finally{
-				out.close();
-				client.close();
-			}
+                //parse jaon messsage
+                JsonReader reader = new JsonReader(new InputStreamReader(client.getInputStream()));
+                //parseJson(reader);
+                Boolean flag = true ;
+
+
+                //client.setSoTimeout(100);
+                try {
+                    while(flag){
+                        String str = buf.readUTF();
+                        Debug.printDebug('r',str, debug, log);
+
+                        if(str == null ){
+                            flag = false ;
+                        }
+                        else{
+                            //out.writeUTF(str);
+                            //System.out.println("from server :"+str);
+                            parseJson(str, out);
+                        }
+                    }
+                } catch (IOException i) {
+                    // TODO: handle exception
+                }
+                finally{
+                    out.close();
+                    client.close();
+                }
+
+            }
+            else{
+
+            }
 		}catch(Exception e){
-			
-		}
+            try {
+                client.close();
+            } catch (IOException e1) {
+            }
+        }
 	}
-	
+
+	// parse json command & choose relevant method
 	private void parseJson(String  message, DataOutputStream out){
 		String key = null;
 		ArrayList<String> list = new ArrayList<String>();
@@ -240,6 +262,14 @@ public class ServerThread implements Runnable {
 	public void setPort(int port) {
 		this.port = port;
 	}
+
+    public int getIntervalLimit() {
+        return intervalLimit;
+    }
+
+    public void setIntervalLimit(int intervalLimit) {
+        this.intervalLimit = intervalLimit;
+    }
 		
 	}
 

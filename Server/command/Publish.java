@@ -20,6 +20,10 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/26/17.
+ * @ param JsonElement root, DataOutputStream out, resourceList resourceList,
+     serverList serverList, Host h, boolean debug , Logger log
+ * publish operation
+ *
  */
 public class Publish {
 
@@ -35,12 +39,9 @@ public class Publish {
         try{
 
             if(root.getAsJsonObject().has("resource")){
-
                 try{
-                    //Map map = gson.fromJson(message, Map.class)
                     JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
                     resource = gson.fromJson(object, Resource.class);
-                    //System.out.println("publish: "+message);
                     response = Function.publish(resource, resourceList);
                     if(response.containsKey(true)){
                         reply.put("response", "success");
@@ -75,7 +76,6 @@ public class Publish {
             }
             finally{
                 Debug.printDebug('s',reply.toString(), debug, log );
-
             }
         }catch(Exception e){
 

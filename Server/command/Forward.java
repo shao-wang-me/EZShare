@@ -17,12 +17,17 @@ import java.util.logging.Logger;
 
 /**
  * Created by xutianyu on 4/25/17.
+ * build connection with host h
+ * forward query to other server
+ *
  */
 public class Forward {
 
     public static resourceList forward(String str, Host h, boolean debug, Logger log){
         resourceList r = new resourceList();
         r.initialResourceList();
+
+        // build connection with host h
         try{
 
             Socket agent = new Socket(h.getHostname(), h.getPort());
