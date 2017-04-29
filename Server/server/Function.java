@@ -100,11 +100,7 @@ public class Function {
 		resourceList resourceListFiltered = new resourceList();
 		resourceListFiltered.initialResourceList();
 		HashMap<Boolean, resourceList> toReturn = new HashMap<Boolean, resourceList>();
-		//System.out.println(resourceList.getResourceList().size());
-		//boolean match = true;
 		for (Resource r: resourceList.getResourceList()) {
-			//System.out.println("r: " + r.getUri());
-			//System.out.println("resource: " + resource.getUri());
 			boolean match = true;
 			if (!resource.getChannel().equals(r.getChannel())) {
 				match = false;
