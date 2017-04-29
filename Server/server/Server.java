@@ -151,7 +151,7 @@ public class Server {
 				Thread.sleep(getIntervalLimit());
 				if(client.isConnected()){
 					ServerThread s = new ServerThread(client, getSecret(), 
-							resourceList, serverList, getDebug(), getHostname(), getPort());
+							resourceList, serverList, getDebug(), getHostname(), getPort(), getIntervalLimit());
 
 					executor.execute(s);
 				}
