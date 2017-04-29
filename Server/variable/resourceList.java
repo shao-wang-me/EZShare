@@ -13,8 +13,7 @@ public class resourceList {
 			resourceList.add(r);
 		} else {
 			Resource sameResource = getSameResource(r);
-			if (r.getOwner().equals(sameResource.getOwner())) {
-			} else {
+			if (!r.getOwner().equals(sameResource.getOwner())) {
 				resourceList.remove(sameResource);
 				resourceList.add(r);
 			}
