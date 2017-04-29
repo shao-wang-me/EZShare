@@ -11,8 +11,10 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
+/** This class contains static methods handling each type of command. */
 public class Function {
 
+	/* publish */
 	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
