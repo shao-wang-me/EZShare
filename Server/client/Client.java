@@ -17,8 +17,11 @@ public class Client {
 		//This is the default host host and port number
 		Integer serverPort = 20006;
 		String serverIP = "localhost";
+		
+		HelpFormatter formatter = new HelpFormatter();
 
 		Options option = new Options();
+		option.addOption("h","help",false,"help documentation");
 		option.addOption("channel", true, "channel");
 		option.addOption("debug", false, "print debug information");
 		option.addOption("description", true, "resource description");
@@ -45,6 +48,11 @@ public class Client {
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
+		}
+		
+		if (cmd.hasOption("help") || cmd.hasOption("h")) { 
+			    formatter.printHelp("Help Documentation",option);
+			    System.exit(0);
 		}
 		
 		if (cmd.hasOption("host")) {
