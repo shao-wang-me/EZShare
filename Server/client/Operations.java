@@ -96,11 +96,8 @@ public class Operations {
 		return resource;
 	}
 	
-	//The first version, all the msgs received from servers will be 
-	//printed out on the console
 	public static void Publish(CommandLine cmd,clientObject c) throws JSONException {
-		
-		
+
 		JSONObject sentJSON = new JSONObject("{}");
 		JSONObject resource = getResource(cmd);
 		
