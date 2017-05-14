@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 
-public class securedServerList extends serverList {
+public class secureServerList extends serverList {
 	
 	private Host hostTemplate ;
 	private volatile ArrayList<Host> serverList;

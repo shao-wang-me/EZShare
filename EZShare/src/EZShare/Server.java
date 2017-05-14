@@ -36,6 +36,7 @@ public class Server {
 	private String secret = RandomStringUtils.randomAlphanumeric(20);
 	private variable.resourceList resourceList;
 	private variable.serverList serverList;
+	private variable.secureServerList secureServerList;
 	private Boolean debug = false;
 	
 	public static void main(String[] args)throws Exception{
@@ -126,7 +127,7 @@ public class Server {
 				//System.out.println("connection succeed !");
 				if(client.isConnected()){
 					ServerThread s = new ServerThread(client, getSecret(),
-							resourceList, serverList, getDebug(), getHostname(), getPort(), getIntervalLimit());
+							resourceList, serverList, secureServerList, getDebug(), getHostname(), getPort(), getIntervalLimit());
 
 					executor.execute(s);
 				}

@@ -6,6 +6,8 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLSocket;
+
 import EZShare.Server;
 import command.*;
 import org.json.JSONObject;
@@ -22,6 +24,7 @@ import support.LogFormatter;
 import variable.Host;
 import variable.Resource;
 import variable.resourceList;
+import variable.secureServerList;
 import variable.serverList;
 
 
@@ -43,6 +46,8 @@ public class ServerThread implements Runnable {
 	
 	private serverList serverList;
 	
+	private secureServerList secureServerList;
+	
 	private Boolean debug = true;
 	
 	private Logger log ;
@@ -52,21 +57,25 @@ public class ServerThread implements Runnable {
 	private int port;
 
 	private int intervalLimit;
+	
+	private boolean secure;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			resourceList resourceList, serverList serverList, Boolean debug, 
-			String hostname, int port, int intervalLimit ){
+			resourceList resourceList, serverList serverList, secureServerList secureServerList, 
+			Boolean debug, String hostname, int port, int intervalLimit ){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
 		this.serverList = serverList;
+		this.secureServerList = secureServerList;
 		this.debug = debug;
 		this.setLog();
 		this.hostname = hostname;
 		this.port = port;
 		this.intervalLimit = intervalLimit;
+		this.secure = client instanceof SSLSocket;
 	}
 
 	@Override
@@ -161,7 +170,11 @@ public class ServerThread implements Runnable {
 					}
 					case QUERY:{
 						Host h = new Host(getHostname(), getPort());
-						Query.query(root, out, resourceList, serverList, h, getDebug(), getLog());
+						if (secure) {
+							Query.query(root, out, resourceList, secureServerList, h, getDebug(), getLog());
+						} else {
+							Query.query(root, out, resourceList, serverList, h, getDebug(), getLog());
+						}
 						break;
 					}
 					case FETCH:{
@@ -171,7 +184,11 @@ public class ServerThread implements Runnable {
 					}
 					case EXCHANGE:{
 						Host h = new Host(getHostname(), getPort());
-						Exchange.exchange(root, out, resourceList, serverList, h, getDebug(), getLog());
+						if (secure) {
+							Exchange.exchange(root, out, resourceList, secureServerList, h, getDebug(), getLog());
+						} else {
+							Exchange.exchange(root, out, resourceList, serverList, h, getDebug(), getLog());
+						}
 						break;
 					}
 					default:{
