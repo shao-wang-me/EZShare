@@ -19,6 +19,7 @@ public class Client {
 		//This is the default host host and port number
 		Integer serverPort = 20006;
 		String serverIP = "localhost";
+		boolean secureFlag = false;
 		
 		HelpFormatter formatter = new HelpFormatter();
 
@@ -41,6 +42,7 @@ public class Client {
 		option.addOption("share", false, "share resource on server");
 		option.addOption("tags", true, "resource tags, tag1,tag2,tag3,...");
 		option.addOption("uri", true, "resource URI");
+		option.addOption("secure", false, "build secure connection");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
@@ -64,8 +66,11 @@ public class Client {
 			if (cmd.hasOption("port")) {
 				serverPort = Integer.parseInt(cmd.getOptionValue("port"));
 			}
+            if(cmd.hasOption("secure")){
+                secureFlag = true;
+            }
 
-			clientObject c = new clientObject(serverIP, serverPort);
+			clientObject c = new clientObject(serverIP, serverPort, secureFlag);
 
 			if (cmd.hasOption("publish")) {
 				try {
@@ -123,6 +128,7 @@ public class Client {
 					System.exit(-1);
 				}
 			}
+
 		}catch(Exception e){
 			System.exit(-1);
 

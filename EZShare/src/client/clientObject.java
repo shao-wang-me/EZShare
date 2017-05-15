@@ -11,25 +11,40 @@ import org.json.*;
 import EZShare.Client;
 import support.LogFormatter;
 
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
 
 public class clientObject {
 
 	private Socket s = null;
 	private Logger log = null;
+	private SSLSocket ss = null;
+	private  boolean secureFlag;
 
-	public clientObject(String serverIP, int serverPort) {
+	public clientObject(String serverIP, int serverPort, boolean secureFlag) {
 		this.setLog();
+		this.secureFlag = secureFlag;
 		LogFormatter formatter = new LogFormatter();
-       ConsoleHandler handler = new ConsoleHandler();
+        ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(formatter);
 		Logger logIni = Logger.getLogger(Client.class.getName());
 		logIni.setUseParentHandlers(false);
 		logIni.setLevel(Level.INFO);
 		logIni.info("setting debug on");
 		try {
-			s = new Socket(serverIP, serverPort);
+			if(secureFlag){
+                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
+                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+				ss = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
+			}
+			else{
+				s = new Socket(serverIP, serverPort);
+			}
 		} catch (UnknownHostException e) {
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -49,8 +64,16 @@ public class clientObject {
 	//we can just implement these functions with one method
 	public void sendJSON(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
 		try {
-			DataInputStream input = new DataInputStream(s.getInputStream());
-			DataOutputStream output = new DataOutputStream(s.getOutputStream());
+			DataInputStream input;
+			DataOutputStream output;
+			if(secureFlag){
+				 input = new DataInputStream(ss.getInputStream());
+				 output = new DataOutputStream(ss.getOutputStream());
+			}
+			else{
+				 input = new DataInputStream(s.getInputStream());
+				 output = new DataOutputStream(s.getOutputStream());
+			}
 
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
@@ -65,8 +88,8 @@ public class clientObject {
 			//Setting a time limit of 5 mins, and keep receiving msgs from the server 
 			while ((currentTime = System.currentTimeMillis()) - startTime <= 5*60*1000) {
 				JSONObject msgGet = null;
-				if (input.available() > 0) {
-					message = input.readUTF();
+				if ((message = input.readUTF())!= null) {
+					//message = input.readUTF();
 					msgGet = new JSONObject(message);
 					if(ifDebug) {
 						log.info("RECEIVED:" + msgGet.toString());

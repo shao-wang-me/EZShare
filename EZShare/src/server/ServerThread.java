@@ -78,6 +78,20 @@ public class ServerThread implements Runnable {
 		this.secure = client instanceof SSLSocket;
 	}
 
+	public ServerThread(SSLSocket client, String secret,
+						resourceList resourceList, serverList serverList, Boolean debug,
+						String hostname, int port, int intervalLimit ){
+		this.client = client ;
+		this.secret = secret;
+		this.resourceList = resourceList;
+		this.serverList = serverList;
+		this.debug = debug;
+		this.setLog();
+		this.hostname = hostname;
+		this.port = port;
+		this.intervalLimit = intervalLimit;
+	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

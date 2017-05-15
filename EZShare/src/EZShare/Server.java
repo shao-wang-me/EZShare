@@ -124,27 +124,17 @@ public class Server {
 			TimerTask timerTaskSecure = new TimerTask(secureServerList,resourceList,local,debug,log);
 			exec.scheduleAtFixedRate(timerTask,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			exec.scheduleAtFixedRate(timerTaskSecure,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
-			
-			//Thread pool to increase efficiency
-			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+			// create secured server
+			HandleSecureRequest SecureServer = new HandleSecureRequest(getSecurePort(), getSecret() , resourceList,
+					 serverList,  getDebug(), log, getHostname(), getIntervalLimit());
 
-			//create multiple threads to build connections
-			Boolean f = true ;
-			while(f){
-				 Socket client = server.accept();
-				//System.out.println("connection succeed !");
-				if(client.isConnected()){
-					ServerThread s = new ServerThread(client, getSecret(),
-							resourceList, serverList, secureServerList, getDebug(), getHostname(), getPort(), getIntervalLimit());
-
-					executor.execute(s);
-				}
-				else{
-					client.close();
-				}
-			}
-			executor.shutdown();
-			server.close();
+			// create unsecured server
+			HandleUnsecureRequest UnsecureServer = new HandleUnsecureRequest(getPort(), getSecret() , resourceList,
+					serverList,  getDebug(), log, getHostname(), getIntervalLimit());
+			Thread s1 = new Thread(SecureServer);
+			Thread s2 = new Thread(UnsecureServer);
+			s1.start();
+			s2.start();
 		}
 		catch(Exception e){
 			e.printStackTrace();
