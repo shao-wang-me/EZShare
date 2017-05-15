@@ -31,6 +31,7 @@ public class Server {
 	// initial parameters
 	private String hostname = "Team_Awesome_Sever";
 	private int port  = 20006;
+	private int sport = 3781;
 	private String interval = "600";
 	private int  intervalLimit = 1000;
 	private String secret = RandomStringUtils.randomAlphanumeric(20);
@@ -61,6 +62,7 @@ public class Server {
 			options.addOption("connectionintervallimit",true,"connection interval limit in seconds");
 			options.addOption("exchangeinterval",true,"exchange interval in seconds");
 			options.addOption("port",true,"server port, an integer");
+			options.addOption("sport",true,"secure server port, an integer");
 			options.addOption("secret",true,"secret");
 			options.addOption("debug",false,"print debug information");
 			
@@ -79,6 +81,9 @@ public class Server {
 			}
 			if(cmd.hasOption("port")){
 				setPort(Integer.parseInt(cmd.getOptionValue("port")));
+			}
+			if(cmd.hasOption("sport")){
+				setSecurePort(Integer.parseInt(cmd.getOptionValue("sport")));
 			}
 			if( cmd.hasOption("exchangeinterval")){
 				setInterval(cmd.getOptionValue("exchangeinterval"));
@@ -104,6 +109,7 @@ public class Server {
 			log.info("- using secret:"+secret);
 			log.info("- using advertised hostname:"+hostname);
 			log.info("- bound to port"+port);
+			log.info("- bound to secure port" + sport);
 			log.info("- started");
 			if(debug){
 				log.info("- setting debug on");
@@ -161,6 +167,10 @@ public class Server {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+	
+	public void setSecurePort(int sport) {
+		this.sport= sport;
 	}
 
 	public String getInterval() {
