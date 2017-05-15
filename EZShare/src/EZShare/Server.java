@@ -115,7 +115,9 @@ public class Server {
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 			Host local = new Host(getHostname(),getPort());
 			TimerTask timerTask = new TimerTask(serverList, resourceList,local, debug, log);
+			TimerTask timerTaskSecure = new TimerTask(secureServerList,resourceList,local,debug,log);
 			exec.scheduleAtFixedRate(timerTask,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
+			exec.scheduleAtFixedRate(timerTaskSecure,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			
 			//Thread pool to increase efficiency
 			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
