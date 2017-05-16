@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import server.HandleSecureRequest;
+import server.HandleUnsecureRequest;
 import server.ServerThread;
 import server.TimerTask;
 import support.LogFormatter;
@@ -126,11 +128,11 @@ public class Server {
 			exec.scheduleAtFixedRate(timerTaskSecure,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			// create secured server
 			HandleSecureRequest SecureServer = new HandleSecureRequest(getSecurePort(), getSecret() , resourceList,
-					 serverList,  getDebug(), log, getHostname(), getIntervalLimit());
+					 serverList, secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
 
 			// create unsecured server
 			HandleUnsecureRequest UnsecureServer = new HandleUnsecureRequest(getPort(), getSecret() , resourceList,
-					serverList,  getDebug(), log, getHostname(), getIntervalLimit());
+					serverList,  secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
 			Thread s1 = new Thread(SecureServer);
 			Thread s2 = new Thread(UnsecureServer);
 			s1.start();
@@ -158,6 +160,8 @@ public class Server {
 	public void setPort(int port) {
 		this.port = port;
 	}
+
+	public int getSecurePort(){return sport;}
 	
 	public void setSecurePort(int sport) {
 		this.sport= sport;

@@ -3,6 +3,7 @@ package server;
 
 import variable.resourceList;
 import variable.serverList;
+import variable.secureServerList;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,13 +17,16 @@ import java.util.logging.Logger;
 public class HandleUnsecureRequest implements Runnable{
 
     private ServerSocket server;
+
     private int serverPort ;
 
     private String secret;
 
-    private variable.resourceList resourceList;
+    private resourceList resourceList;
 
-    private variable.serverList serverList;
+    private serverList serverList;
+
+    private secureServerList secureServerList;
 
     private Boolean debug = true;
 
@@ -33,11 +37,13 @@ public class HandleUnsecureRequest implements Runnable{
     private int intervalLimit;
 
     public HandleUnsecureRequest(int serverPort, String secret , resourceList resourceList,
-                    serverList serverList, Boolean debug, Logger log, String hostname, int intervalLimit ){
+                    serverList serverList, secureServerList secureServerList,
+                                 Boolean debug, Logger log, String hostname, int intervalLimit ){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
         this.serverList = serverList;
+        this.secureServerList = secureServerList;
         this.debug = debug;
         this.log = log;
         this.hostname = hostname;
@@ -69,7 +75,7 @@ public class HandleUnsecureRequest implements Runnable{
                 Socket client = server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, serverList, getDebug(), getHostname(), serverPort, getIntervalLimit());
+                            resourceList, serverList, secureServerList ,getDebug(), getHostname(), serverPort, getIntervalLimit());
 
                     executor.execute(s);
                 }

@@ -35,8 +35,9 @@ import variable.serverList;
  */
 
 public class ServerThread implements Runnable {
-	
-	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE;} 
+
+
+	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE;}
 
 	private Socket client ;
 	
@@ -78,19 +79,6 @@ public class ServerThread implements Runnable {
 		this.secure = client instanceof SSLSocket;
 	}
 
-	public ServerThread(SSLSocket client, String secret,
-						resourceList resourceList, serverList serverList, Boolean debug,
-						String hostname, int port, int intervalLimit ){
-		this.client = client ;
-		this.secret = secret;
-		this.resourceList = resourceList;
-		this.serverList = serverList;
-		this.debug = debug;
-		this.setLog();
-		this.hostname = hostname;
-		this.port = port;
-		this.intervalLimit = intervalLimit;
-	}
 
 	@Override
 	public void run() {

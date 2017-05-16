@@ -3,6 +3,7 @@ package server;
 import com.sun.net.ssl.internal.ssl.Provider;
 import variable.resourceList;
 import variable.serverList;
+import variable.secureServerList;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -27,9 +28,11 @@ public class HandleSecureRequest implements Runnable{
 
     private String secret;
 
-    private variable.resourceList resourceList;
+    private resourceList resourceList;
 
-    private variable.serverList serverList;
+    private serverList serverList;
+
+    private secureServerList secureServerList;
 
     private Boolean debug = true;
 
@@ -40,11 +43,13 @@ public class HandleSecureRequest implements Runnable{
     private int intervalLimit;
 
     public HandleSecureRequest(int serverPort, String secret , resourceList resourceList,
-                                 serverList serverList, Boolean debug, Logger log, String hostname, int intervalLimit ){
+                                 serverList serverList, secureServerList secureServerList,
+                               Boolean debug, Logger log, String hostname, int intervalLimit ){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
         this.serverList = serverList;
+        this.secureServerList = secureServerList;
         this.debug = debug;
         this.log = log;
         this.hostname = hostname;
@@ -75,7 +80,7 @@ public class HandleSecureRequest implements Runnable{
                 SSLSocket client = (SSLSocket)server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, serverList, getDebug(), getHostname(), getServerPort(), getIntervalLimit());
+                            resourceList, serverList, secureServerList, getDebug(), getHostname(), getServerPort(), getIntervalLimit());
 
                     executor.execute(s);
                 }
