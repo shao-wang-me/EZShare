@@ -29,7 +29,7 @@ public class Query
 {
 
     public static void query(JsonElement root, DataOutputStream out, resourceList resourceList,
-                            serverList serverList, Host h, boolean debug , Logger log){
+                            serverList serverList, Host h, boolean debug , Logger log, boolean secure){
         ArrayList<String> list = new ArrayList<String>();
         Resource resource = new Resource("", "", list, "", "", "", "");
         JSONObject reply = new JSONObject();
@@ -78,7 +78,7 @@ public class Query
                         for (Host host : serverList.getServerList()) {
                             resourceList tempList = new resourceList();
                             tempList.initialResourceList();
-                            tempList = Forward.forward(trans.toString(), host, debug, log);
+                            tempList = Forward.forward(trans.toString(), host, debug, log, secure);
                             if (tempList.getResourceList().size() != 0) {
                                for (Resource r : tempList.getResourceList()) {
                                     resultList.add(r);

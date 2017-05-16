@@ -7,5 +7,15 @@
 	<classpathentry kind="lib" path="/Users/xutianyu/Downloads/gson-2.6.2.jar"/>
 	<classpathentry kind="lib" path="/Users/xutianyu/Downloads/commons-cli-1.4/commons-cli-1.4.jar"/>
 	<classpathentry kind="lib" path="/Users/xutianyu/Dropbox/EZShare/src/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="gson-2.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="json-20160810.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/json-20160810.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

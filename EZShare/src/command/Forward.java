@@ -1,6 +1,9 @@
 package command;
 
 import com.google.gson.JsonSyntaxException;
+
+import security.*;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import variable.resourceList;
@@ -15,6 +18,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLSocket;
+
 /**
  * Created by xutianyu on 4/25/17.
  * build connection with host h
@@ -23,13 +28,18 @@ import java.util.logging.Logger;
  */
 public class Forward {
 
-    public static resourceList forward(String str, Host h, boolean debug, Logger log){
+    public static resourceList forward(String str, Host h, boolean debug, Logger log, boolean secure){
         resourceList r = new resourceList();
         r.initialResourceList();
 
         // build connection with host h
         try{
-            Socket agent = new Socket(h.getHostname(), h.getPort());
+        	if (secure) {
+        		SSLSocket agent = clientSecure(h.getHostname(), h.getPort());
+        	} else {
+        		Socket agent = new Socket(h.getHostname(), h.getPort());
+        	}
+            
 
             
             //Socket 输出流， 转发查询

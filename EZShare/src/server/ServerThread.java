@@ -173,9 +173,9 @@ public class ServerThread implements Runnable {
 					case QUERY:{
 						Host h = new Host(getHostname(), getPort());
 						if (secure) {
-							Query.query(root, out, resourceList, secureServerList, h, getDebug(), getLog());
+							Query.query(root, out, resourceList, secureServerList, h, getDebug(), getLog(), secure);
 						} else {
-							Query.query(root, out, resourceList, serverList, h, getDebug(), getLog());
+							Query.query(root, out, resourceList, serverList, h, getDebug(), getLog(), secure);
 						}
 						break;
 					}
