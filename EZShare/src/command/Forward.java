@@ -14,11 +14,14 @@ import support.Debug;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by xutianyu on 4/25/17.
@@ -34,10 +37,16 @@ public class Forward {
 
         // build connection with host h
         try{
+            Socket agent ;
+            SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
         	if (secure) {
-        		SSLSocket agent = clientSecure(h.getHostname(), h.getPort());
+                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
+                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+                agent = (SSLSocket)sslsocketfactory.createSocket();
+                agent.connect(socketaddr, 5000);
         	} else {
-        		Socket agent = new Socket(h.getHostname(), h.getPort());
+                agent = new Socket();
+                agent.connect(socketaddr, 5000);
         	}
             
 
