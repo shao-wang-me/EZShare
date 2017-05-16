@@ -42,7 +42,7 @@ public class Function {
 				for(Resource r : resourceList.getResourceList()){
 					if(r.getKey().equals(resource.getKey())){
 						if(r.getOwner().equals(resource.getOwner())){
-							resourceList.replace(r);
+							resourceList.add(r);
 							flag2 = false;
 							break;
 						}
