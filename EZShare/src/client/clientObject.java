@@ -183,12 +183,77 @@ public class clientObject {
 				} else if (msgGet != null && msgGet.has("resultSize")) {
 					break;
 				}
+
 			}
 		} catch (UnknownHostException e) {
 			System.exit(-1);
 		} catch (SocketException e) {
 			System.exit(-1);
 		} catch (Exception e) {
+			System.exit(-1);
+		}
+	}
+
+	public void subscribe(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
+		try {
+			DataInputStream input = new DataInputStream(s.getInputStream());
+			DataOutputStream output = new DataOutputStream(s.getOutputStream());
+
+			if (ifDebug) {
+				log.info("SENT:" + j.toString());
+			}
+			output.writeUTF(j.toString());
+			output.flush();
+
+
+			while (true) {
+				String message = "";
+				JSONObject msgGet = null;
+				if (input.available() > 0) {
+					message = input.readUTF();
+					msgGet = new JSONObject(message);
+					if(ifDebug) {
+						log.info("RECEIVED:" + msgGet.toString());
+					} else {
+						System.out.println(msgGet.toString());
+					}
+					if(msgGet.has("resultSize")) {
+						break;
+					}
+				}
+
+				long start = System.currentTimeMillis();
+
+				while(System.currentTimeMillis() - start < 1000) {
+
+
+					String str = null;
+					BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+					if (bf.ready()) {
+						str = bf.readLine();
+					}
+					if (str != null && str.length() == 0) {
+						JSONObject sentJSON = new JSONObject("{}");
+						String id = Operations.getId(port);
+						sentJSON.put("command", "UNSUBSCRIBE");
+						sentJSON.put("id", id);
+						if (ifDebug) {
+							log.info("SENT:" + sentJSON.toString());
+						}
+						output.writeUTF(sentJSON.toString());
+						output.flush();
+
+					}
+				}
+			}
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		} catch (SocketException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
 	}
