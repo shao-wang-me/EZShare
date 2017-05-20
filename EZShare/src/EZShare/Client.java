@@ -43,6 +43,7 @@ public class Client {
 		option.addOption("tags", true, "resource tags, tag1,tag2,tag3,...");
 		option.addOption("uri", true, "resource URI");
 		option.addOption("secure", false, "build secure connection");
+		option.addOption("subscribe", false, "build persistent connection");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
@@ -125,6 +126,15 @@ public class Client {
 					System.exit(-1);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("Missing \"-servers\"");
+					System.exit(-1);
+				}
+			}
+
+			if (cmd.hasOption("subscribe")) {
+				try{
+					Operations.Subscribe(cmd, c);
+				}catch(JSONException e ){
+					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
