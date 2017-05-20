@@ -4,6 +4,7 @@ import com.sun.net.ssl.internal.ssl.Provider;
 import variable.resourceList;
 import variable.serverList;
 import variable.secureServerList;
+import variable.subscribeList;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -14,6 +15,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.PrivilegedActionException;
 import java.security.Security;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
@@ -24,15 +26,16 @@ import java.util.logging.Logger;
 public class HandleSecureRequest implements Runnable{
 
     private SSLServerSocket server;
+
     private int serverPort ;
 
     private String secret;
 
     private resourceList resourceList;
 
-    private serverList serverList;
+    private resourceList newResourceList;
 
-    private secureServerList secureServerList;
+    private serverList serverList;
 
     private Boolean debug = true;
 
@@ -42,14 +45,14 @@ public class HandleSecureRequest implements Runnable{
 
     private int intervalLimit;
 
-    public HandleSecureRequest(int serverPort, String secret , resourceList resourceList,
-                                 serverList serverList, secureServerList secureServerList,
-                               Boolean debug, Logger log, String hostname, int intervalLimit ){
+    public HandleSecureRequest(int serverPort, String secret , resourceList resourceList, resourceList newResourceList,
+                               secureServerList serverList,
+                               Boolean debug, Logger log, String hostname, int intervalLimit){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
+        this.newResourceList = newResourceList;
         this.serverList = serverList;
-        this.secureServerList = secureServerList;
         this.debug = debug;
         this.log = log;
         this.hostname = hostname;
@@ -70,6 +73,27 @@ public class HandleSecureRequest implements Runnable{
             System.setProperty("javax.net.ssl.keyStore", "serverKeystore/server.jks");
             System.setProperty("javax.net.ssl.keyStorePassword", "comp90015");
 
+            //Single thread executor for the relay thread, added by yankun
+            subscribeList subscribeList = new subscribeList();
+            subscribeList readyToSend = new subscribeList();
+            secureServerList serverDeleteList = new secureServerList();
+            serverDeleteList.initialserverList();
+            secureServerList serverAddList = new secureServerList();
+            serverAddList.initialserverList();
+
+            //Single thread executor for the subscription thread, added by yankun
+            ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+            subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
+                    intervalLimit , subscribeList, readyToSend);
+            singleThreadExecutor.execute(subscriptionThread);
+
+
+            // relay monitor
+            ExecutorService relayThreadExecutor = Executors.newSingleThreadExecutor();
+            relayThread relayThread = new relayThread(newResourceList, debug,
+                    subscribeList, serverList, serverDeleteList, serverAddList, readyToSend, true);
+            relayThreadExecutor.execute(relayThread);
+
 
             SSLServerSocketFactory sslServerSocketfactory = (SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
             server= (SSLServerSocket)sslServerSocketfactory.createServerSocket(getServerPort());
@@ -80,7 +104,9 @@ public class HandleSecureRequest implements Runnable{
                 SSLSocket client = (SSLSocket)server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, serverList, secureServerList, getDebug(), getHostname(), getServerPort(), getIntervalLimit());
+                            resourceList, newResourceList, serverList, serverAddList,
+                            getDebug(), getHostname(), getServerPort(), getIntervalLimit(),
+                             subscribeList,  readyToSend);
 
                     executor.execute(s);
                 }

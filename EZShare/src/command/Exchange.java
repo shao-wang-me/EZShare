@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 public class Exchange {
 
     public static void exchange(JsonElement root, DataOutputStream out, resourceList resourceList,
-                                serverList serverList, Host h, boolean debug , Logger log){
+                                serverList serverList, serverList serverAddList, Host h, boolean debug,
+                                Logger log){
 
         ArrayList<String> list = new ArrayList<String>();
         JSONObject reply = new JSONObject();
@@ -40,7 +41,7 @@ public class Exchange {
                 JsonArray array = root.getAsJsonObject().get("serverList").getAsJsonArray();
                 Host[] host = gson.fromJson(array, Host[].class);
                 if(host.length != 0){
-                    response = Function.exchange(serverList, host, h);
+                    response = Function.exchange(serverList, serverAddList, host, h);
                 }
                 if(response.containsKey(true)){
                     reply.put("response", "success");

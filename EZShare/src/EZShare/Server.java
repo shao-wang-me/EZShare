@@ -2,10 +2,7 @@ package EZShare;
 
 import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +13,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 import server.HandleSecureRequest;
 import server.HandleUnsecureRequest;
 import server.ServerThread;
+import server.subscribeThread;
+import server.relayThread;
 import server.TimerTask;
 import support.LogFormatter;
-import variable.Host;
-import variable.Resource;
-import variable.resourceList;
-import variable.serverList;
+import variable.*;
+
 
 /**
  * Created by xutianyu on 4/25/17.
@@ -41,6 +38,18 @@ public class Server {
 	private variable.serverList serverList;
 	private variable.secureServerList secureServerList;
 	private Boolean debug = false;
+
+	/**
+	 * New resource list is for storing new added resources
+	 * when executing SHARE and PUBLISH commands
+	 * Subscribe list is for storing the subscriptions sent
+	 * by clients
+	 */
+	private volatile variable.resourceList newResourceList;
+	private volatile variable.subscribeList subscribeList;
+	private volatile variable.subscribeList readyToSend;
+	private volatile variable.serverList serverDeleteList;
+	private volatile variable.serverList serverAddList;
 	
 	public static void main(String[] args)throws Exception{
 		Server server = new Server();
@@ -54,6 +63,11 @@ public class Server {
 		resourceList.initialResourceList();
 		serverList = new serverList();
 		serverList.initialserverList();
+
+		//added by yankun
+		newResourceList  = new resourceList();
+		newResourceList.initialResourceList();
+
 		
 		try{
 			
@@ -122,24 +136,26 @@ public class Server {
 			//Time schedule thread pool
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 			Host local = new Host(getHostname(),getPort());
-			TimerTask timerTask = new TimerTask(serverList, resourceList,local, debug, log);
-			TimerTask timerTaskSecure = new TimerTask(secureServerList,resourceList,local,debug,log);
+			TimerTask timerTask = new TimerTask(serverList, serverDeleteList, resourceList,local, debug, log);
+			TimerTask timerTaskSecure = new TimerTask(secureServerList,serverDeleteList, resourceList,local,debug,log);
 			exec.scheduleAtFixedRate(timerTask,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
 			exec.scheduleAtFixedRate(timerTaskSecure,Integer.parseInt(getInterval()) , Integer.parseInt(getInterval()) , TimeUnit.SECONDS);
+
+
+
 			// create secured server
 			HandleSecureRequest SecureServer = new HandleSecureRequest(getSecurePort(), getSecret() , resourceList,
-					 serverList, secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
+					newResourceList, secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
 
 			// create unsecured server
 			HandleUnsecureRequest UnsecureServer = new HandleUnsecureRequest(getPort(), getSecret() , resourceList,
-					serverList,  secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
+					newResourceList, serverList, getDebug(), log, getHostname(), getIntervalLimit());
 			Thread s1 = new Thread(SecureServer);
 			Thread s2 = new Thread(UnsecureServer);
 			s1.start();
 			s2.start();
 		}
 		catch(Exception e){
-			e.printStackTrace();
 		}
 
 	}

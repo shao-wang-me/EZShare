@@ -4,9 +4,11 @@ package server;
 import variable.resourceList;
 import variable.serverList;
 import variable.secureServerList;
+import variable.subscribeList;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
@@ -24,9 +26,9 @@ public class HandleUnsecureRequest implements Runnable{
 
     private resourceList resourceList;
 
-    private serverList serverList;
+    private resourceList newResourceList;
 
-    private secureServerList secureServerList;
+    private serverList serverList;
 
     private Boolean debug = true;
 
@@ -37,13 +39,13 @@ public class HandleUnsecureRequest implements Runnable{
     private int intervalLimit;
 
     public HandleUnsecureRequest(int serverPort, String secret , resourceList resourceList,
-                    serverList serverList, secureServerList secureServerList,
-                                 Boolean debug, Logger log, String hostname, int intervalLimit ){
+                                 resourceList newResourceList, serverList serverList,
+                                 Boolean debug, Logger log, String hostname, int intervalLimit){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
+        this.newResourceList = newResourceList;
         this.serverList = serverList;
-        this.secureServerList = secureServerList;
         this.debug = debug;
         this.log = log;
         this.hostname = hostname;
@@ -57,7 +59,6 @@ public class HandleUnsecureRequest implements Runnable{
             ServerSocket server = new ServerSocket(serverPort);
             OpenServer(server, serverPort);
         }catch(Exception e){
-            e.printStackTrace();
         }
 
 
@@ -69,13 +70,37 @@ public class HandleUnsecureRequest implements Runnable{
 
             ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
+
+            //Single thread executor for the relay thread, added by yankun
+            subscribeList subscribeList = new subscribeList();
+            subscribeList readyToSend = new subscribeList();
+            serverList serverDeleteList = new serverList();
+            serverDeleteList.initialserverList();
+            serverList serverAddList = new serverList();
+            serverAddList.initialserverList();
+
+            //Single thread executor for the subscription thread, added by yankun
+            ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+            subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
+                    intervalLimit , subscribeList, readyToSend);
+            singleThreadExecutor.execute(subscriptionThread);
+
+
+            // relay monitor
+            ExecutorService relayThreadExecutor = Executors.newSingleThreadExecutor();
+            relayThread relayThread = new relayThread(newResourceList, debug,
+                    subscribeList, serverList, serverDeleteList, serverAddList, readyToSend, false);
+            relayThreadExecutor.execute(relayThread);
+
             //create multiple threads to build connections
             Boolean f = true ;
             while(f){
                 Socket client = server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, serverList, secureServerList ,getDebug(), getHostname(), serverPort, getIntervalLimit());
+                            resourceList, newResourceList, serverAddList,
+                            serverList ,getDebug(), getHostname(), serverPort, getIntervalLimit(),
+                            subscribeList,readyToSend);
 
                     executor.execute(s);
                 }

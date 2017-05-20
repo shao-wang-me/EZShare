@@ -22,7 +22,8 @@ public class Function {
 	 * @return success or error information, and the error message if applicable
 	 * @throws URISyntaxException
 	 */
-	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
+	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList,
+												   resourceList newResourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -58,6 +59,7 @@ public class Function {
 				}
 				if(flag){
 					toReturn.put(true, "success");
+					newResourceList.add(resource);
 				}
 				else{
 					toReturn.put(false, "cannot publish resource");
@@ -101,7 +103,8 @@ public class Function {
 	 * @return success or error information, and the error message if applicable
 	 * @throws URISyntaxException
 	 */
-	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList) throws URISyntaxException {
+	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList
+			, resourceList newResourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -138,6 +141,7 @@ public class Function {
 					if (file.canRead() && !file.isDirectory()) {
 						/**Now we should be able to add or update the resource.*/
 						resourceList.add(resource);
+						newResourceList.add(resource);
 						toReturn.put(true, "success");
 
 					} else {
@@ -151,6 +155,7 @@ public class Function {
 						if (file.canRead() && !file.isDirectory()) {
 							resourceList.add(resource);
 							toReturn.put(true, "success");
+							newResourceList.add(resource);
 
 						} else {
 							toReturn.put(false, "cannot share resource");
@@ -244,7 +249,8 @@ public class Function {
 	 * @param host received new host
 	 * @return success or error information, and the error message if applicable
 	 */
-	public static HashMap<Boolean, String> exchange(serverList serverList, Host[] host, Host local) {
+	public static HashMap<Boolean, String> exchange(serverList serverList,serverList serverAddList,
+													Host[] host, Host local) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Host h : host) {
 				try {
@@ -261,6 +267,7 @@ public class Function {
 					}
 					if(flag == true){
 						serverList.add(h);
+						serverAddList.getServerList().add(h);
 					}
 				} catch (UnknownHostException e) {
 					toReturn.put(false, "invalid server");
@@ -269,6 +276,11 @@ public class Function {
 		}
 		toReturn.put(true, "success");
 		return toReturn;
+	}
+
+	// subscribe command
+	public static void subscribe() {
+
 	}
 	
 }

@@ -21,13 +21,16 @@ public class TimerTask implements Runnable{
 	private boolean debug ;
 	private Logger log;
 	private Host local;
+	private serverList serverDeleteList;
 	
-	public TimerTask(serverList serverList, resourceList resourceList, Host local, boolean debug, Logger log){
+	public TimerTask(serverList serverList, serverList serverDeleteList,
+					 resourceList resourceList, Host local, boolean debug, Logger log){
 		this.resourceList = resourceList;
 		this.serverList = serverList;
 		this.debug = debug;
 		this.log = log;
 		this.local = local;
+		this.serverDeleteList = serverDeleteList;
 	}
 	
 	@Override
@@ -42,6 +45,8 @@ public class TimerTask implements Runnable{
 	        update = serverUpdate.update(serverList,  local, h.getHostname(), h.getPort(), debug, log);
 	        if(update.getString("response").equals("error")){
 	        	serverList.delete(h);
+				//added by yankun
+				serverDeleteList.add(h);
 	        }
 		}catch(Exception e){
 			
