@@ -19,7 +19,6 @@ public class Client {
 		//This is the default host host and port number
 		Integer serverPort = 20006;
 		String serverIP = "localhost";
-		boolean secureFlag = false;
 		
 		HelpFormatter formatter = new HelpFormatter();
 
@@ -42,96 +41,96 @@ public class Client {
 		option.addOption("share", false, "share resource on server");
 		option.addOption("tags", true, "resource tags, tag1,tag2,tag3,...");
 		option.addOption("uri", true, "resource URI");
-		option.addOption("secure", false, "build secure connection");
+		option.addOption("subscribe", false, "build persistent connection");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
 
-		try{
+		try {
+			cmd = parser.parse(option, args);
+		} catch (ParseException e) {
+			System.out.println( e.getMessage());
+			System.exit(-1);
+		}
+		
+		if (cmd.hasOption("help") || cmd.hasOption("h")) { 
+			    formatter.printHelp("Help Documentation",option);
+			    System.exit(0);
+		}
+		
+		if (cmd.hasOption("host")) {
+			serverIP = cmd.getOptionValue("host");
+		}
+		if (cmd.hasOption("port")) {
+			serverPort = Integer.parseInt(cmd.getOptionValue("port"));
+		}
+
+		clientObject c = new clientObject(serverIP, serverPort);
+
+		if (cmd.hasOption("publish")) {
 			try {
-				cmd = parser.parse(option, args);
-			} catch (ParseException e) {
+				Operations.Publish(cmd, c);
+			} catch (JSONException e) {
 				System.out.println(e.getMessage());
 				System.exit(-1);
 			}
+		}
 
-			if (cmd.hasOption("help") || cmd.hasOption("h")) {
-				formatter.printHelp("Help Documentation",option);
-				System.exit(0);
+		if (cmd.hasOption("query")) {
+			try {
+				Operations.Query(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
 			}
+		}
 
-			if (cmd.hasOption("host")) {
-				serverIP = cmd.getOptionValue("host");
+		if (cmd.hasOption("remove")) {
+			try {
+				Operations.Remove(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
 			}
-			if (cmd.hasOption("port")) {
-				serverPort = Integer.parseInt(cmd.getOptionValue("port"));
+		}
+
+		if (cmd.hasOption("share")) {
+			try {
+				Operations.Share(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
 			}
-            if(cmd.hasOption("secure")){
-                secureFlag = true;
-            }
+		}
 
-			clientObject c = new clientObject(serverIP, serverPort, secureFlag);
-
-			if (cmd.hasOption("publish")) {
-				try {
-					Operations.Publish(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				}
+		if (cmd.hasOption("fetch")) {
+			try {
+				Operations.Fetch(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
 			}
-
-			if (cmd.hasOption("query")) {
-				try {
-					Operations.Query(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				}
+		}
+		
+		if (cmd.hasOption("exchange")) {
+			try {
+				Operations.Exchange(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println("Missing \"-servers\"");
+				System.exit(-1);
 			}
-
-			if (cmd.hasOption("remove")) {
-				try {
-					Operations.Remove(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				}
+		}
+		
+		if (cmd.hasOption("subscribe")) {
+			try {
+				Operations.Subscribe(cmd, c);
+			} catch (JSONException e) {
+				System.out.println(e.getMessage());
+				System.exit(-1);
 			}
-
-			if (cmd.hasOption("share")) {
-				try {
-					Operations.Share(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				}
-			}
-
-			if (cmd.hasOption("fetch")) {
-				try {
-					Operations.Fetch(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				}
-			}
-
-			if (cmd.hasOption("exchange")) {
-				try {
-					Operations.Exchange(cmd, c);
-				} catch (JSONException e) {
-					System.out.println(e.getMessage());
-					System.exit(-1);
-				} catch (ArrayIndexOutOfBoundsException e) {
-					System.out.println("Missing \"-servers\"");
-					System.exit(-1);
-				}
-			}
-
-		}catch(Exception e){
-			System.exit(-1);
-
 		}
 
 	}

@@ -5,7 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.cli.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class Operations {
 	
@@ -15,6 +18,10 @@ public class Operations {
 			name = cmd.getOptionValue("name");
 		}
 		return name;
+	}
+	
+	protected static String getId(String port) {
+		return RandomStringUtils.randomAlphanumeric(10);
 	}
 	
 	private static ArrayList<String> getTags(CommandLine cmd) {
@@ -76,6 +83,14 @@ public class Operations {
 		}
 		return servers;
 	}
+	
+	public static String getCurrentTime() {
+		long millis = System.currentTimeMillis();
+		Date now = new Date(millis); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String time = dateFormat.format(now);
+		return time + "." + millis % 1000;
+	}
 
 	private static JSONObject getResource(CommandLine cmd) throws JSONException {
 		JSONObject resource = new JSONObject("{}");
@@ -104,8 +119,6 @@ public class Operations {
 		sentJSON.put("command", "PUBLISH");
 		sentJSON.put("resource", resource);
 		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
-		
-		
 	}
 	
 	public static void Query(CommandLine cmd,clientObject c) throws JSONException {
@@ -161,11 +174,16 @@ public class Operations {
 		sentJSON.put("serverList", servers);
 		c.sendJSON(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
-	public static String getCurrentTime() {
-		long millis = System.currentTimeMillis();
-		Date now = new Date(millis); 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		String time = dateFormat.format(now);
-		return time + "." + millis % 1000;
+
+	public static void Subscribe(CommandLine cmd,clientObject c) throws JSONException {
+		JSONObject sentJSON = new JSONObject("{}");
+		JSONObject resource = getResource(cmd);
+		String id = getId(cmd.getOptionValue("port"));
+		sentJSON.put("resourceTemplate", resource);
+		sentJSON.put("relay", true);
+		sentJSON.put("id", id);
+		sentJSON.put("command", "SUBSCRIBE");
+		c.subscribe(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
 	}
+
 }

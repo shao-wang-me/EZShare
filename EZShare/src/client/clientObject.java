@@ -11,21 +11,14 @@ import org.json.*;
 import EZShare.Client;
 import support.LogFormatter;
 
-import javax.net.ssl.SSLServerSocketFactory;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-
 
 public class clientObject {
 
 	private Socket s = null;
 	private Logger log = null;
-	private SSLSocket ss = null;
-	private  boolean secureFlag;
 
-	public clientObject(String serverIP, int serverPort, boolean secureFlag) {
+	public clientObject(String serverIP, int serverPort) {
 		this.setLog();
-		this.secureFlag = secureFlag;
 		LogFormatter formatter = new LogFormatter();
         ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(formatter);
@@ -34,16 +27,10 @@ public class clientObject {
 		logIni.setLevel(Level.INFO);
 		logIni.info("setting debug on");
 		try {
-			if(secureFlag){
-                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
-                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-				ss = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
-			}
-			else{
-				s = new Socket(serverIP, serverPort);
-			}
+			s = new Socket(serverIP, serverPort);
 		} catch (UnknownHostException e) {
-		} catch (Exception e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,16 +51,8 @@ public class clientObject {
 	//we can just implement these functions with one method
 	public void sendJSON(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
 		try {
-			DataInputStream input;
-			DataOutputStream output;
-			if(secureFlag){
-				 input = new DataInputStream(ss.getInputStream());
-				 output = new DataOutputStream(ss.getOutputStream());
-			}
-			else{
-				 input = new DataInputStream(s.getInputStream());
-				 output = new DataOutputStream(s.getOutputStream());
-			}
+			DataInputStream input = new DataInputStream(s.getInputStream());
+			DataOutputStream output = new DataOutputStream(s.getOutputStream());
 
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
@@ -88,8 +67,8 @@ public class clientObject {
 			//Setting a time limit of 5 mins, and keep receiving msgs from the server 
 			while ((currentTime = System.currentTimeMillis()) - startTime <= 5*60*1000) {
 				JSONObject msgGet = null;
-				if ((message = input.readUTF())!= null) {
-					//message = input.readUTF();
+				if (input.available() > 0) {
+					message = input.readUTF();
 					msgGet = new JSONObject(message);
 					if(ifDebug) {
 						log.info("RECEIVED:" + msgGet.toString());
@@ -108,10 +87,13 @@ public class clientObject {
 				System.exit(0);
 			}
 		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (SocketException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
-		} catch (Exception e) {
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		} 
 	}
@@ -185,12 +167,90 @@ public class clientObject {
 				}
 			}
 		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (SocketException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
-		} catch (Exception e) {
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
+	}
+	
+	public void subscribe(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
+		try {
+			DataInputStream input = new DataInputStream(s.getInputStream());
+			DataOutputStream output = new DataOutputStream(s.getOutputStream());
+
+			if (ifDebug) {
+				log.info("SENT:" + j.toString());
+			}
+			output.writeUTF(j.toString());
+			output.flush();
+
+			
+			while (true) {
+				String message = "";
+				JSONObject msgGet = null;
+				if (input.available() > 0) {
+					message = input.readUTF();
+					msgGet = new JSONObject(message);
+					if(ifDebug) {
+						log.info("RECEIVED:" + msgGet.toString());
+					} else {
+						System.out.println(msgGet.toString());
+					}
+					if(msgGet.has("resultSize")) {
+						break;
+					}
+				}
+
+				long start = System.currentTimeMillis();
+
+				while(System.currentTimeMillis() - start < 1000) {
+
+
+					String str = null;
+					BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+					if (bf.ready()) {
+						str = bf.readLine();
+					}
+					if (str != null && str.length() == 0) {
+						JSONObject sentJSON = new JSONObject("{}");
+						String id = Operations.getId(port);
+						sentJSON.put("command", "UNSUBSCRIBE");
+						sentJSON.put("id", id);
+						if (ifDebug) {
+							log.info("SENT:" + sentJSON.toString());
+						}
+						output.writeUTF(sentJSON.toString());
+						output.flush();
+//					String message2 = "";
+//
+//						JSONObject msgGet2 = null;
+//						if (input.available() > 0){
+//							message2 = input.readUTF();
+//							msgGet2 = new JSONObject(message2);
+//							if(sentJSON.getString("command").equalsIgnoreCase("UNSUBSCRIBE") && msgGet.has("resultSize")) {
+//								break;
+//							}
+//						}
+
+
+					}
+				}
+			}
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		} catch (SocketException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		} 
 	}
 
 }
