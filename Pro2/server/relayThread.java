@@ -31,39 +31,85 @@ public class relayThread implements Runnable {
     private subscribeList relayList;
     private serverList serverDeleteList;
     private serverList serverAddList;
+    private subscribeList readyToSend;
 
-    public relayThread(resourceList newResourceList, Boolean debug, subscribeList subscribeList, serverList serverList, serverList serverDeleteList, serverList serverAddList) {
+    public relayThread(resourceList newResourceList, Boolean debug, subscribeList subscribeList, serverList serverList, serverList serverDeleteList, serverList serverAddList, subscribeList readyToSend) {
         this.newResourceList = newResourceList;
         this.debug = debug;
         this.subscribeList = subscribeList;
         this.serverList = serverList;
         this.serverDeleteList = serverDeleteList;
         this.serverAddList = serverAddList;
+        this.readyToSend = readyToSend;
         this.relayList = new subscribeList();
         sockets = new HashMap<String,Socket>();
     }
 
     public void run() {
         try {
+
             Thread.sleep(1000);
 
             while (true) {
+
+
                 try {
+
+
+                    Thread.sleep(1000);
+
+
                     boolean ifUpdate = false;
                     /**
                      * search the serverAddlist if its size is greater than one. If so, create socket connecting to the new
                      * server and add to the HashMap, send all the subscriptions in relayList, delete the record from serverAddList
                      */
 
+                    for(variable.Host h : serverList.getServerList()) {
+
+                        Socket s = new Socket(h.getHostname(), h.getPort());
+//                        sockets.put(h.getHostname(), s);
+                        DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                        for (JSONObject j : relayList.getList()) {
+                            if (!sockets.containsKey(j.getString("actualID") + h.getHostname())) {
+                                sockets.put(j.getString("actualID") + h.getHostname(), s);
+                                Resource re = (Resource) j.get("resourceTemplate");
+                                JSONObject send = new JSONObject("{}");
+
+                                sockets.put(j.getString("actualID") + h.getHostname(), s);
+
+                                send.put("command", "SUBSCRIBE");
+                                send.put("relay", false);
+                                JSONObject r = new JSONObject("{}");
+                                r.put("name", re.getName());
+                                r.put("tags", re.getTags());
+                                r.put("description", re.getDescription());
+                                r.put("uri", re.getUri());
+                                r.put("channel", re.getChannel());
+                                r.put("owner", re.getOwner());
+                                String ez = null;
+                                r.put("ezserver", ez);
+                                send.put("resourceTemplate", r);
+                                send.put("id", j.getString("actualID"));
+
+
+                                out.writeUTF(send.toString());
+                                out.flush();
+                            }
+                        }
+                    }
+
+
                     while (serverAddList.getServerList().size() > 0) {
                         Host h = serverAddList.getServerList().get(0);
                         Socket s = new Socket(h.getHostname(), h.getPort());
-                        sockets.put(h.getHostname(), s);
+//                        sockets.put(h.getHostname(), s);
                         DataOutputStream out = new DataOutputStream(s.getOutputStream());
                         for (JSONObject j : relayList.getList()) {
                             Resource re = (Resource) j.get("resourceTemplate");
                             JSONObject send = new JSONObject("{}");
 
+                            sockets.put(j.getString("actualID") + h.getHostname(),s);
 
                             send.put("command", "SUBSCRIBE");
                             send.put("relay", false);
@@ -92,9 +138,14 @@ public class relayThread implements Runnable {
                      */
                     while (serverDeleteList.getServerList().size() > 0) {
                         Host h = serverDeleteList.getServerList().get(0);
-                        Socket s = sockets.get(h.getHostname());
-                        s.close();
-                        sockets.remove(h.getHostname());
+
+                        for (JSONObject j : relayList.getList()) {
+
+                            Socket s = sockets.get(j.getString("actualID") + h.getHostname());
+                            s.close();
+                            sockets.remove(j.getString("actualID") + h.getHostname());
+
+                        }
                         serverDeleteList.delete(h);
                         ifUpdate = true;
                     }
@@ -133,7 +184,7 @@ public class relayThread implements Runnable {
 
                             for (variable.Host h : serverList.getServerList()) {
 
-                                DataOutputStream out = new DataOutputStream(sockets.get(h.getHostname()).getOutputStream());
+                                DataOutputStream out = new DataOutputStream(sockets.get(subscribeRecord.getString("actualID") + h.getHostname()).getOutputStream());
 
                                 out.writeUTF(send.toString());
                                 out.flush();
@@ -158,37 +209,55 @@ public class relayThread implements Runnable {
                             send.put("id", relayRecord.getString("actualID"));
 
                             for (variable.Host h : serverList.getServerList()) {
-                                Socket s = sockets.get(h.getHostname());
-                                DataOutput out = new DataOutputStream(s.getOutputStream());
+                                Socket s = sockets.get(relayRecord.getString("actualID") + h.getHostname());
+                                DataOutputStream out = new DataOutputStream(s.getOutputStream());
                                 out.writeUTF(send.toString());
+                                out.flush();
                             }
                         }
                     }
 
                     for (variable.Host h : serverList.getServerList()) {
-                        DataInputStream in = new DataInputStream(sockets.get(h.getHostname()).getInputStream());
 
-                        if (in.available() > 0) {
+                        for (JSONObject relayRecord : relayList.getList()) {
 
-                            JsonElement root = new JsonParser().parse(in.readUTF());
-                            Resource resource = new Resource("", "", new ArrayList<String>(), "", "", "", "");
-                            Gson gson = new Gson();
-                            Resource r = gson.fromJson(root.getAsJsonObject(), Resource.class);
-                            newResourceList.add(r);
+                            DataInputStream in = new DataInputStream(sockets.get(relayRecord.getString("actualID") + h.getHostname()).getInputStream());
+
+                            if (in.available() > 0) {
+
+                                /**
+                                 * need to check if this is really a resource
+                                 */
+
+                                String s = in.readUTF();
 
 
+                                System.out.println(s);
+
+
+                                JsonElement root = new JsonParser().parse(s);
+                                if (!(root.getAsJsonObject().has("response") || root.getAsJsonObject().has("resultSize"))) {
+                                    Resource resource = new Resource("", "", new ArrayList<String>(), "", "", "", "");
+                                    Gson gson = new Gson();
+                                    resource = gson.fromJson(root.getAsJsonObject(), Resource.class);
+                                   // newResourceList.add(r);
+                                    readyToSend.add(relayRecord.getString("userID"), relayRecord.getString("actualID"), false, resource);
+
+                                }
+
+                            }
                         }
 
                     }
 
 
                 } catch (IOException e) {
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                }
+                catch (Exception e) {
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        }
+        catch (Exception e) {
         }
     }
 

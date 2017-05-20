@@ -178,8 +178,9 @@ public class clientObject {
 		}
 	}
 	
-	public void subscribe(JSONObject j,boolean ifDebug,String host,String port) throws JSONException {
+	public void subscribe(JSONObject j,boolean ifDebug,String host,String port,String id) throws JSONException {
 		try {
+			boolean ifUnsub = false;
 			DataInputStream input = new DataInputStream(s.getInputStream());
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
 
@@ -190,9 +191,20 @@ public class clientObject {
 			output.flush();
 
 			String message = "";
-			
+			long start = System.currentTimeMillis();
 			while (true) {
 				JSONObject msgGet = null;
+				long current = System.currentTimeMillis();
+
+				if (current - start > 1000*60*5 && !ifUnsub) {
+					JSONObject reply = new JSONObject("{}");
+					reply.put("command","UNSUBSCRIBE");
+					reply.put("id",id);
+					ifUnsub = true;
+					output.writeUTF(reply.toString());
+					output.flush();
+				}
+
 				if (input.available() > 0) {
 					message = input.readUTF();
 					msgGet = new JSONObject(message);
@@ -201,8 +213,8 @@ public class clientObject {
 					} else {
 						System.out.println(msgGet.toString());
 					}
-					if(j.getString("command").equalsIgnoreCase("SUBSCRIBE") && msgGet.has("id")) {
-						continue;
+					if(msgGet.has("resultSize")) {
+						break;
 					}
 				}
 //				BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));

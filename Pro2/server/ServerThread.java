@@ -35,7 +35,7 @@ import variable.subscribeList;
 
 public class ServerThread implements Runnable {
 	
-	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE,SUBSCRIBE;}
+	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE,SUBSCRIBE,UNSUBSCRIBE}
 
 	private Socket client ;
 	
@@ -195,6 +195,10 @@ public class ServerThread implements Runnable {
 						Host h = new Host(getHostname(), getPort());
 						String clientID = this.client.getInetAddress().getHostAddress() + ":" + this.client.getPort();
 						Subscribe.subscribe(root, out, in, clientID, newResourceList, subscribeList, readyToSend, serverList, h, getDebug(), getLog());
+						client.close();
+						break;
+					}
+					case UNSUBSCRIBE:{
 						break;
 					}
 					default:{

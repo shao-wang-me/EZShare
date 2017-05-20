@@ -193,7 +193,7 @@ public class Operations {
 		sentJSON.put("id", id);
 		sentJSON.put("command", "SUBSCRIBE");
 		System.out.println(sentJSON.toString());
-		c.subscribe(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"));
+		c.subscribe(sentJSON,cmd.hasOption("debug"),cmd.getOptionValue("host"),cmd.getOptionValue("port"), id);
 	}
 
 }

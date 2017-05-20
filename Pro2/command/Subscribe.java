@@ -52,14 +52,6 @@ public class Subscribe {
                     actualID = userID + clientID;
                     subscribeList.add(userID, actualID, relay, resource);
 
-                    {
-                        //System.out.println("subscribe list size : " + subscribeList.getList().size());
-                        for (JSONObject j:subscribeList.getList()) {
-                            System.out.println(j.getString("userID") + j.getString("actualID"));
-                        }
-                    }
-
-
 
 
                     reply.put("response","success");
@@ -67,6 +59,7 @@ public class Subscribe {
                     out.writeUTF(reply.toString());
                     out.flush();
                     Debug.printDebug('s',reply.toString() , debug, log);
+                    int resultSize = 0;
 
                     while(true) {
 
@@ -90,26 +83,17 @@ public class Subscribe {
                                     out.writeUTF(re.toString());
                                     out.flush();
 
-                                    {
-                                        System.out.println("subscribe list size : " + subscribeList.getList().size());
-                                        for (JSONObject j:subscribeList.getList()) {
-                                            System.out.println(j.getString("userID") + "  " + j.getString("actualID"));
-                                        }
-                                    }
 
 
                                 } else if (command.equals("UNSUBSCRIBE")) {
                                     userID = jsonEle.getAsJsonObject().get("id").getAsString();
                                     actualID = userID + clientID;
+                                    JSONObject rep = new JSONObject("{}");
+                                    rep.put("resultSize",resultSize);
+                                    out.writeUTF(rep.toString());
+                                    out.flush();
                                     subscribeList.remove(actualID);
-
-                                    {
-                                        System.out.println("subscribe list size : " + subscribeList.getList().size());
-                                        for (JSONObject j:subscribeList.getList()) {
-                                            System.out.println(j.getString("userID") + j.getString("actualID"));
-                                        }
-                                    }
-
+                                    break;
 
                                 }
                             }
@@ -139,6 +123,7 @@ public class Subscribe {
                                     }
 
                                     out.writeUTF(re.toString());
+                                    resultSize ++;
                                     out.flush();
                                     iterator.remove();
                                 }
