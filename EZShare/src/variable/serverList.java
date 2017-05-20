@@ -28,10 +28,10 @@ public class serverList {
 	public synchronized void delete(Host h){
 		int index = 0 ;
 		for(Host o : serverList){
-			index++;
 			if(o.equals(h)){
 				getServerList().remove(index);
 			}
+			index++;
 		}
 	}
 

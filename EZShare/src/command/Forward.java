@@ -1,9 +1,6 @@
 package command;
 
 import com.google.gson.JsonSyntaxException;
-
-import security.*;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import variable.resourceList;
@@ -14,14 +11,9 @@ import support.Debug;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.logging.Logger;
-
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by xutianyu on 4/25/17.
@@ -31,24 +23,13 @@ import javax.net.ssl.SSLSocketFactory;
  */
 public class Forward {
 
-    public static resourceList forward(String str, Host h, boolean debug, Logger log, boolean secure){
+    public static resourceList forward(String str, Host h, boolean debug, Logger log){
         resourceList r = new resourceList();
         r.initialResourceList();
 
         // build connection with host h
         try{
-            Socket agent ;
-            SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
-        	if (secure) {
-                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
-                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-                agent = (SSLSocket)sslsocketfactory.createSocket();
-                agent.connect(socketaddr, 5000);
-        	} else {
-                agent = new Socket();
-                agent.connect(socketaddr, 5000);
-        	}
-            
+            Socket agent = new Socket(h.getHostname(), h.getPort());
 
             
             //Socket 输出流， 转发查询

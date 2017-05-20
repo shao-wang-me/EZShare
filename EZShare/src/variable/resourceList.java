@@ -38,7 +38,9 @@ public class resourceList {
 			resourceList.remove(temp);
 		}
 	}
-	
+
+	public synchronized void delete(int index) { resourceList.remove(index); }
+
 	public boolean contains(Resource r){
 		String key = r.getKey();
 		boolean contains = false;
@@ -59,10 +61,16 @@ public class resourceList {
 		}
 		resourceList.add(r);
 	}
-	
+
+	public int size(){ return this.resourceList.size(); }
+
 	public void initialResourceList(){
 		ArrayList<Resource> resourceList = new ArrayList<Resource>();
 		setResourceList(resourceList);
+	}
+
+	public Resource getFirstResource(){
+		return resourceList.get(0);
 	}
 	
 	public Resource getResourceTemplate() {

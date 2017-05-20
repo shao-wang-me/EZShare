@@ -6,14 +6,13 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.net.ssl.SSLSocket;
-
 import EZShare.Server;
 import command.*;
 import org.json.JSONObject;
 
 import java.io.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
@@ -24,8 +23,8 @@ import support.LogFormatter;
 import variable.Host;
 import variable.Resource;
 import variable.resourceList;
-import variable.secureServerList;
 import variable.serverList;
+import variable.subscribeList;
 
 
 /**
@@ -35,19 +34,20 @@ import variable.serverList;
  */
 
 public class ServerThread implements Runnable {
-
-
-	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE;}
+	
+	private enum Operation {PUBLISH,REMOVE,SHARE,QUERY,FETCH,EXCHANGE,SUBSCRIBE,UNSUBSCRIBE}
 
 	private Socket client ;
 	
 	private String secret;
 	
 	private resourceList resourceList;
+
+	private resourceList newResourceList;
+
+	private subscribeList subscribeList;
 	
 	private serverList serverList;
-	
-	private secureServerList secureServerList;
 	
 	private Boolean debug = true;
 	
@@ -58,27 +58,30 @@ public class ServerThread implements Runnable {
 	private int port;
 
 	private int intervalLimit;
-	
-	private boolean secure;
+
+	private subscribeList readyToSend;
+
+	private serverList serverAddList;
 
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, 
-			resourceList resourceList, serverList serverList, secureServerList secureServerList, 
-			Boolean debug, String hostname, int port, int intervalLimit ){
+			resourceList resourceList, resourceList newResourceList, serverList serverList, serverList serverAddList, Boolean debug,
+			String hostname, int port, int intervalLimit ,subscribeList subscribeList, subscribeList readyToSend){
 		this.client = client ;
 		this.secret = secret;
 		this.resourceList = resourceList;
+		this.newResourceList = newResourceList;
 		this.serverList = serverList;
-		this.secureServerList = secureServerList;
 		this.debug = debug;
 		this.setLog();
 		this.hostname = hostname;
 		this.port = port;
 		this.intervalLimit = intervalLimit;
-		this.secure = client instanceof SSLSocket;
+		this.subscribeList = subscribeList;
+		this.readyToSend = readyToSend;
+		this.serverAddList = serverAddList;
 	}
-
 
 	@Override
 	public void run() {
@@ -98,11 +101,12 @@ public class ServerThread implements Runnable {
                 //parseJson(reader);
                 Boolean flag = true ;
 
-
+ 
                 //client.setSoTimeout(100);
                 try {
                     while(flag){
                         String str = buf.readUTF();
+                        System.out.println(str);
                         Debug.printDebug('r',str, debug, log);
 
                         if(str == null ){
@@ -111,7 +115,7 @@ public class ServerThread implements Runnable {
                         else{
                             //out.writeUTF(str);
                             //System.out.println("from server :"+str);
-                            parseJson(str, out);
+                            parseJson(str, out, buf, serverAddList);
                         }
                     }
                 } catch (IOException i) {
@@ -135,7 +139,7 @@ public class ServerThread implements Runnable {
 	}
 
 	// parse json command & choose relevant method
-	private void parseJson(String  message, DataOutputStream out){
+	private void parseJson(String  message, DataOutputStream out, DataInputStream in, serverList serverAddList){
 		String key = null;
 		ArrayList<String> list = new ArrayList<String>();
 		Resource resource = new Resource("", "", list, "", "", "", "");
@@ -145,8 +149,10 @@ public class ServerThread implements Runnable {
 		try {
 			
 			//initialize variables
+
 			JsonElement root = new JsonParser().parse(message);
-			Gson gson = new Gson();
+			//Gson gson = new Gson();
+
 			if(root.getAsJsonObject().has("command")){
 				String commandName = root.getAsJsonObject().get("command").getAsString();
 				Operation operation = Operation.valueOf(commandName);
@@ -156,7 +162,7 @@ public class ServerThread implements Runnable {
 					case PUBLISH:{
 						//check resource field exists
 						Host h = new Host(getHostname(), getPort());
-						Publish.publish(root, out, resourceList, serverList, h, getDebug(), getLog());
+						Publish.publish(root, out, resourceList, newResourceList, serverList, h, getDebug(), getLog());
 						break;
 					}
 					case REMOVE:{
@@ -167,16 +173,12 @@ public class ServerThread implements Runnable {
 					}
 					case SHARE:{
 						Host h = new Host(getHostname(), getPort());
-						Share.share(root, out, resourceList, serverList, h, getDebug(), getLog(), this.secret);
+						Share.share(root, out, resourceList, newResourceList, serverList, h, getDebug(), getLog(), this.secret);
 						break;
 					}
 					case QUERY:{
 						Host h = new Host(getHostname(), getPort());
-						if (secure) {
-							Query.query(root, out, resourceList, secureServerList, h, getDebug(), getLog(), secure);
-						} else {
-							Query.query(root, out, resourceList, serverList, h, getDebug(), getLog(), secure);
-						}
+						Query.query(root, out, resourceList, serverList, h, getDebug(), getLog());
 						break;
 					}
 					case FETCH:{
@@ -186,11 +188,17 @@ public class ServerThread implements Runnable {
 					}
 					case EXCHANGE:{
 						Host h = new Host(getHostname(), getPort());
-						if (secure) {
-							Exchange.exchange(root, out, resourceList, secureServerList, h, getDebug(), getLog());
-						} else {
-							Exchange.exchange(root, out, resourceList, serverList, h, getDebug(), getLog());
-						}
+						Exchange.exchange(root, out, resourceList, serverList, serverAddList, h, getDebug(), getLog());
+						break;
+					}
+					case SUBSCRIBE:{
+						Host h = new Host(getHostname(), getPort());
+						String clientID = this.client.getInetAddress().getHostAddress() + ":" + this.client.getPort();
+						Subscribe.subscribe(root, out, in, clientID, newResourceList, subscribeList, readyToSend, serverList, h, getDebug(), getLog());
+						client.close();
+						break;
+					}
+					case UNSUBSCRIBE:{
 						break;
 					}
 					default:{

@@ -22,7 +22,7 @@ public class Function {
 	 * @return success or error information, and the error message if applicable
 	 * @throws URISyntaxException
 	 */
-	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList) throws URISyntaxException {
+	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList, resourceList newResourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -35,31 +35,44 @@ public class Function {
 			 */
 			if (resource.isFile()) {
 				toReturn.put(false, "cannot publish resource");
-			}else {
+			} else {
 				/**Now we should be able to add or update the resource.*/
 				boolean flag = true;
 				boolean flag2 = true;
-				for(Resource r : resourceList.getResourceList()){
-					if(r.getKey().equals(resource.getKey())){
-						if(r.getOwner().equals(resource.getOwner())){
+				for (Resource r : resourceList.getResourceList()) {
+					if (r.getKey().equals(resource.getKey())) {
+						if (r.getOwner().equals(resource.getOwner())) {
 							resourceList.add(r);
 							flag2 = false;
 							break;
-						}
-						else{
+						} else {
 							flag = false;
 							flag2 = false;
 							break;
 						}
 					}
 				}
-				if(flag2){
+				/**
+				 * If flag2 is true, there is no resource in the resourceList having
+				 * the same key with given resource, which means the resource can be
+				 * published, therefore, we need to add this resource to the list called
+				 * newResourceList.
+				 * If flag is true, there is a resource in the resourceList sharing the
+				 * same key and owner with given resource, which means the resource
+				 * can be published.
+				 * Otherwise, the resource cannot be published.
+				 *                                           - comment added by Yankun
+				 */
+				if (flag2) {
 					resourceList.add(resource);
+					newResourceList.add(resource);
+
 				}
-				if(flag){
+				if (flag) {
 					toReturn.put(true, "success");
-				}
-				else{
+					newResourceList.add(resource);
+
+				} else {
 					toReturn.put(false, "cannot publish resource");
 				}
 
@@ -101,7 +114,7 @@ public class Function {
 	 * @return success or error information, and the error message if applicable
 	 * @throws URISyntaxException
 	 */
-	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList) throws URISyntaxException {
+	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList, resourceList newResourceList) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -138,6 +151,7 @@ public class Function {
 					if (file.canRead() && !file.isDirectory()) {
 						/**Now we should be able to add or update the resource.*/
 						resourceList.add(resource);
+						newResourceList.add(resource);
 						toReturn.put(true, "success");
 
 					} else {
@@ -150,6 +164,7 @@ public class Function {
 						File file = new File(resource.getURI().getPath());
 						if (file.canRead() && !file.isDirectory()) {
 							resourceList.add(resource);
+							newResourceList.add(resource);
 							toReturn.put(true, "success");
 
 						} else {
@@ -244,7 +259,7 @@ public class Function {
 	 * @param host received new host
 	 * @return success or error information, and the error message if applicable
 	 */
-	public static HashMap<Boolean, String> exchange(serverList serverList, Host[] host, Host local) {
+	public static HashMap<Boolean, String> exchange(serverList serverList,serverList serverAddList, Host[] host, Host local) {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		for (Host h : host) {
 				try {
@@ -261,14 +276,22 @@ public class Function {
 					}
 					if(flag == true){
 						serverList.add(h);
+						serverAddList.getServerList().add(h);
 					}
 				} catch (UnknownHostException e) {
 					toReturn.put(false, "invalid server");
+					System.out.println(e.getMessage());
 					return toReturn;
 				}
 		}
 		toReturn.put(true, "success");
 		return toReturn;
+	}
+
+	/**
+	 *
+	 */
+	public static void subscribe() {
 	}
 	
 }
