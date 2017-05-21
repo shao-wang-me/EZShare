@@ -75,13 +75,15 @@ public class Query
                         trans.remove("relay");
                         trans.addProperty("relay", false);
 
-                        for (Host host : serverList.getServerList()) {
-                            resourceList tempList = new resourceList();
-                            tempList.initialResourceList();
-                            tempList = Forward.forward(trans.toString(), host, debug, log, secure);
-                            if (tempList.getResourceList().size() != 0) {
-                               for (Resource r : tempList.getResourceList()) {
-                                    resultList.add(r);
+                        if (serverList.getServerList().size() != 0 ){
+                            for (Host host : serverList.getServerList()) {
+                                resourceList tempList = new resourceList();
+                                tempList.initialResourceList();
+                                tempList = Forward.forward(trans.toString(), host, debug, log, secure);
+                                if (tempList.getResourceList().size() != 0) {
+                                    for (Resource r : tempList.getResourceList()) {
+                                        resultList.add(r);
+                                    }
                                 }
                             }
                         }
@@ -128,6 +130,7 @@ public class Query
 
             }
         }catch(Exception e){
+            e.printStackTrace();
         }
 
 

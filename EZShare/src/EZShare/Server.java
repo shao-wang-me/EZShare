@@ -63,6 +63,8 @@ public class Server {
 		resourceList.initialResourceList();
 		serverList = new serverList();
 		serverList.initialserverList();
+		secureServerList = new secureServerList();
+		secureServerList.initialserverList();
 
 		//added by yankun
 		newResourceList  = new resourceList();
@@ -124,7 +126,7 @@ public class Server {
 			log.info("- Starting the EZShare Server");
 			log.info("- using secret:"+secret);
 			log.info("- using advertised hostname:"+hostname);
-			log.info("- bound to port"+port);
+			log.info("- bound to port:"+port);
 			log.info("- bound to secure port" + sport);
 			log.info("- started");
 			if(debug){
