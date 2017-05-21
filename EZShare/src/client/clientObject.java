@@ -35,7 +35,16 @@ public class clientObject {
 		logIni.info("setting debug on");
 		try {
 			if(secureFlag){
-                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
+
+				InputStream keystoreInput = getClass()
+						.getResourceAsStream("/serverKeystore/server.jks");
+				InputStream truststoreInput = getClass()
+						.getResourceAsStream("/clientKeystore/client.jks");
+				support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+				keystoreInput.close();
+				truststoreInput.close();
+
+				//System.setProperty("javax.net.ssl.trustStore", getClass().getResource("/clientKeystore/client.jks").getFile());
                 SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
 				ss = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
 			}

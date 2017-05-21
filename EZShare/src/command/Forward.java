@@ -14,6 +14,7 @@ import support.Debug;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -40,7 +41,16 @@ public class Forward {
             Socket agent ;
             SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
         	if (secure) {
-                System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
+
+                InputStream keystoreInput = Forward.class
+                        .getResourceAsStream("/serverKeystore/server.jks");
+                InputStream truststoreInput = Forward.class
+                        .getResourceAsStream("/clientKeystore/client.jks");
+                support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+                keystoreInput.close();
+                truststoreInput.close();
+                //System.setProperty("javax.net.ssl.trustStore",
+                        //Forward.class.getResource("/clientKeystore/client.jks").getFile());
                 SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
                 agent = (SSLSocket)sslsocketfactory.createSocket();
                 agent.connect(socketaddr, 5000);

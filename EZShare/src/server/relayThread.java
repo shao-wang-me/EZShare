@@ -1,9 +1,6 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,8 +74,16 @@ public class relayThread implements Runnable {
                         SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
 
                         if (secure) {
-                            System.setProperty("javax.net.ssl.trustStore",
-                                    getClass().getResource("/clientKeystore/client.jks").getFile());
+
+                            InputStream keystoreInput = getClass()
+                                    .getResourceAsStream("/serverKeystore/server.jks");
+                            InputStream truststoreInput = getClass()
+                                    .getResourceAsStream("/clientKeystore/client.jks");
+                            support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+                            keystoreInput.close();
+                            truststoreInput.close();
+                            //System.setProperty("javax.net.ssl.trustStore",
+                                    //getClass().getResource("/clientKeystore/client.jks").getFile());
                             SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
                             s = (SSLSocket)sslsocketfactory.createSocket();
                             s.connect(socketaddr, 5000);

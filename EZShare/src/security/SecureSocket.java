@@ -4,6 +4,7 @@ import com.sun.net.ssl.internal.ssl.Provider;
 import variable.Host;
 
 import javax.net.ssl.*;
+import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 
@@ -32,14 +33,19 @@ public class SecureSocket {
      *
      */
 
-    public static SSLServerSocket serverSecure(Host host) {
+    public static SSLServerSocket serverSecure(Host host) throws Exception {
         {
             // Registering the JSSE provider
             Security.addProvider(new Provider());
 
             //Specifying the Keystore details
-            System.setProperty("javax.net.ssl.keyStore", "keyStore.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "123456");
+            InputStream keystoreInput = SecureSocket.class
+                    .getResourceAsStream("/serverKeystore/server.jks");
+            InputStream truststoreInput = SecureSocket.class
+                    .getResourceAsStream("/clientKeystore/client.jks");
+            support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+            keystoreInput.close();
+            truststoreInput.close();
 
             // Enable debugging to view the handshake and communication which happens between the SSLClient and the SSLServer
             // System.setProperty("javax.net.debug","all");
