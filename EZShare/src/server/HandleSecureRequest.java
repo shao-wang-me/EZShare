@@ -1,6 +1,7 @@
 package server;
 
 import com.sun.net.ssl.internal.ssl.Provider;
+import support.SetSecureSocket;
 import variable.resourceList;
 import variable.serverList;
 import variable.secureServerList;
@@ -10,15 +11,21 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.security.KeyStore;
 import java.security.PrivilegedActionException;
 import java.security.Security;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Created by xutianyu on 5/14/17.
@@ -69,9 +76,17 @@ public class HandleSecureRequest implements Runnable{
             // Initialize the Server Socket
             Security.addProvider(new Provider());
 
+            InputStream keystoreInput = getClass()
+                    .getResourceAsStream("/serverKeystore/server.jks");
+            InputStream truststoreInput = getClass()
+                    .getResourceAsStream("/clientKeystore/client.jks");
+            support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+            keystoreInput.close();
+            truststoreInput.close();
+
             //Specifying the Keystore details
-            System.setProperty("javax.net.ssl.keyStore", "serverKeystore/server.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "comp90015");
+            //System.setProperty("javax.net.ssl.keyStore", buffer.lines().collect(Collectors.joining("\n")));
+            //System.setProperty("javax.net.ssl.keyStorePassword", "comp90015");
 
             //Single thread executor for the relay thread, added by yankun
             subscribeList subscribeList = new subscribeList();
@@ -118,10 +133,6 @@ public class HandleSecureRequest implements Runnable{
             server.close();
 
         }catch(Exception e){
-            PrivilegedActionException priexp = new PrivilegedActionException(e);
-            System.out.println(" Priv exp --- " + priexp.getMessage());
-
-            System.out.println(" Exception occurred .... " +e);
             e.printStackTrace();        }
 
         }
