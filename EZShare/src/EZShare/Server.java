@@ -130,9 +130,7 @@ public class Server {
 			if(debug){
 				log.info("- setting debug on");
 			}
-			
-			ServerSocket server = new ServerSocket(getPort());
-			
+
 			//Time schedule thread pool
 			ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 			Host local = new Host(getHostname(),getPort());
