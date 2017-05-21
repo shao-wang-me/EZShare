@@ -77,7 +77,8 @@ public class relayThread implements Runnable {
                         SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
 
                         if (secure) {
-                            System.setProperty("javax.net.ssl.trustStore", "clientKeyStore/client.jks");
+                            System.setProperty("javax.net.ssl.trustStore",
+                                    getClass().getResource("/clientKeystore/client.jks").getFile());
                             SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
                             s = (SSLSocket)sslsocketfactory.createSocket();
                             s.connect(socketaddr, 5000);
