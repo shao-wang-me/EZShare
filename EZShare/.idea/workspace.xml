@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="510e2f81-b7a2-4f79-acb6-946166b394af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/subscribeThread.java" afterPath="$PROJECT_DIR$/src/server/subscribeThread.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,7 +84,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="subscribeThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="subscribeThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/subscribeThread.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-326">
@@ -95,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Function.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/Function.java">
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="219" column="0" lean-forward="false" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="28" column="31" lean-forward="false" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -147,6 +146,7 @@
       <find>add</find>
       <find>secureServerList</find>
       <find>server</find>
+      <find>debug</find>
     </findStrings>
     <replaceStrings>
       <replace>debug</replace>
@@ -306,6 +306,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EZShare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EZShare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EZShare" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -851,7 +869,7 @@
       <workItem from="1495353635909" duration="11895000" />
       <workItem from="1495407954428" duration="49000" />
       <workItem from="1495623851016" duration="2161000" />
-      <workItem from="1495678242886" duration="43000" />
+      <workItem from="1495678242886" duration="241000" />
     </task>
     <task id="LOCAL-00001" summary="fix some error">
       <created>1494895151930</created>
@@ -951,11 +969,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495631979135</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="one line in subscribe thread">
+      <created>1495678306698</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1495678306698</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94199000" />
+    <option name="totallyTimeSpent" value="94397000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1046,7 +1071,8 @@
     <MESSAGE value="solve secure socket bugs from java to jar v2" />
     <MESSAGE value="solve secure socket bugs from java to jar" />
     <MESSAGE value="jar error" />
-    <option name="LAST_COMMIT_MESSAGE" value="jar error" />
+    <MESSAGE value="one line in subscribe thread" />
+    <option name="LAST_COMMIT_MESSAGE" value="one line in subscribe thread" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1369,14 +1395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/json-20160810 .jar!/org/json/JSONObject.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -1527,6 +1545,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-326">
           <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="28" column="31" lean-forward="false" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="31" />
           <folding />
         </state>
       </provider>
