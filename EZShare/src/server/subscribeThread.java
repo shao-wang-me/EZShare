@@ -31,15 +31,14 @@ public class subscribeThread implements Runnable {
     }
     public void run() {
         try {
+
             Thread.sleep(intervalLimit * 2);
 
             for (;;){
 
-
+                Thread.sleep(1000);
 
                 if (newResourceList.size() > 0) {
-
-                    Thread.sleep(1000);
 
                     Resource r = newResourceList.getFirstResource();
                     /**
