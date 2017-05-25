@@ -46,7 +46,7 @@ public class clientObject {
 
 				//System.setProperty("javax.net.ssl.trustStore", getClass().getResource("/clientKeystore/client.jks").getFile());
                 SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-				ss = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
+				s = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
 			}
 			else{
 				s = new Socket(serverIP, serverPort);
@@ -75,14 +75,10 @@ public class clientObject {
 		try {
 			DataInputStream input;
 			DataOutputStream output;
-			if(secureFlag){
-				 input = new DataInputStream(ss.getInputStream());
-				 output = new DataOutputStream(ss.getOutputStream());
-			}
-			else{
+
 				 input = new DataInputStream(s.getInputStream());
 				 output = new DataOutputStream(s.getOutputStream());
-			}
+
 
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
@@ -129,7 +125,7 @@ public class clientObject {
 		int resourceSize = 0;
 		String uri = "";
 		try {
-			
+
 			DataInputStream input = new DataInputStream(s.getInputStream());
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
 			
@@ -261,7 +257,7 @@ public class clientObject {
 		} catch (SocketException e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
