@@ -9,15 +9,7 @@
     <list default="true" id="510e2f81-b7a2-4f79-acb6-946166b394af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/client/clientObject.class" afterPath="$PROJECT_DIR$/bin/client/clientObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/client/unsubscribeThread.class" afterPath="$PROJECT_DIR$/bin/client/unsubscribeThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ezshare/ezshare.jar" afterPath="$PROJECT_DIR$/ezshare/ezshare.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EZShare/Client.java" afterPath="$PROJECT_DIR$/src/EZShare/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/clientObject.java" afterPath="$PROJECT_DIR$/src/client/clientObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/unsubscribeThread.java" afterPath="$PROJECT_DIR$/src/client/unsubscribeThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleSecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleSecureRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/relayThread.java" afterPath="$PROJECT_DIR$/src/server/relayThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/subscribeThread.java" afterPath="$PROJECT_DIR$/src/server/subscribeThread.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1035,7 +1027,7 @@
       <workItem from="1495770465150" duration="55000" />
       <workItem from="1495779453700" duration="6298000" />
       <workItem from="1495789274272" duration="10172000" />
-      <workItem from="1495801112381" duration="12119000" />
+      <workItem from="1495801112381" duration="12163000" />
     </task>
     <task id="LOCAL-00001" summary="fix some error">
       <created>1494895151930</created>
@@ -1226,11 +1218,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495818288956</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="final submission">
+      <created>1495820593508</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1495820593508</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137767000" />
+    <option name="totallyTimeSpent" value="137811000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1325,7 +1324,8 @@
     <MESSAGE value="525 fix some subscribe error" />
     <MESSAGE value="small" />
     <MESSAGE value="fix bug of secure and unsecure" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug of secure and unsecure" />
+    <MESSAGE value="final submission" />
+    <option name="LAST_COMMIT_MESSAGE" value="final submission" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
