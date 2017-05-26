@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/json-20160810.jar!/" />
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/com.sun.net.ssl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/gson-2.6.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/gson-2.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/commons-cli-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/EZShare/lib/commons-lang3-3.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
