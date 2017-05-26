@@ -38,7 +38,7 @@ public class subscribeThread implements Runnable {
 
                 Thread.sleep(1000);
 
-                if (newResourceList.size() > 0) {
+                if (newResourceList.getResourceList().size() > 0) {
 
                     Resource r = newResourceList.getFirstResource();
                     /**
@@ -47,7 +47,7 @@ public class subscribeThread implements Runnable {
                      * add the resource and id into the readyToSent list and
                      * remove it from the newResourceList
                      */
-                    for (JSONObject temp : subscribeList.getList()) {
+                    for (JSONObject temp : subscribeList.getSubList()) {
                         String actualID = temp.getString("actualID");
                         Resource tempRe = (Resource)temp.get("resourceTemplate");
                         boolean match = true;
@@ -90,6 +90,7 @@ public class subscribeThread implements Runnable {
 
         } catch (Exception e) {
             System.out.println("exception     " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

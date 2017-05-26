@@ -1,6 +1,5 @@
 package variable;
 
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -13,13 +12,13 @@ import java.util.ArrayList;
  */
 public class subscribeList {
 
-    private ArrayList<JSONObject> subList;
+    private  ArrayList<JSONObject> subList;
 
     public subscribeList() {
         this.subList = new ArrayList<JSONObject>();
     }
 
-    public synchronized void add(String userID, String actualID, boolean relay, Resource resource) {
+    public  void add(String userID, String actualID, boolean relay, Resource resource) {
         JSONObject temp = new JSONObject();
         temp.put("userID",userID);
         temp.put("actualID",actualID);
@@ -28,7 +27,7 @@ public class subscribeList {
         this.subList.add(temp);
     }
 
-    public synchronized void add(JSONObject j) {
+    public  void add(JSONObject j) {
         this.subList.add(j);
     }
 
@@ -56,4 +55,10 @@ public class subscribeList {
     public int size() {
         return this.subList.size();
     }
+
+    public ArrayList<JSONObject> getSubList(){
+        return subList;
+    }
+
+
 }
