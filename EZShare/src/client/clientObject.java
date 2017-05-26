@@ -203,12 +203,13 @@ public class clientObject {
 		try {
 			DataInputStream input = new DataInputStream(s.getInputStream());
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
+			boolean stop = false;
 
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
 			}
 
-			unsubscribeThread unsubscribeThread = new unsubscribeThread(output, j, ifDebug, log);
+			unsubscribeThread unsubscribeThread = new unsubscribeThread(output, j, ifDebug, log, stop);
 			Thread t = new Thread(unsubscribeThread);
 			t.start();
 
@@ -236,13 +237,10 @@ public class clientObject {
 			//t.currentThread().interrupt();
 
 		} catch (UnknownHostException e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (SocketException e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
 	}
