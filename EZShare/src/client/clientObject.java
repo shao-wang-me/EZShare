@@ -207,6 +207,11 @@ public class clientObject {
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
 			}
+
+			unsubscribeThread unsubscribeThread = new unsubscribeThread(output, j, ifDebug, log);
+			Thread t = new Thread(unsubscribeThread);
+			t.start();
+
 			output.writeUTF(j.toString());
 			output.flush();
 
@@ -227,30 +232,9 @@ public class clientObject {
 					}
 				}
 
-				long start = System.currentTimeMillis();
-
-				while(System.currentTimeMillis() - start < 1000) {
-
-
-					String str = null;
-					BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-					if (bf.ready()) {
-						str = bf.readLine();
-					}
-					if (str != null && str.length() == 0) {
-						JSONObject sentJSON = new JSONObject("{}");
-						String id = j.getString("id");
-						sentJSON.put("command", "UNSUBSCRIBE");
-						sentJSON.put("id", id);
-						if (ifDebug) {
-							log.info("SENT:" + sentJSON.toString());
-						}
-						output.writeUTF(sentJSON.toString());
-						output.flush();
-
-					}
-				}
 			}
+			//t.currentThread().interrupt();
+
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
 			System.exit(-1);
