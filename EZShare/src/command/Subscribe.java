@@ -50,9 +50,10 @@ public class Subscribe {
                     resource = gson.fromJson(object, Resource.class);
                     userID = root.getAsJsonObject().get("id").getAsString();
                     actualID = userID + clientID;
+
                     subscribeList.add(userID, actualID, relay, resource);
 
-
+                    System.out.println("sub list size is" + subscribeList.size());
 
                     reply.put("response","success");
                     reply.put("id",userID);
@@ -63,7 +64,7 @@ public class Subscribe {
 
                     while(true) {
 
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
 
                         if (in.available() > 0) {
                             JsonElement jsonEle = new JsonParser().parse(in.readUTF());

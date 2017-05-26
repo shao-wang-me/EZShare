@@ -239,7 +239,7 @@ public class clientObject {
 					}
 					if (str != null && str.length() == 0) {
 						JSONObject sentJSON = new JSONObject("{}");
-						String id = Operations.getId(port);
+						String id = j.getString("id");
 						sentJSON.put("command", "UNSUBSCRIBE");
 						sentJSON.put("id", id);
 						if (ifDebug) {
