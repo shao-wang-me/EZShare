@@ -7,28 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="510e2f81-b7a2-4f79-acb6-946166b394af" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/EZShare/Server.class" afterPath="$PROJECT_DIR$/bin/EZShare/Server.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/command/Publish.class" afterPath="$PROJECT_DIR$/bin/command/Publish.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/command/Share.class" afterPath="$PROJECT_DIR$/bin/command/Share.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/Function.class" afterPath="$PROJECT_DIR$/bin/server/Function.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/HandleSecureRequest.class" afterPath="$PROJECT_DIR$/bin/server/HandleSecureRequest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" afterPath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/ServerThread$1.class" afterPath="$PROJECT_DIR$/bin/server/ServerThread$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/ServerThread.class" afterPath="$PROJECT_DIR$/bin/server/ServerThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/relayThread.class" afterPath="$PROJECT_DIR$/bin/server/relayThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/serverUpdate.class" afterPath="$PROJECT_DIR$/bin/server/serverUpdate.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/subscribeThread.class" afterPath="$PROJECT_DIR$/bin/server/subscribeThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EZShare/Server.java" afterPath="$PROJECT_DIR$/src/EZShare/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/command/Publish.java" afterPath="$PROJECT_DIR$/src/command/Publish.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/command/Share.java" afterPath="$PROJECT_DIR$/src/command/Share.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/Function.java" afterPath="$PROJECT_DIR$/src/server/Function.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleSecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleSecureRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/ServerThread.java" afterPath="$PROJECT_DIR$/src/server/ServerThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/relayThread.java" afterPath="$PROJECT_DIR$/src/server/relayThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/serverUpdate.java" afterPath="$PROJECT_DIR$/src/server/serverUpdate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/subscribeThread.java" afterPath="$PROJECT_DIR$/src/server/subscribeThread.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,8 +44,8 @@
       <file leaf-file-name="relayThread.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+            <state relative-caret-position="134">
+              <caret line="91" column="64" lean-forward="true" selection-start-line="91" selection-start-column="64" selection-end-line="91" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -74,8 +54,8 @@
       <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="150" column="59" lean-forward="false" selection-start-line="150" selection-start-column="59" selection-end-line="150" selection-end-column="59" />
+            <state relative-caret-position="324">
+              <caret line="155" column="12" lean-forward="false" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -215,7 +195,6 @@
         <option value="$PROJECT_DIR$/src/client/clientObject.java" />
         <option value="$PROJECT_DIR$/src/variable/secureServerList.java" />
         <option value="$PROJECT_DIR$/src/variable/serverList.java" />
-        <option value="$PROJECT_DIR$/src/EZShare/Server.java" />
         <option value="$PROJECT_DIR$/src/server/ServerThread.java" />
         <option value="$PROJECT_DIR$/src/server/HandleSecureRequest.java" />
         <option value="$PROJECT_DIR$/src/command/Publish.java" />
@@ -225,6 +204,7 @@
         <option value="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
         <option value="$PROJECT_DIR$/src/server/serverUpdate.java" />
         <option value="$PROJECT_DIR$/src/server/relayThread.java" />
+        <option value="$PROJECT_DIR$/src/EZShare/Server.java" />
       </list>
     </option>
   </component>
@@ -1037,7 +1017,7 @@
       <workItem from="1495770465150" duration="55000" />
       <workItem from="1495779453700" duration="6298000" />
       <workItem from="1495789274272" duration="10172000" />
-      <workItem from="1495801112381" duration="6572000" />
+      <workItem from="1495801112381" duration="7287000" />
     </task>
     <task id="LOCAL-00001" summary="fix some error">
       <created>1494895151930</created>
@@ -1200,11 +1180,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495804189793</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="525 fix some subscribe error">
+      <created>1495807983804</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1495807983804</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132220000" />
+    <option name="totallyTimeSpent" value="132935000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1746,14 +1733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="150" column="59" lean-forward="false" selection-start-line="150" selection-start-column="59" selection-end-line="150" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/ServerThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1041">
@@ -1821,10 +1800,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="155" column="12" lean-forward="false" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state relative-caret-position="134">
+          <caret line="91" column="64" lean-forward="true" selection-start-line="91" selection-start-column="64" selection-end-line="91" selection-end-column="64" />
           <folding />
         </state>
       </provider>
