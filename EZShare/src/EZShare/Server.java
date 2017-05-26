@@ -46,6 +46,7 @@ public class Server {
 	 * by clients
 	 */
 	private volatile variable.resourceList newResourceList;
+	private volatile variable.resourceList newResourceList_copy;
 	private volatile variable.subscribeList subscribeList;
 	private volatile variable.subscribeList readyToSend;
 	private volatile variable.serverList serverDeleteList;
@@ -69,6 +70,8 @@ public class Server {
 		//added by yankun
 		newResourceList  = new resourceList();
 		newResourceList.initialResourceList();
+		newResourceList_copy = new resourceList();
+		newResourceList_copy.initialResourceList();
 
 		
 		try{
@@ -145,15 +148,15 @@ public class Server {
 
 			// create secured server
 			HandleSecureRequest SecureServer = new HandleSecureRequest(getSecurePort(), getSecret() , resourceList,
-					newResourceList, secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
+					newResourceList, newResourceList_copy, secureServerList, getDebug(), log, getHostname(), getIntervalLimit());
 
 			// create unsecured server
 			HandleUnsecureRequest UnsecureServer = new HandleUnsecureRequest(getPort(), getSecret() , resourceList,
-					newResourceList, serverList, getDebug(), log, getHostname(), getIntervalLimit());
+					newResourceList, newResourceList_copy, serverList, getDebug(), log, getHostname(), getIntervalLimit());
 			Thread s1 = new Thread(SecureServer);
-			Thread s2 = new Thread(UnsecureServer);
+			//Thread s2 = new Thread(UnsecureServer);
 			s1.start();
-			s2.start();
+			//s2.start();
 		}
 		catch(Exception e){
 		}

@@ -26,8 +26,8 @@ import java.util.logging.Logger;
 public class Share {
 
     public static void share(JsonElement root, DataOutputStream out, resourceList resourceList,
-                             resourceList newResourceList, serverList serverList, Host h, boolean debug,
-                             Logger log, String secret){
+                             resourceList newResourceList, resourceList newResourceList_copy,
+                             serverList serverList, Host h, boolean debug, Logger log, String secret){
         Resource resource;
         JSONObject reply = new JSONObject();
         Gson gson = new Gson();
@@ -41,7 +41,7 @@ public class Share {
                     try{
                         JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
                         resource = gson.fromJson(object, Resource.class);
-                        response = Function.share(resource, resourceList, newResourceList);
+                        response = Function.share(resource, resourceList, newResourceList, newResourceList_copy);
 
                         // share result check & print
                         if(response.containsKey(true)){

@@ -39,6 +39,7 @@ public class serverUpdate {
 
 				JSONArray array = new JSONArray(serverList.getServerList());
 				local.setHostname(InetAddress.getLocalHost().getHostAddress());
+				local.setPort(port);
 				array.put(new JSONObject(local));
 				temp.put("serverList", array);
 	            String str = temp.toString();

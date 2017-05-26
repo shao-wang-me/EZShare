@@ -23,7 +23,8 @@ public class Function {
 	 * @throws URISyntaxException
 	 */
 	public static HashMap<Boolean, String> publish(Resource resource, resourceList resourceList,
-												   resourceList newResourceList) throws URISyntaxException {
+												   resourceList newResourceList,
+												   resourceList newResourceList_copy) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -60,6 +61,7 @@ public class Function {
 				if(flag){
 					toReturn.put(true, "success");
 					newResourceList.add(resource);
+					newResourceList_copy.add(resource);
 				}
 				else{
 					toReturn.put(false, "cannot publish resource");
@@ -104,7 +106,7 @@ public class Function {
 	 * @throws URISyntaxException
 	 */
 	public static HashMap<Boolean, String> share(Resource resource, resourceList resourceList
-			, resourceList newResourceList) throws URISyntaxException {
+			, resourceList newResourceList, resourceList newResourceList_copy) throws URISyntaxException {
 		HashMap<Boolean, String> toReturn = new HashMap<Boolean, String>();
 		if (!resource.isValid()) {
 			toReturn.put(false, "invalid resource");
@@ -142,6 +144,7 @@ public class Function {
 						/**Now we should be able to add or update the resource.*/
 						resourceList.add(resource);
 						newResourceList.add(resource);
+						newResourceList_copy.add(resource);
 						toReturn.put(true, "success");
 
 					} else {

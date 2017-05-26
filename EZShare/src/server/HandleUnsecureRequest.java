@@ -28,6 +28,8 @@ public class HandleUnsecureRequest implements Runnable{
 
     private resourceList newResourceList;
 
+    private resourceList newResourceList_copy;
+
     private serverList serverList;
 
     private Boolean debug = true;
@@ -39,12 +41,13 @@ public class HandleUnsecureRequest implements Runnable{
     private int intervalLimit;
 
     public HandleUnsecureRequest(int serverPort, String secret , resourceList resourceList,
-                                 resourceList newResourceList, serverList serverList,
-                                 Boolean debug, Logger log, String hostname, int intervalLimit){
+                                 resourceList newResourceList, resourceList newResourceList_copy,
+                                         serverList serverList, Boolean debug, Logger log, String hostname, int intervalLimit){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
         this.newResourceList = newResourceList;
+        this.newResourceList_copy = newResourceList_copy;
         this.serverList = serverList;
         this.debug = debug;
         this.log = log;
@@ -88,7 +91,7 @@ public class HandleUnsecureRequest implements Runnable{
 
             // relay monitor
             //ExecutorService relayThreadExecutor = Executors.newCachedThreadPool();
-            relayThread relayThread = new relayThread(newResourceList, debug,
+            relayThread relayThread = new relayThread(newResourceList_copy, debug,
                     subscribeList, serverList, serverDeleteList, serverAddList, readyToSend, false);
             //ThreadExecutor.execute(relayThread);
             new Thread(relayThread).start();
@@ -99,7 +102,7 @@ public class HandleUnsecureRequest implements Runnable{
                 Socket client = server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, newResourceList, serverList, serverAddList,
+                            resourceList, newResourceList, newResourceList_copy, serverList, serverAddList,
                              getDebug(), getHostname(), serverPort, getIntervalLimit(),
                             subscribeList,readyToSend);
 

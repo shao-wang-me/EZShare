@@ -42,6 +42,9 @@ public class HandleSecureRequest implements Runnable{
 
     private resourceList newResourceList;
 
+    private resourceList newResourceList_copy;
+
+
     private serverList serverList;
 
     private Boolean debug = true;
@@ -52,13 +55,14 @@ public class HandleSecureRequest implements Runnable{
 
     private int intervalLimit;
 
-    public HandleSecureRequest(int serverPort, String secret , resourceList resourceList, resourceList newResourceList,
-                               secureServerList serverList,
+    public HandleSecureRequest(int serverPort, String secret , resourceList resourceList, resourceList newResourceList
+                               ,resourceList newResourceList_copy, secureServerList serverList,
                                Boolean debug, Logger log, String hostname, int intervalLimit){
         this.serverPort = serverPort;
         this.secret = secret;
         this.resourceList = resourceList;
         this.newResourceList = newResourceList;
+        this.newResourceList_copy = newResourceList_copy; // copy resourcelist
         this.serverList = serverList;
         this.debug = debug;
         this.log = log;
@@ -122,7 +126,7 @@ public class HandleSecureRequest implements Runnable{
                 SSLSocket client = (SSLSocket)server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, newResourceList, serverList, serverAddList,
+                            resourceList, newResourceList, newResourceList_copy, serverList, serverAddList,
                             getDebug(), getHostname(), getServerPort(), getIntervalLimit(),
                              subscribeList,  readyToSend);
 

@@ -57,6 +57,9 @@ public class ServerThread implements Runnable {
 
 	private resourceList newResourceList;
 
+	private resourceList newResourceList_copy;
+
+
 	private subscribeList subscribeList;
 
 	private subscribeList readyToSend;
@@ -65,8 +68,8 @@ public class ServerThread implements Runnable {
 
 	//private Resource resourceList;
 	
-	public ServerThread(Socket client, String secret, resourceList resourceList, resourceList newResourceList
-			,serverList serverList, serverList serverAddList,
+	public ServerThread(Socket client, String secret, resourceList resourceList, resourceList newResourceList,
+						resourceList newResourceList_copy ,serverList serverList, serverList serverAddList,
 						Boolean debug, String hostname, int port, int intervalLimit,
 						subscribeList subscribeList, subscribeList readyToSend){
 		this.client = client ;
@@ -81,6 +84,8 @@ public class ServerThread implements Runnable {
 		this.secure = client instanceof SSLSocket;
 
 		this.newResourceList = newResourceList;
+		this.newResourceList_copy = newResourceList_copy;
+
 		this.subscribeList = subscribeList;
 		this.readyToSend = readyToSend;
 		this.serverAddList = serverAddList;
@@ -162,7 +167,7 @@ public class ServerThread implements Runnable {
 					case PUBLISH:{
 						//check resource field exists
 						Host h = new Host(getHostname(), getPort());
-						Publish.publish(root, out, resourceList, newResourceList, serverList, h, getDebug(), getLog());
+						Publish.publish(root, out, resourceList, newResourceList, newResourceList_copy, serverList, h, getDebug(), getLog());
 						break;
 					}
 					case REMOVE:{
@@ -173,7 +178,7 @@ public class ServerThread implements Runnable {
 					}
 					case SHARE:{
 						Host h = new Host(getHostname(), getPort());
-						Share.share(root, out, resourceList, newResourceList, serverList, h, getDebug(), getLog(), this.secret);
+						Share.share(root, out, resourceList, newResourceList, newResourceList_copy, serverList, h, getDebug(), getLog(), this.secret);
 						break;
 					}
 					case QUERY:{

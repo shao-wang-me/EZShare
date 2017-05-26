@@ -36,9 +36,9 @@ public class subscribeThread implements Runnable {
 
             for (;;){
 
-                //Thread.sleep(1000);
+                Thread.sleep(1000);
 
-                synchronized(newResourceList){
+                //synchronized(newResourceList){
                     if (newResourceList.getResourceList().size() > 0) {
 
                         Resource r = newResourceList.getFirstResource();
@@ -71,31 +71,18 @@ public class subscribeThread implements Runnable {
                                 match = false;
                             }
 
-
-
-                        /*
-                        if (!(tempRe.getName().isEmpty() && tempRe.getDescription().isEmpty())) {
-                            if (!r.getName().contains(tempRe.getName()) || !r.getDescription().contains(tempRe.getDescription())) {
-                                match = false;
-                            }
-                        }
-                        */
-
                             if(match) {
                                 readyToSend.add(temp.getString("userID"), actualID, temp.getBoolean("relay"), r);
                             }
                         }
                         if(newResourceList.getResourceList().size() > 0 ){
                             newResourceList.delete(0);
-
                         }
-
-                    }
+                  // }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("exception     " + e.getMessage());
             e.printStackTrace();
         }
     }

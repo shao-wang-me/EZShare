@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 public class Publish {
 
     public static void publish(JsonElement root, DataOutputStream out, resourceList resourceList,
-                               resourceList newResourceList, serverList serverList, Host h, boolean debug ,
+                               resourceList newResourceList, resourceList newResourceList_copy,
+                               serverList serverList, Host h, boolean debug ,
                                Logger log){
 
         ArrayList<String> list = new ArrayList<String>();
@@ -43,7 +44,7 @@ public class Publish {
                 try{
                     JsonObject object = root.getAsJsonObject().get("resource").getAsJsonObject();
                     resource = gson.fromJson(object, Resource.class);
-                    response = Function.publish(resource, resourceList, newResourceList);
+                    response = Function.publish(resource, resourceList, newResourceList, newResourceList_copy);
                     if(response.containsKey(true)){
                         reply.put("response", "success");
                     }

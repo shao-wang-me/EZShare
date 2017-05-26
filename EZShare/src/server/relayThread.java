@@ -56,6 +56,7 @@ public class relayThread implements Runnable {
 
 
                 while (true) {
+
                     Thread.sleep(1000);
                     synchronized(serverList){
                     try {
