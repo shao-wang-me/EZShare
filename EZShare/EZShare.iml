@@ -19,47 +19,27 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="module-library">
-      <library name="json-20160810 .jar">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/json-20160810 .jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="gson-2.6.2-javadoc.jar">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/gson-2.6.2-javadoc.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="gson-2.6.2.jar">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/gson-2.6.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="commons-cli-1.4.jar">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/commons-cli-1.4/commons-cli-1.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/commons-lang3-3.5.jar!/" />
         </CLASSES>
         <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../EZShare/commons-cli-1.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../EZShare/commons-lang3-3.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../EZShare/EZShare.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../EZShare/gson-2.6.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../EZShare/json-20160810.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../EZShare/EZShare.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../EZShare/gson-2.6.2-javadoc.jar!/" />
+        </JAVADOC>
         <SOURCES />
       </library>
     </orderEntry>

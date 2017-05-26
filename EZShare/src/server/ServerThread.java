@@ -21,7 +21,11 @@ import com.google.gson.stream.JsonReader;
 
 import support.Debug;
 import support.LogFormatter;
-import variable.*;
+import variable.Host;
+import variable.Resource;
+import variable.subscribeList;
+import variable.serverList;
+import variable.resourceList;
 
 
 /**

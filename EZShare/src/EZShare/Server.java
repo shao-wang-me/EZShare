@@ -154,9 +154,9 @@ public class Server {
 			//HandleUnsecureRequest UnsecureServer = new HandleUnsecureRequest(getPort(), getSecret() , resourceList,
 			//		newResourceList, newResourceList_copy, serverList, getDebug(), log, getHostname(), getIntervalLimit());
 			Thread s1 = new Thread(SecureServer);
-			//Thread s2 = new Thread(UnsecureServer);
+			Thread s2 = new Thread(UnsecureServer);
 			s1.start();
-			//s2.start();
+			s2.start();
 		}
 		catch(Exception e){
 		}

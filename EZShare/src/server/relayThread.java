@@ -130,7 +130,17 @@ public class relayThread implements Runnable {
 
                         while (serverAddList.getServerList().size() > 0) {
                             Host h = serverAddList.getServerList().get(0);
-                            Socket s = new Socket(h.getHostname(), h.getPort());
+                            Socket s = null ;
+                            SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
+                            if (secure) {
+                                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+                                s = (SSLSocket)sslsocketfactory.createSocket();
+                                s.connect(socketaddr, 5000);
+                            } else {
+                                s = new Socket();
+                                s.connect(socketaddr, 5000);
+                            }
+                            //Socket s = new Socket(h.getHostname(), h.getPort());
                             // sockets.put(h.getHostname(), s);
                             DataOutputStream out = new DataOutputStream(s.getOutputStream());
                             for (JSONObject j : relayList.getList()) {
