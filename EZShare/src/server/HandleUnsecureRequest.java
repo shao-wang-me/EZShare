@@ -84,7 +84,7 @@ public class HandleUnsecureRequest implements Runnable{
 
             //Single thread executor for the subscription thread, added by yankun
             //ExecutorService ThreadExecutor = Executors.newCachedThreadPool();
-            subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
+            subscribeThread subscriptionThread = new subscribeThread(newResourceList_copy, debug,
                     intervalLimit , subscribeList, readyToSend);
             //ThreadExecutor.execute(subscriptionThread);
             new Thread(subscriptionThread).start();

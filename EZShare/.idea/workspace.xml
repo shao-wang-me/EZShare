@@ -7,8 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="510e2f81-b7a2-4f79-acb6-946166b394af" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" afterPath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EZShare.iml" afterPath="$PROJECT_DIR$/EZShare.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EZShare/Server.java" afterPath="$PROJECT_DIR$/src/EZShare/Server.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +27,8 @@
       <file leaf-file-name="HandleUnsecureRequest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="93" column="74" lean-forward="false" selection-start-line="93" selection-start-column="74" selection-end-line="93" selection-end-column="74" />
+            <state relative-caret-position="154">
+              <caret line="86" column="87" lean-forward="false" selection-start-line="86" selection-start-column="87" selection-end-line="86" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -41,12 +44,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="relayThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="relayThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="91" column="64" lean-forward="true" selection-start-line="91" selection-start-column="64" selection-end-line="91" selection-end-column="64" />
-              <folding />
+            <state relative-caret-position="-4450">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,18 +59,55 @@
       <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="155" column="12" lean-forward="false" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
+            <state relative-caret-position="143">
+              <caret line="153" column="25" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+              <folding>
+                <marker date="1495815804000" expanded="false" signature="5649:5654" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="5670:5673" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="5716:5721" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="5746:5749" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="5772:5777" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="5789:5792" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="5824:5829" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="5846:5849" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="5933:5938" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="5956:5959" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="5989:5994" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6010:6013" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6056:6061" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6086:6089" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6121:6126" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6147:6150" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6200:6205" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6240:6243" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6271:6276" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6290:6293" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6332:6337" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6358:6361" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6389:6394" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6407:6410" ph=" }" />
+                <marker date="1495815804000" expanded="false" signature="6448:6453" ph=" { " />
+                <marker date="1495815804000" expanded="false" signature="6472:6475" ph=" }" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="694">
+              <caret line="98" column="36" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Publish.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/command/Publish.java">
+      <file leaf-file-name="clientObject.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/client/clientObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="46" column="109" lean-forward="false" selection-start-line="46" selection-start-column="89" selection-end-line="46" selection-end-column="109" />
+            <state relative-caret-position="103">
+              <caret line="211" column="51" lean-forward="false" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -105,21 +147,8 @@
         <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-594">
-              <caret line="57" column="118" lean-forward="true" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
+              <caret line="57" column="118" lean-forward="false" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/ServerThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1041">
-              <caret line="86" column="33" lean-forward="false" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
-              <folding>
-                <element signature="e#7405#7406#0" expanded="true" />
-                <element signature="e#7424#7425#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -201,9 +230,9 @@
         <option value="$PROJECT_DIR$/src/command/Share.java" />
         <option value="$PROJECT_DIR$/src/server/Function.java" />
         <option value="$PROJECT_DIR$/src/server/subscribeThread.java" />
-        <option value="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
         <option value="$PROJECT_DIR$/src/server/serverUpdate.java" />
         <option value="$PROJECT_DIR$/src/server/relayThread.java" />
+        <option value="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
         <option value="$PROJECT_DIR$/src/EZShare/Server.java" />
       </list>
     </option>
@@ -378,7 +407,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
@@ -400,7 +429,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.server2">
+  <component name="RunManager" selected="Application.Client">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -819,56 +848,11 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="subscribe" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-port 20000  -subscribe -secure -debug" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="unsecure" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-port 10000  -subscribe  -debug" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="remove" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="-publish -uri http://www.google.com -debug  -host 127.0.0.1 -port 10000  " />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="publish" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-publish -uri http://www.google.com -debug  -host 127.0.0.1 -port 20000 -secure" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -909,21 +893,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Client" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-publish -uri http://www.unimelb.edu.au -debug  -host 127.0.0.1 -port 3781 -secure" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="Server1" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="EZShare.Server" />
@@ -954,17 +923,77 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="subscribe" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-port 3781  -subscribe -secure -debug" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="unsecure" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-port 20006  -subscribe  -debug" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="publish" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-publish -uri http://www.google.com -debug   -port 3781 -secure" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Client" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-publish -uri http://www.unimelb.edu.au -debug  -port 20006 " />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
     <list size="10">
       <item index="0" class="java.lang.String" itemvalue="Application.query" />
-      <item index="1" class="java.lang.String" itemvalue="Application.subscribe" />
-      <item index="2" class="java.lang.String" itemvalue="Application.unsecure" />
-      <item index="3" class="java.lang.String" itemvalue="Application.remove" />
-      <item index="4" class="java.lang.String" itemvalue="Application.publish" />
-      <item index="5" class="java.lang.String" itemvalue="Application.share" />
-      <item index="6" class="java.lang.String" itemvalue="Application.fetch" />
-      <item index="7" class="java.lang.String" itemvalue="Application.Client" />
-      <item index="8" class="java.lang.String" itemvalue="Application.Server1" />
-      <item index="9" class="java.lang.String" itemvalue="Application.server2" />
+      <item index="1" class="java.lang.String" itemvalue="Application.remove" />
+      <item index="2" class="java.lang.String" itemvalue="Application.share" />
+      <item index="3" class="java.lang.String" itemvalue="Application.fetch" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Server1" />
+      <item index="5" class="java.lang.String" itemvalue="Application.server2" />
+      <item index="6" class="java.lang.String" itemvalue="Application.subscribe" />
+      <item index="7" class="java.lang.String" itemvalue="Application.unsecure" />
+      <item index="8" class="java.lang.String" itemvalue="Application.publish" />
+      <item index="9" class="java.lang.String" itemvalue="Application.Client" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -1017,7 +1046,7 @@
       <workItem from="1495770465150" duration="55000" />
       <workItem from="1495779453700" duration="6298000" />
       <workItem from="1495789274272" duration="10172000" />
-      <workItem from="1495801112381" duration="7287000" />
+      <workItem from="1495801112381" duration="8362000" />
     </task>
     <task id="LOCAL-00001" summary="fix some error">
       <created>1494895151930</created>
@@ -1187,11 +1216,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495807983804</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="small">
+      <created>1495811603022</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1495811603022</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132935000" />
+    <option name="totallyTimeSpent" value="134010000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1212,10 +1248,10 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33424658" sideWeight="0.37479806" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3520548" sideWeight="0.51615506" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26164383" sideWeight="0.5105008" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3520548" sideWeight="0.48707592" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26164383" sideWeight="0.5726979" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3520548" sideWeight="0.4838449" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1284,7 +1320,8 @@
     <MESSAGE value="jar error" />
     <MESSAGE value="one line in subscribe thread" />
     <MESSAGE value="525 fix some subscribe error" />
-    <option name="LAST_COMMIT_MESSAGE" value="525 fix some subscribe error" />
+    <MESSAGE value="small" />
+    <option name="LAST_COMMIT_MESSAGE" value="small" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1321,25 +1358,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>151</line>
+          <line>155</line>
           <properties />
           <option name="timeStamp" value="121" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>116</line>
+          <line>120</line>
           <properties />
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>117</line>
+          <line>121</line>
           <properties />
           <option name="timeStamp" value="126" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>124</line>
+          <line>128</line>
           <properties />
           <option name="timeStamp" value="127" />
         </line-breakpoint>
@@ -1375,7 +1412,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>188</line>
+          <line>192</line>
           <properties />
           <option name="timeStamp" value="137" />
         </line-breakpoint>
@@ -1411,7 +1448,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/ServerThread.java</url>
-          <line>190</line>
+          <line>194</line>
           <properties />
           <option name="timeStamp" value="148" />
         </line-breakpoint>
@@ -1717,29 +1754,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/clientObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/ServerThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1041">
-          <caret line="86" column="33" lean-forward="false" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
+          <caret line="90" column="33" lean-forward="false" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
           <folding>
-            <element signature="e#7405#7406#0" expanded="true" />
-            <element signature="e#7424#7425#0" expanded="true" />
+            <marker date="1495811619000" expanded="true" signature="668:761" ph="/**...*/" />
+            <marker date="1495811619000" expanded="true" signature="1749:2246" ph="{...}" />
+            <marker date="1495811619000" expanded="true" signature="2279:3839" ph="{...}" />
+            <marker date="1495811619000" expanded="true" signature="3997:7494" ph="{...}" />
+            <marker date="1495811619000" expanded="false" signature="4060:4068" ph="&lt;~&gt;" />
+            <marker date="1495811619000" expanded="true" signature="7522:7527" ph=" { " />
+            <marker date="1495811619000" expanded="true" signature="7540:7543" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="7581:7586" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="7605:7608" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="7633:7638" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="7649:7652" ph=" }" />
+            <marker date="1495811619000" expanded="true" signature="7676:8002" ph="{...}" />
+            <marker date="1495811619000" expanded="false" signature="8032:8037" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="8053:8056" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="8099:8104" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="8129:8132" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="8155:8160" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="8172:8175" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="8207:8212" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="8229:8232" ph=" }" />
+            <marker date="1495811619000" expanded="false" signature="8267:8278" ph=" { " />
+            <marker date="1495811619000" expanded="false" signature="8299:8305" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -1776,22 +1817,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-594">
-          <caret line="57" column="118" lean-forward="true" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="93" column="74" lean-forward="false" selection-start-line="93" selection-start-column="74" selection-end-line="93" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/serverUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1800,18 +1825,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
+    <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="155" column="12" lean-forward="false" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
+        <state relative-caret-position="-4450">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-594">
+          <caret line="57" column="118" lean-forward="false" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
+    <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="91" column="64" lean-forward="true" selection-start-line="91" selection-start-column="64" selection-end-line="91" selection-end-column="64" />
+        <state relative-caret-position="154">
+          <caret line="86" column="87" lean-forward="false" selection-start-line="86" selection-start-column="87" selection-end-line="86" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="153" column="25" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding>
+            <marker date="1495815804000" expanded="false" signature="5649:5654" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="5670:5673" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="5716:5721" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="5746:5749" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="5772:5777" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="5789:5792" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="5824:5829" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="5846:5849" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="5933:5938" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="5956:5959" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="5989:5994" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6010:6013" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6056:6061" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6086:6089" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6121:6126" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6147:6150" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6200:6205" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6240:6243" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6271:6276" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6290:6293" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6332:6337" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6358:6361" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6389:6394" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6407:6410" ph=" }" />
+            <marker date="1495815804000" expanded="false" signature="6448:6453" ph=" { " />
+            <marker date="1495815804000" expanded="false" signature="6472:6475" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="694">
+          <caret line="98" column="36" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/clientObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="211" column="51" lean-forward="false" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="51" />
           <folding />
         </state>
       </provider>
