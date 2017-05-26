@@ -59,66 +59,68 @@ public class relayThread implements Runnable {
 
                 try {
 
-
-                    Thread.sleep(1000);
-
+                    //Thread.sleep(500);
 
                     boolean ifUpdate = false;
+
                     /**
                      * search the serverAddlist if its size is greater than one. If so, create socket connecting to the new
                      * server and add to the HashMap, send all the subscriptions in relayList, delete the record from serverAddList
                      */
 
-                    for(variable.Host h : serverList.getServerList()) {
-                        Socket s ;
-                        SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
+                    if(serverList.getServerList().size() != 0){
 
-                        if (secure) {
+                        for(variable.Host h : serverList.getServerList()) {
+                            Socket s ;
+                            SocketAddress socketaddr = new InetSocketAddress(h.getHostname(), h.getPort());
 
-                            InputStream keystoreInput = getClass()
-                                    .getResourceAsStream("/serverKeystore/server.jks");
-                            InputStream truststoreInput = getClass()
-                                    .getResourceAsStream("/clientKeystore/client.jks");
-                            support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
-                            keystoreInput.close();
-                            truststoreInput.close();
-                            //System.setProperty("javax.net.ssl.trustStore",
-                                    //getClass().getResource("/clientKeystore/client.jks").getFile());
-                            SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-                            s = (SSLSocket)sslsocketfactory.createSocket();
-                            s.connect(socketaddr, 5000);
-                        } else {
-                            s = new Socket();
-                            s.connect(socketaddr, 5000);
-                        }
+                            if (secure) {
 
-                        //sockets.put(h.getHostname(), s);
-                        DataOutputStream out = new DataOutputStream(s.getOutputStream());
-                        for (JSONObject j : relayList.getList()) {
-                            if (!sockets.containsKey(j.getString("actualID") + h.getHostname())) {
-                                sockets.put(j.getString("actualID") + h.getHostname(), s);
-                                Resource re = (Resource) j.get("resourceTemplate");
-                                JSONObject send = new JSONObject("{}");
+                                InputStream keystoreInput = getClass()
+                                        .getResourceAsStream("/serverKeystore/server.jks");
+                                InputStream truststoreInput = getClass()
+                                        .getResourceAsStream("/clientKeystore/client.jks");
+                                support.SetSecureSocket.setSSLFactories(keystoreInput, "comp90015", truststoreInput);
+                                keystoreInput.close();
+                                truststoreInput.close();
+                                //System.setProperty("javax.net.ssl.trustStore",
+                                //getClass().getResource("/clientKeystore/client.jks").getFile());
+                                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+                                s = (SSLSocket)sslsocketfactory.createSocket();
+                                s.connect(socketaddr, 5000);
+                            } else {
+                                s = new Socket();
+                                s.connect(socketaddr, 5000);
+                            }
 
-                                sockets.put(j.getString("actualID") + h.getHostname(), s);
+                            //sockets.put(h.getHostname(), s);
+                            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                            for (JSONObject j : relayList.getList()) {
+                                if (!sockets.containsKey(j.getString("actualID") + h.getHostname())) {
+                                    sockets.put(j.getString("actualID") + h.getHostname(), s);
+                                    Resource re = (Resource) j.get("resourceTemplate");
+                                    JSONObject send = new JSONObject("{}");
 
-                                send.put("command", "SUBSCRIBE");
-                                send.put("relay", false);
-                                JSONObject r = new JSONObject("{}");
-                                r.put("name", re.getName());
-                                r.put("tags", re.getTags());
-                                r.put("description", re.getDescription());
-                                r.put("uri", re.getUri());
-                                r.put("channel", re.getChannel());
-                                r.put("owner", re.getOwner());
-                                String ez = null;
-                                r.put("ezserver", ez);
-                                send.put("resourceTemplate", r);
-                                send.put("id", j.getString("actualID"));
+                                    sockets.put(j.getString("actualID") + h.getHostname(), s);
+
+                                    send.put("command", "SUBSCRIBE");
+                                    send.put("relay", false);
+                                    JSONObject r = new JSONObject("{}");
+                                    r.put("name", re.getName());
+                                    r.put("tags", re.getTags());
+                                    r.put("description", re.getDescription());
+                                    r.put("uri", re.getUri());
+                                    r.put("channel", re.getChannel());
+                                    r.put("owner", re.getOwner());
+                                    String ez = null;
+                                    r.put("ezserver", ez);
+                                    send.put("resourceTemplate", r);
+                                    send.put("id", j.getString("actualID"));
 
 
-                                out.writeUTF(send.toString());
-                                out.flush();
+                                    out.writeUTF(send.toString());
+                                    out.flush();
+                                }
                             }
                         }
                     }
@@ -153,6 +155,7 @@ public class relayThread implements Runnable {
                             out.writeUTF(send.toString());
                             out.flush();
                         }
+                        System.out.println(serverAddList.getServerList().size());
                         serverAddList.delete(h);
                         ifUpdate = true;
                     }
@@ -160,18 +163,20 @@ public class relayThread implements Runnable {
                      * search the serverDeleteList, if its size is greater than one. If so, find the socket in the HashMap,
                      * close the socket and delete it from the HashMap
                      */
-                    while (serverDeleteList.getServerList().size() > 0) {
-                        Host h = serverDeleteList.getServerList().get(0);
+                    if(serverDeleteList.getServerList() != null){
+                        while (serverDeleteList.getServerList().size() > 0) {
+                            Host h = serverDeleteList.getServerList().get(0);
 
-                        for (JSONObject j : relayList.getList()) {
+                            for (JSONObject j : relayList.getList()) {
 
-                            Socket s = sockets.get(j.getString("actualID") + h.getHostname());
-                            s.close();
-                            sockets.remove(j.getString("actualID") + h.getHostname());
+                                Socket s = sockets.get(j.getString("actualID") + h.getHostname());
+                                s.close();
+                                sockets.remove(j.getString("actualID") + h.getHostname());
 
+                            }
+                            serverDeleteList.delete(h);
+                            ifUpdate = true;
                         }
-                        serverDeleteList.delete(h);
-                        ifUpdate = true;
                     }
 
 
@@ -183,40 +188,44 @@ public class relayThread implements Runnable {
                     /**
                      * search the subscribe List, put records with the relay field true but not in the relay list into the relay list
                      */
-                    for (JSONObject subscribeRecord : subscribeList.getList()) {
-                        if (subscribeRecord.getBoolean("relay") == true && !relayList.contain(subscribeRecord)) {
-                            relayList.add(subscribeRecord);
+                    if( subscribeList.getList()  != null){
+                        for (JSONObject subscribeRecord : subscribeList.getList()) {
+                            if (subscribeRecord.getBoolean("relay") == true && !relayList.contain(subscribeRecord)) {
+                                relayList.add(subscribeRecord);
 
-                            Resource re = (Resource) subscribeRecord.get("resourceTemplate");
-                            JSONObject send = new JSONObject("{}");
-
-
-                            send.put("command", "SUBSCRIBE");
-                            send.put("relay", false);
-                            JSONObject r = new JSONObject("{}");
-                            r.put("name", re.getName());
-                            r.put("tags", re.getTags());
-                            r.put("description", re.getDescription());
-                            r.put("uri", re.getUri());
-                            r.put("channel", re.getChannel());
-                            r.put("owner", re.getOwner());
-                            String ez = null;
-                            r.put("ezserver", ez);
-                            send.put("resourceTemplate", r);
-                            send.put("id", subscribeRecord.getString("actualID"));
+                                Resource re = (Resource) subscribeRecord.get("resourceTemplate");
+                                JSONObject send = new JSONObject("{}");
 
 
-                            for (variable.Host h : serverList.getServerList()) {
+                                send.put("command", "SUBSCRIBE");
+                                send.put("relay", false);
+                                JSONObject r = new JSONObject("{}");
+                                r.put("name", re.getName());
+                                r.put("tags", re.getTags());
+                                r.put("description", re.getDescription());
+                                r.put("uri", re.getUri());
+                                r.put("channel", re.getChannel());
+                                r.put("owner", re.getOwner());
+                                String ez = null;
+                                r.put("ezserver", ez);
+                                send.put("resourceTemplate", r);
+                                send.put("id", subscribeRecord.getString("actualID"));
 
-                                DataOutputStream out = new DataOutputStream(sockets.get(subscribeRecord.getString("actualID") + h.getHostname()).getOutputStream());
 
-                                out.writeUTF(send.toString());
-                                out.flush();
+                                for (variable.Host h : serverList.getServerList()) {
+
+                                    if(sockets.get(subscribeRecord.getString("actualID") + h.getHostname()) != null) {
+                                        Socket s = sockets.get(subscribeRecord.getString("actualID") + h.getHostname());
+                                        DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                                        out.writeUTF(send.toString());
+                                        out.flush();
+                                    }
+
+
+                                }
 
 
                             }
-
-
                         }
                     }
 
@@ -245,31 +254,38 @@ public class relayThread implements Runnable {
 
                         for (JSONObject relayRecord : relayList.getList()) {
 
-                            DataInputStream in = new DataInputStream(sockets.get(relayRecord.getString("actualID") + h.getHostname()).getInputStream());
+                            Socket socket = sockets.get(relayRecord.getString("actualID") + h.getHostname());
+                            if(socket != null){
+                                DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                            if (in.available() > 0) {
+                                String s = null;
+                                if ( ( s = in.readUTF() )!= null) {
 
-                                /**
-                                 * need to check if this is really a resource
-                                 */
+                                    /**
+                                     * need to check if this is really a resource
+                                     */
 
-                                String s = in.readUTF();
-
-
-                                System.out.println(s);
+                                    //String s = in.readUTF();
 
 
-                                JsonElement root = new JsonParser().parse(s);
-                                if (!(root.getAsJsonObject().has("response") || root.getAsJsonObject().has("resultSize"))) {
-                                    Resource resource = new Resource("", "", new ArrayList<String>(), "", "", "", "");
-                                    Gson gson = new Gson();
-                                    resource = gson.fromJson(root.getAsJsonObject(), Resource.class);
-                                    // newResourceList.add(r);
-                                    readyToSend.add(relayRecord.getString("userID"), relayRecord.getString("actualID"), false, resource);
+                                    System.out.println(s);
+
+
+                                    JsonElement root = new JsonParser().parse(s);
+                                    if (!(root.getAsJsonObject().has("response") || root.getAsJsonObject().has("resultSize"))) {
+                                        Resource resource = new Resource("", "", new ArrayList<String>(), "", "", "", "");
+                                        Gson gson = new Gson();
+                                        resource = gson.fromJson(root.getAsJsonObject(), Resource.class);
+                                        // newResourceList.add(r);
+                                        readyToSend.add(relayRecord.getString("userID"), relayRecord.getString("actualID"), false, resource);
+
+                                    }
 
                                 }
 
                             }
+
+
                         }
 
                     }
@@ -278,10 +294,12 @@ public class relayThread implements Runnable {
                 } catch (IOException e) {
                 }
                 catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

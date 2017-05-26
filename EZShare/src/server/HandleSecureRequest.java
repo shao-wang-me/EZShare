@@ -97,7 +97,7 @@ public class HandleSecureRequest implements Runnable{
             serverAddList.initialserverList();
 
             //Single thread executor for the subscription thread, added by yankun
-            ExecutorService ThreadExecutor = Executors.newCachedThreadPool();
+            //ExecutorService ThreadExecutor = Executors.newCachedThreadPool();
             subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
                     intervalLimit , subscribeList, readyToSend);
             //ThreadExecutor.execute(subscriptionThread);

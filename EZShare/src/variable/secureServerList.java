@@ -1,6 +1,7 @@
 package variable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by xutianyu on 4/25/17.
@@ -27,12 +28,20 @@ public class secureServerList extends serverList {
 	
 	public synchronized void delete(Host h){
 		int index = 0 ;
-		for(Host o : serverList){
+		Iterator<Host> iter = this.serverList.iterator();
+		while(iter.hasNext()){
+			Host o = iter.next();
+			if(h.getHostname().equals(o.getHostname()) &&
+					h.getPort()==o.getPort()){
+				iter.remove();
+			}
+		}
+		/*for(Host o : serverList){
 			index++;
 			if(o.equals(h)){
 				getServerList().remove(index);
 			}
-		}
+		}*/
 	}
 
 	public boolean contains(Host h){

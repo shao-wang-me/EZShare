@@ -38,37 +38,38 @@ public class subscribeThread implements Runnable {
 
                 //Thread.sleep(1000);
 
-                if (newResourceList.getResourceList().size() > 0) {
+                synchronized(newResourceList){
+                    if (newResourceList.getResourceList().size() > 0) {
 
-                    Resource r = newResourceList.getFirstResource();
-                    /**
-                     * Comparing the resource in the newResourceList with
-                     * the resourceTemplate in the subscribeList, if match,
-                     * add the resource and id into the readyToSent list and
-                     * remove it from the newResourceList
-                     */
-                    for (JSONObject temp : subscribeList.getSubList()) {
-                        String actualID = temp.getString("actualID");
-                        Resource tempRe = (Resource)temp.get("resourceTemplate");
-                        boolean match = true;
-                        if (!tempRe.getChannel().equals(r.getChannel())) {
-                            match = false;
-                        }
-                        if (!tempRe.getOwner().isEmpty() && !r.getOwner().equals(tempRe.getOwner())) {
-                            match = false;
-                        }
-                        if (!tempRe.getTags().isEmpty() && !r.getTags().containsAll(tempRe.getTags())) {
-                            match = false;
-                        }
-                        if (!tempRe.getUri().isEmpty() && !r.getUri().equals(tempRe.getUri())) {
-                            match = false;
-                        }
+                        Resource r = newResourceList.getFirstResource();
+                        /**
+                         * Comparing the resource in the newResourceList with
+                         * the resourceTemplate in the subscribeList, if match,
+                         * add the resource and id into the readyToSent list and
+                         * remove it from the newResourceList
+                         */
+                        for (JSONObject temp : subscribeList.getSubList()) {
+                            String actualID = temp.getString("actualID");
+                            Resource tempRe = (Resource)temp.get("resourceTemplate");
+                            boolean match = true;
+                            if (!tempRe.getChannel().equals(r.getChannel())) {
+                                match = false;
+                            }
+                            if (!tempRe.getOwner().isEmpty() && !r.getOwner().equals(tempRe.getOwner())) {
+                                match = false;
+                            }
+                            if (!tempRe.getTags().isEmpty() && !r.getTags().containsAll(tempRe.getTags())) {
+                                match = false;
+                            }
+                            if (!tempRe.getUri().isEmpty() && !r.getUri().equals(tempRe.getUri())) {
+                                match = false;
+                            }
 
 
-                        if (!((tempRe.getName().isEmpty() || r.getName().contains(tempRe.getName())) &&
-                                (tempRe.getDescription().isEmpty() || r.getDescription().contains(tempRe.getDescription())))) {
-                            match = false;
-                        }
+                            if (!((tempRe.getName().isEmpty() || r.getName().contains(tempRe.getName())) &&
+                                    (tempRe.getDescription().isEmpty() || r.getDescription().contains(tempRe.getDescription())))) {
+                                match = false;
+                            }
 
 
 
@@ -80,15 +81,16 @@ public class subscribeThread implements Runnable {
                         }
                         */
 
-                        if(match) {
-                            readyToSend.add(temp.getString("userID"), actualID, temp.getBoolean("relay"), r);
+                            if(match) {
+                                readyToSend.add(temp.getString("userID"), actualID, temp.getBoolean("relay"), r);
+                            }
                         }
-                    }
-                    if(newResourceList.getResourceList().size() > 0 ){
-                        newResourceList.delete(0);
+                        if(newResourceList.getResourceList().size() > 0 ){
+                            newResourceList.delete(0);
+
+                        }
 
                     }
-
                 }
             }
 
