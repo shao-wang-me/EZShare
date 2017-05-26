@@ -80,17 +80,17 @@ public class HandleUnsecureRequest implements Runnable{
             serverAddList.initialserverList();
 
             //Single thread executor for the subscription thread, added by yankun
-            ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+            ExecutorService ThreadExecutor = Executors.newCachedThreadPool();
             subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
                     intervalLimit , subscribeList, readyToSend);
-            singleThreadExecutor.execute(subscriptionThread);
+            ThreadExecutor.execute(subscriptionThread);
 
 
             // relay monitor
-            ExecutorService relayThreadExecutor = Executors.newSingleThreadExecutor();
+            //ExecutorService relayThreadExecutor = Executors.newCachedThreadPool();
             relayThread relayThread = new relayThread(newResourceList, debug,
                     subscribeList, serverList, serverDeleteList, serverAddList, readyToSend, false);
-            relayThreadExecutor.execute(relayThread);
+            ThreadExecutor.execute(relayThread);
 
             //create multiple threads to build connections
             Boolean f = true ;

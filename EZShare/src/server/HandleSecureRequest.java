@@ -97,17 +97,17 @@ public class HandleSecureRequest implements Runnable{
             serverAddList.initialserverList();
 
             //Single thread executor for the subscription thread, added by yankun
-            ExecutorService singleThreadExecutor = Executors.newCachedThreadPool();
+            ExecutorService ThreadExecutor = Executors.newCachedThreadPool();
             subscribeThread subscriptionThread = new subscribeThread(newResourceList, debug,
                     intervalLimit , subscribeList, readyToSend);
-            singleThreadExecutor.execute(subscriptionThread);
+            ThreadExecutor.execute(subscriptionThread);
 
 
             // relay monitor
-            ExecutorService relayThreadExecutor = Executors.newCachedThreadPool();
+            //ExecutorService relayThreadExecutor = Executors.newCachedThreadPool();
             relayThread relayThread = new relayThread(newResourceList, debug,
                     subscribeList, serverList, serverDeleteList, serverAddList, readyToSend, true);
-            relayThreadExecutor.execute(relayThread);
+            ThreadExecutor.execute(relayThread);
 
 
             SSLServerSocketFactory sslServerSocketfactory = (SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
