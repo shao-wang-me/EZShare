@@ -267,7 +267,8 @@ public class Function {
 					}
 					if(flag == true){
 						serverList.add(h);
-						serverAddList.getServerList().add(h);
+						Host hCopy = new Host(h.getHostname(),h.getPort());
+						serverAddList.add(hCopy);
 					}
 				} catch (UnknownHostException e) {
 					toReturn.put(false, "invalid server");

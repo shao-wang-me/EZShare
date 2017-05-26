@@ -98,8 +98,8 @@ public class HandleUnsecureRequest implements Runnable{
                 Socket client = server.accept();
                 if(client.isConnected()){
                     ServerThread s = new ServerThread(client, getSecret(),
-                            resourceList, newResourceList, serverAddList,
-                            serverList ,getDebug(), getHostname(), serverPort, getIntervalLimit(),
+                            resourceList, newResourceList, serverList, serverAddList,
+                             getDebug(), getHostname(), serverPort, getIntervalLimit(),
                             subscribeList,readyToSend);
 
                     executor.execute(s);

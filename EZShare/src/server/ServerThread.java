@@ -178,8 +178,7 @@ public class ServerThread implements Runnable {
 					}
 					case QUERY:{
 						Host h = new Host(getHostname(), getPort());
-
-							Query.query(root, out, resourceList, serverList, h, getDebug(), getLog(), secure);
+						Query.query(root, out, resourceList, serverList, h, getDebug(), getLog(), secure);
 						break;
 					}
 					case FETCH:{

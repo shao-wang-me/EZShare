@@ -3,11 +3,11 @@
     <output-path>$PROJECT_DIR$/ezshare</output-path>
     <root id="archive" name="ezshare.jar">
       <element id="module-output" name="EZShare" />
-      <element id="extracted-dir" path="$USER_HOME$/Dropbox/EZShare/src/commons-lang3-3.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-cli-1.4/commons-cli-1.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/gson-2.6.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/gson-2.6.2-javadoc.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/json-20160810 .jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-lang3-3.5.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
