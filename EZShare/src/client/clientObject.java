@@ -214,8 +214,8 @@ public class clientObject {
 			while (true) {
 				String message = "";
 				JSONObject msgGet = null;
-				if ((message = input.readUTF())!= null) {
-					//message = input.readUTF();
+				if (input.available() > 0) {
+					message = input.readUTF();
 					msgGet = new JSONObject(message);
 					if(ifDebug) {
 						log.info("RECEIVED:" + msgGet.toString());
