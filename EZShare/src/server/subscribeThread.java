@@ -36,7 +36,7 @@ public class subscribeThread implements Runnable {
 
             for (;;){
 
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
 
                 if (newResourceList.getResourceList().size() > 0) {
 
@@ -84,7 +84,11 @@ public class subscribeThread implements Runnable {
                             readyToSend.add(temp.getString("userID"), actualID, temp.getBoolean("relay"), r);
                         }
                     }
-                    newResourceList.delete(0);
+                    if(newResourceList.getResourceList().size() > 0 ){
+                        newResourceList.delete(0);
+
+                    }
+
                 }
             }
 

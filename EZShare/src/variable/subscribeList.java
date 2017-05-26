@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public class subscribeList {
 
-    private  ArrayList<JSONObject> subList;
+    private  volatile ArrayList<JSONObject> subList;
 
-    public subscribeList() {
+    public  subscribeList() {
         this.subList = new ArrayList<JSONObject>();
     }
 
-    public  void add(String userID, String actualID, boolean relay, Resource resource) {
+    public synchronized void add(String userID, String actualID, boolean relay, Resource resource) {
         JSONObject temp = new JSONObject();
         temp.put("userID",userID);
         temp.put("actualID",actualID);
@@ -27,7 +27,7 @@ public class subscribeList {
         this.subList.add(temp);
     }
 
-    public  void add(JSONObject j) {
+    public synchronized void add(JSONObject j) {
         this.subList.add(j);
     }
 
