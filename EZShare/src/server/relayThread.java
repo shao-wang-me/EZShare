@@ -306,7 +306,7 @@ public class relayThread implements Runnable {
                     } catch (IOException e) {
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        //throw exception
                     }
                 }
             }

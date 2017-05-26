@@ -15,13 +15,15 @@ public class unsubscribeThread implements Runnable{
     private boolean ifDebug;
     private Logger log;
     private Scanner sc;
+    private boolean stop;
 
-    public unsubscribeThread(DataOutputStream out, JSONObject subscribe, boolean ifDebug, Logger log){
+    public unsubscribeThread(DataOutputStream out, JSONObject subscribe, boolean ifDebug, Logger log, boolean stop){
         this.output = out;
         this.subscribe = subscribe;
         this.ifDebug = ifDebug;
         this.log = log;
         this.sc = new Scanner(System.in);
+        this.stop = stop;
     }
 
     public void run(){

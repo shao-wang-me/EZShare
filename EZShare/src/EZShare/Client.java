@@ -77,7 +77,6 @@ public class Client {
 				try {
 					Operations.Publish(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
@@ -86,7 +85,6 @@ public class Client {
 				try {
 					Operations.Query(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
@@ -95,7 +93,6 @@ public class Client {
 				try {
 					Operations.Remove(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
@@ -104,7 +101,6 @@ public class Client {
 				try {
 					Operations.Share(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
@@ -113,7 +109,6 @@ public class Client {
 				try {
 					Operations.Fetch(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}
@@ -122,7 +117,6 @@ public class Client {
 				try {
 					Operations.Exchange(cmd, c);
 				} catch (JSONException e) {
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("Missing \"-servers\"");
@@ -134,7 +128,6 @@ public class Client {
 				try{
 					Operations.Subscribe(cmd, c);
 				}catch(JSONException e ){
-					System.out.println(e.getMessage());
 					System.exit(-1);
 				}
 			}

@@ -83,7 +83,6 @@ public class subscribeThread implements Runnable {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
