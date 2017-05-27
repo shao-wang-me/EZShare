@@ -140,7 +140,7 @@ public class HandleSecureRequest implements Runnable{
             server.close();
 
         }catch(Exception e){
-            e.printStackTrace();        }
+        }
 
         }
 

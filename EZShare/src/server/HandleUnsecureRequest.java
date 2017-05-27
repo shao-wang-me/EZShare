@@ -115,7 +115,6 @@ public class HandleUnsecureRequest implements Runnable{
             executor.shutdown();
             server.close();
         }catch(Exception e){
-            e.printStackTrace();
         }
     }
 

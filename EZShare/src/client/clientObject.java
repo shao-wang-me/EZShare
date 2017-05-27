@@ -34,8 +34,8 @@ public class clientObject {
 		logIni.setLevel(Level.INFO);
 		logIni.info("setting debug on");
 		try {
+			SocketAddress socketaddr = new InetSocketAddress(serverIP, serverPort);
 			if(secureFlag){
-
 				InputStream keystoreInput = getClass()
 						.getResourceAsStream("/serverKeystore/server.jks");
 				InputStream truststoreInput = getClass()
@@ -46,14 +46,15 @@ public class clientObject {
 
 				//System.setProperty("javax.net.ssl.trustStore", getClass().getResource("/clientKeystore/client.jks").getFile());
                 SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-				s = (SSLSocket)sslsocketfactory.createSocket(serverIP,serverPort);
+				s = (SSLSocket)sslsocketfactory.createSocket();
+				s.connect(socketaddr, 5000);
 			}
 			else{
-				s = new Socket(serverIP, serverPort);
+				s = new Socket();
+				s.connect(socketaddr, 5000);
 			}
 		} catch (UnknownHostException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -203,12 +204,13 @@ public class clientObject {
 		try {
 			DataInputStream input = new DataInputStream(s.getInputStream());
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
+			boolean stop = false;
 
 			if (ifDebug) {
 				log.info("SENT:" + j.toString());
 			}
 
-			unsubscribeThread unsubscribeThread = new unsubscribeThread(output, j, ifDebug, log);
+			unsubscribeThread unsubscribeThread = new unsubscribeThread(output, j, ifDebug, log, stop);
 			Thread t = new Thread(unsubscribeThread);
 			t.start();
 
@@ -236,13 +238,10 @@ public class clientObject {
 			//t.currentThread().interrupt();
 
 		} catch (UnknownHostException e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (SocketException e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
 	}

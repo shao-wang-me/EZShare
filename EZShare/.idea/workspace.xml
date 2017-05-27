@@ -7,11 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="510e2f81-b7a2-4f79-acb6-946166b394af" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/EZShare/Client.class" afterPath="$PROJECT_DIR$/bin/EZShare/Client.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/HandleSecureRequest.class" afterPath="$PROJECT_DIR$/bin/server/HandleSecureRequest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" afterPath="$PROJECT_DIR$/bin/server/HandleUnsecureRequest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/relayThread.class" afterPath="$PROJECT_DIR$/bin/server/relayThread.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/server/subscribeThread.class" afterPath="$PROJECT_DIR$/bin/server/subscribeThread.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ezshare/ezshare.jar" afterPath="$PROJECT_DIR$/ezshare/ezshare.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EZShare.iml" afterPath="$PROJECT_DIR$/EZShare.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EZShare/Server.java" afterPath="$PROJECT_DIR$/src/EZShare/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" afterPath="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/command/Subscribe.java" afterPath="$PROJECT_DIR$/src/command/Subscribe.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/relayThread.java" afterPath="$PROJECT_DIR$/src/server/relayThread.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,71 +28,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HandleUnsecureRequest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
+      <file leaf-file-name="HandleSecureRequest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="86" column="87" lean-forward="false" selection-start-line="86" selection-start-column="87" selection-end-line="86" selection-end-column="87" />
+            <state relative-caret-position="236">
+              <caret line="83" column="64" lean-forward="false" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serverUpdate.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/serverUpdate.java">
+      <file leaf-file-name="Subscribe.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/command/Subscribe.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
+            <state relative-caret-position="171">
+              <caret line="67" column="76" lean-forward="false" selection-start-line="67" selection-start-column="76" selection-end-line="67" selection-end-column="76" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="relayThread.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
+      <file leaf-file-name="TimerTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/TimerTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4450">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="153" column="25" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-              <folding>
-                <marker date="1495815804000" expanded="false" signature="5649:5654" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="5670:5673" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="5716:5721" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="5746:5749" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="5772:5777" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="5789:5792" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="5824:5829" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="5846:5849" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="5933:5938" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="5956:5959" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="5989:5994" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6010:6013" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6056:6061" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6086:6089" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6121:6126" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6147:6150" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6200:6205" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6240:6243" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6271:6276" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6290:6293" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6332:6337" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6358:6361" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6389:6394" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6407:6410" ph=" }" />
-                <marker date="1495815804000" expanded="false" signature="6448:6453" ph=" { " />
-                <marker date="1495815804000" expanded="false" signature="6472:6475" ph=" }" />
-              </folding>
+            <state relative-caret-position="555">
+              <caret line="42" column="42" lean-forward="false" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,28 +61,30 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="98" column="36" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="36" />
+            <state relative-caret-position="281">
+              <caret line="130" column="0" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="clientObject.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="clientObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/clientObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="211" column="51" lean-forward="false" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="107">
+              <caret line="228" column="16" lean-forward="true" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Share.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/command/Share.java">
+      <file leaf-file-name="unsubscribeThread.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/unsubscribeThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="43" column="91" lean-forward="false" selection-start-line="43" selection-start-column="91" selection-end-line="43" selection-end-column="91" />
+            <state relative-caret-position="324">
+              <caret line="47" column="37" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -126,28 +93,38 @@
       <file leaf-file-name="subscribeThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/subscribeThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="80" column="20" lean-forward="false" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+            <state relative-caret-position="135">
+              <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Function.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/Function.java">
+      <file leaf-file-name="HandleUnsecureRequest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="63" column="53" lean-forward="false" selection-start-line="63" selection-start-column="53" selection-end-line="63" selection-end-column="53" />
+            <state relative-caret-position="143">
+              <caret line="126" column="17" lean-forward="false" selection-start-line="126" selection-start-column="17" selection-end-line="126" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HandleSecureRequest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
+      <file leaf-file-name="relayThread.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-594">
-              <caret line="57" column="118" lean-forward="false" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
+            <state relative-caret-position="-1536">
+              <caret line="2" column="11" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2040">
+              <caret line="153" column="25" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -171,7 +148,6 @@
       <find>after</find>
       <find>a</find>
       <find>println</find>
-      <find>print</find>
       <find>add</find>
       <find>secureServerList</find>
       <find>server</find>
@@ -180,6 +156,12 @@
       <find>secure</find>
       <find>newResourceList</find>
       <find>serverList</find>
+      <find>Exceptio</find>
+      <find>printStackTrace</find>
+      <find>printStacktrace</find>
+      <find>sublist</find>
+      <find>print</find>
+      <find>in</find>
     </findStrings>
     <replaceStrings>
       <replace>debug</replace>
@@ -212,28 +194,29 @@
         <option value="$PROJECT_DIR$/src/server/RelayThread.java" />
         <option value="$PROJECT_DIR$/src/variable/resourceList.java" />
         <option value="$PROJECT_DIR$/src/server/TimerTask.java" />
-        <option value="$PROJECT_DIR$/src/command/Subscribe.java" />
         <option value="$PROJECT_DIR$/src/command/Exchange.java" />
         <option value="$PROJECT_DIR$/src/client/Operations.java" />
         <option value="$PROJECT_DIR$/src/command/Query.java" />
         <option value="$PROJECT_DIR$/src/support/SetSecureSocket.java" />
         <option value="$PROJECT_DIR$/src/security/SecureSocket.java" />
-        <option value="$PROJECT_DIR$/src/EZShare/Client.java" />
         <option value="$PROJECT_DIR$/src/command/Forward.java" />
         <option value="$PROJECT_DIR$/src/variable/subscribeList.java" />
-        <option value="$PROJECT_DIR$/src/client/clientObject.java" />
         <option value="$PROJECT_DIR$/src/variable/secureServerList.java" />
         <option value="$PROJECT_DIR$/src/variable/serverList.java" />
         <option value="$PROJECT_DIR$/src/server/ServerThread.java" />
-        <option value="$PROJECT_DIR$/src/server/HandleSecureRequest.java" />
         <option value="$PROJECT_DIR$/src/command/Publish.java" />
         <option value="$PROJECT_DIR$/src/command/Share.java" />
         <option value="$PROJECT_DIR$/src/server/Function.java" />
-        <option value="$PROJECT_DIR$/src/server/subscribeThread.java" />
         <option value="$PROJECT_DIR$/src/server/serverUpdate.java" />
+        <option value="$PROJECT_DIR$/src/EZShare/Server.java" />
+        <option value="$PROJECT_DIR$/src/client/unsubscribeThread.java" />
+        <option value="$PROJECT_DIR$/src/server/subscribeThread.java" />
+        <option value="$PROJECT_DIR$/src/EZShare/Client.java" />
+        <option value="$PROJECT_DIR$/src/server/HandleSecureRequest.java" />
+        <option value="$PROJECT_DIR$/src/client/clientObject.java" />
         <option value="$PROJECT_DIR$/src/server/relayThread.java" />
         <option value="$PROJECT_DIR$/src/server/HandleUnsecureRequest.java" />
-        <option value="$PROJECT_DIR$/src/EZShare/Server.java" />
+        <option value="$PROJECT_DIR$/src/command/Subscribe.java" />
       </list>
     </option>
   </component>
@@ -263,6 +246,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -305,6 +290,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="variable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EZShare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EZShare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="support" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -400,8 +403,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -429,7 +430,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.subscribe">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -863,21 +864,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="share" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-share -uri file://$USER_HOME$/Pictures/logo.jpg -secret 123 -name &quot;EZShare JAR&quot; -secure -port 20000 -debug" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="fetch" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
@@ -938,21 +924,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="unsecure" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-port 20006  -subscribe  -debug" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="EZShare" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="publish" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
@@ -983,17 +954,47 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="share" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-share -uri file://$USER_HOME$/Pictures/logo.jpg -secret 123  -port 20006 -debug" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="unsecure" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="EZShare.Client" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-port 20006  -secure -subscribe  -debug" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EZShare" />
+      <envs />
+      <method />
+    </configuration>
     <list size="10">
       <item index="0" class="java.lang.String" itemvalue="Application.query" />
       <item index="1" class="java.lang.String" itemvalue="Application.remove" />
-      <item index="2" class="java.lang.String" itemvalue="Application.share" />
-      <item index="3" class="java.lang.String" itemvalue="Application.fetch" />
-      <item index="4" class="java.lang.String" itemvalue="Application.Server1" />
-      <item index="5" class="java.lang.String" itemvalue="Application.server2" />
-      <item index="6" class="java.lang.String" itemvalue="Application.subscribe" />
-      <item index="7" class="java.lang.String" itemvalue="Application.unsecure" />
-      <item index="8" class="java.lang.String" itemvalue="Application.publish" />
-      <item index="9" class="java.lang.String" itemvalue="Application.Client" />
+      <item index="2" class="java.lang.String" itemvalue="Application.fetch" />
+      <item index="3" class="java.lang.String" itemvalue="Application.Server1" />
+      <item index="4" class="java.lang.String" itemvalue="Application.server2" />
+      <item index="5" class="java.lang.String" itemvalue="Application.subscribe" />
+      <item index="6" class="java.lang.String" itemvalue="Application.publish" />
+      <item index="7" class="java.lang.String" itemvalue="Application.Client" />
+      <item index="8" class="java.lang.String" itemvalue="Application.share" />
+      <item index="9" class="java.lang.String" itemvalue="Application.unsecure" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -1046,7 +1047,9 @@
       <workItem from="1495770465150" duration="55000" />
       <workItem from="1495779453700" duration="6298000" />
       <workItem from="1495789274272" duration="10172000" />
-      <workItem from="1495801112381" duration="8362000" />
+      <workItem from="1495801112381" duration="12181000" />
+      <workItem from="1495826354456" duration="269000" />
+      <workItem from="1495851390435" duration="971000" />
     </task>
     <task id="LOCAL-00001" summary="fix some error">
       <created>1494895151930</created>
@@ -1223,11 +1226,46 @@
       <option name="project" value="LOCAL" />
       <updated>1495811603022</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix bug of secure and unsecure">
+      <created>1495816293471</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1495816293471</updated>
+    </task>
+    <task id="LOCAL-00027" summary="fix bug of secure and unsecure">
+      <created>1495818288956</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1495818288956</updated>
+    </task>
+    <task id="LOCAL-00028" summary="final submission">
+      <created>1495820593508</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1495820593508</updated>
+    </task>
+    <task id="LOCAL-00029" summary="final submission2">
+      <created>1495820633289</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1495820633289</updated>
+    </task>
+    <task id="LOCAL-00030" summary="final submission2">
+      <created>1495851822963</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1495851822964</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134010000" />
+    <option name="totallyTimeSpent" value="139069000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1248,15 +1286,15 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3520548" sideWeight="0.51615506" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3520548" sideWeight="0.51615506" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26164383" sideWeight="0.5726979" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3520548" sideWeight="0.4838449" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30547947" sideWeight="0.5726979" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3520548" sideWeight="0.4838449" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24394184" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25201938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.4806139" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1321,7 +1359,10 @@
     <MESSAGE value="one line in subscribe thread" />
     <MESSAGE value="525 fix some subscribe error" />
     <MESSAGE value="small" />
-    <option name="LAST_COMMIT_MESSAGE" value="small" />
+    <MESSAGE value="fix bug of secure and unsecure" />
+    <MESSAGE value="final submission" />
+    <MESSAGE value="final submission2" />
+    <option name="LAST_COMMIT_MESSAGE" value="final submission2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1382,7 +1423,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/EZShare/Client.java</url>
-          <line>134</line>
+          <line>128</line>
           <properties />
           <option name="timeStamp" value="130" />
         </line-breakpoint>
@@ -1418,7 +1459,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/client/clientObject.java</url>
-          <line>124</line>
+          <line>125</line>
           <properties />
           <option name="timeStamp" value="140" />
         </line-breakpoint>
@@ -1427,12 +1468,6 @@
           <line>147</line>
           <properties />
           <option name="timeStamp" value="141" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/EZShare/Client.java</url>
-          <line>20</line>
-          <properties />
-          <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/client/Operations.java</url>
@@ -1453,34 +1488,28 @@
           <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/subscribeThread.java</url>
+          <url>file://$PROJECT_DIR$/src/client/unsubscribeThread.java</url>
           <line>43</line>
           <properties />
-          <option name="timeStamp" value="166" />
+          <option name="timeStamp" value="170" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/subscribeThread.java</url>
+          <url>file://$PROJECT_DIR$/src/client/unsubscribeThread.java</url>
+          <line>42</line>
+          <properties />
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/client/clientObject.java</url>
           <line>53</line>
           <properties />
-          <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/subscribeThread.java</url>
-          <line>41</line>
-          <properties />
-          <option name="timeStamp" value="168" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/subscribeThread.java</url>
-          <line>40</line>
-          <properties />
-          <option name="timeStamp" value="169" />
+          <option name="timeStamp" value="176" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="170" />
+      <option name="time" value="177" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1489,14 +1518,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/variable/serverList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="46" lean-forward="true" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Variables.java" />
     <entry file="file://$PROJECT_DIR$/src/variable.java" />
     <entry file="file://$PROJECT_DIR$/src/variable/Command_template.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1572,13 +1593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/TimerTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="42" column="42" lean-forward="false" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/json-20160810 .jar!/org/json/JSONObject.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -1643,13 +1657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/command/Subscribe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="117" column="70" lean-forward="false" selection-start-line="117" selection-start-column="70" selection-end-line="117" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/command/Query.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
@@ -1696,30 +1703,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/Operations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/variable/secureServerList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
           <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="37" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/variable/serverList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="36" column="13" lean-forward="false" selection-start-line="34" selection-start-column="45" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1742,61 +1729,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/variable/resourceList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding>
-            <element signature="e#1534#1535#0" expanded="true" />
-            <element signature="e#1763#1764#0" expanded="true" />
-            <element signature="e#1789#1790#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/ServerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1041">
-          <caret line="90" column="33" lean-forward="false" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
-          <folding>
-            <marker date="1495811619000" expanded="true" signature="668:761" ph="/**...*/" />
-            <marker date="1495811619000" expanded="true" signature="1749:2246" ph="{...}" />
-            <marker date="1495811619000" expanded="true" signature="2279:3839" ph="{...}" />
-            <marker date="1495811619000" expanded="true" signature="3997:7494" ph="{...}" />
-            <marker date="1495811619000" expanded="false" signature="4060:4068" ph="&lt;~&gt;" />
-            <marker date="1495811619000" expanded="true" signature="7522:7527" ph=" { " />
-            <marker date="1495811619000" expanded="true" signature="7540:7543" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="7581:7586" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="7605:7608" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="7633:7638" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="7649:7652" ph=" }" />
-            <marker date="1495811619000" expanded="true" signature="7676:8002" ph="{...}" />
-            <marker date="1495811619000" expanded="false" signature="8032:8037" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="8053:8056" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="8099:8104" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="8129:8132" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="8155:8160" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="8172:8175" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="8207:8212" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="8229:8232" ph=" }" />
-            <marker date="1495811619000" expanded="false" signature="8267:8278" ph=" { " />
-            <marker date="1495811619000" expanded="false" signature="8299:8305" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/command/Publish.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="46" column="109" lean-forward="false" selection-start-line="46" selection-start-column="89" selection-end-line="46" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/command/Share.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="43" column="91" lean-forward="false" selection-start-line="43" selection-start-column="91" selection-end-line="43" selection-end-column="91" />
           <folding />
         </state>
       </provider>
@@ -1809,95 +1745,145 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/subscribeThread.java">
+    <entry file="file://$PROJECT_DIR$/src/command/Share.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="80" column="20" lean-forward="false" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+        <state relative-caret-position="302">
+          <caret line="43" column="91" lean-forward="false" selection-start-line="43" selection-start-column="91" selection-end-line="43" selection-end-column="91" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/serverUpdate.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk/Contents/Home/src.zip!/javax/xml/crypto/dsig/TransformException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="155">
+          <caret line="126" column="18" lean-forward="false" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
+    <entry file="file://$PROJECT_DIR$/src/variable/resourceList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4450">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="1080">
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding>
+            <element signature="e#1534#1535#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/variable/serverList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="36" column="13" lean-forward="false" selection-start-line="34" selection-start-column="45" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
+    <entry file="file://$PROJECT_DIR$/src/server/serverUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-594">
-          <caret line="57" column="118" lean-forward="false" selection-start-line="57" selection-start-column="118" selection-end-line="57" selection-end-column="118" />
+        <state relative-caret-position="435">
+          <caret line="41" column="35" lean-forward="false" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
+    <entry file="file://$PROJECT_DIR$/src/server/ServerThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="86" column="87" lean-forward="false" selection-start-line="86" selection-start-column="87" selection-end-line="86" selection-end-column="87" />
+        <state relative-caret-position="1200">
+          <caret line="105" column="25" lean-forward="false" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/TimerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="42" column="42" lean-forward="false" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EZShare/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="153" column="25" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+        <state relative-caret-position="2040">
+          <caret line="153" column="25" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/relayThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1536">
+          <caret line="2" column="11" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Operations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-894">
+          <caret line="100" column="8" lean-forward="false" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
           <folding>
-            <marker date="1495815804000" expanded="false" signature="5649:5654" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="5670:5673" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="5716:5721" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="5746:5749" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="5772:5777" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="5789:5792" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="5824:5829" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="5846:5849" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="5933:5938" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="5956:5959" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="5989:5994" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6010:6013" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6056:6061" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6086:6089" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6121:6126" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6147:6150" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6200:6205" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6240:6243" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6271:6276" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6290:6293" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6332:6337" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6358:6361" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6389:6394" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6407:6410" ph=" }" />
-            <marker date="1495815804000" expanded="false" signature="6448:6453" ph=" { " />
-            <marker date="1495815804000" expanded="false" signature="6472:6475" ph=" }" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EZShare/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="98" column="36" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="36" />
+        <state relative-caret-position="281">
+          <caret line="130" column="0" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/clientObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="211" column="51" lean-forward="false" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="51" />
+        <state relative-caret-position="107">
+          <caret line="228" column="16" lean-forward="true" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/unsubscribeThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="47" column="37" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/subscribeThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/HandleUnsecureRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="126" column="17" lean-forward="false" selection-start-line="126" selection-start-column="17" selection-end-line="126" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server/HandleSecureRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="83" column="64" lean-forward="false" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/command/Subscribe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="67" column="76" lean-forward="false" selection-start-line="67" selection-start-column="76" selection-end-line="67" selection-end-column="76" />
           <folding />
         </state>
       </provider>

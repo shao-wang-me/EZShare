@@ -167,7 +167,6 @@ public class relayThread implements Runnable {
                                 out.writeUTF(send.toString());
                                 out.flush();
                             }
-                            System.out.println(serverAddList.getServerList().size());
                             serverAddList.delete(h);
                             ifUpdate = true;
                         }
@@ -280,8 +279,6 @@ public class relayThread implements Runnable {
                                         //String s = in.readUTF();
 
 
-                                        System.out.println(s);
-
 
                                         JsonElement root = new JsonParser().parse(s);
                                         if (!(root.getAsJsonObject().has("response") || root.getAsJsonObject().has("resultSize"))) {
@@ -306,13 +303,12 @@ public class relayThread implements Runnable {
                     } catch (IOException e) {
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        //throw exception
                     }
                 }
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
