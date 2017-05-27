@@ -53,8 +53,6 @@ public class Subscribe {
 
                     subscribeList.add(userID, actualID, relay, resource);
 
-                    System.out.println("sub list size is" + subscribeList.size());
-
                     reply.put("response","success");
                     reply.put("id",userID);
                     out.writeUTF(reply.toString());
@@ -65,9 +63,9 @@ public class Subscribe {
                     while(true) {
 
                         Thread.sleep(2000);
-
-                        if (in.available() > 0) {
-                            JsonElement jsonEle = new JsonParser().parse(in.readUTF());
+                        String str = null;
+                        if ((str = in.readUTF() )!= null) {
+                            JsonElement jsonEle = new JsonParser().parse(str);
                             // Gson gs = new Gson();
                             if (jsonEle.getAsJsonObject().has("command")) {
                                 String command = jsonEle.getAsJsonObject().get("command").getAsString();
@@ -99,9 +97,6 @@ public class Subscribe {
                                 }
                             }
                         }
-
-
-
 
 
                         if (readyToSend.size() > 0) {
@@ -155,10 +150,8 @@ public class Subscribe {
                 out.writeUTF(reply.toString());
                 Debug.printDebug('s',reply.toString(), debug, log );
             } catch (IOException e) {
-                System.out.println("IOException");
             }
         }catch(Exception e){
-            System.out.println(e.getMessage());
         }
     }
 }

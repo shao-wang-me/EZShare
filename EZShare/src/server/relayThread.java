@@ -167,7 +167,6 @@ public class relayThread implements Runnable {
                                 out.writeUTF(send.toString());
                                 out.flush();
                             }
-                            System.out.println(serverAddList.getServerList().size());
                             serverAddList.delete(h);
                             ifUpdate = true;
                         }
@@ -310,7 +309,6 @@ public class relayThread implements Runnable {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
