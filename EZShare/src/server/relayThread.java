@@ -280,8 +280,6 @@ public class relayThread implements Runnable {
                                         //String s = in.readUTF();
 
 
-                                        System.out.println(s);
-
 
                                         JsonElement root = new JsonParser().parse(s);
                                         if (!(root.getAsJsonObject().has("response") || root.getAsJsonObject().has("resultSize"))) {
