@@ -70,6 +70,7 @@ public class ServerThread implements Runnable {
 
 	private serverList serverAddList;
 
+
 	//private Resource resourceList;
 	
 	public ServerThread(Socket client, String secret, resourceList resourceList, resourceList newResourceList,
@@ -93,6 +94,7 @@ public class ServerThread implements Runnable {
 		this.subscribeList = subscribeList;
 		this.readyToSend = readyToSend;
 		this.serverAddList = serverAddList;
+
 	}
 
 

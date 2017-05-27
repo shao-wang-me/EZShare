@@ -3,6 +3,7 @@ package command;
 import com.google.gson.*;
 import org.json.JSONObject;
 import server.Function;
+import server.unsubThread;
 import support.Debug;
 import variable.Host;
 import variable.Resource;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  * Created by qiuyankun on 15/5/17.
  */
 public class Subscribe {
+
     public static void subscribe(JsonElement root, DataOutputStream out, DataInputStream in, String clientID, resourceList resourceList,
                                  subscribeList subscribeList, subscribeList readyToSend, serverList serverList, Host h, boolean debug , Logger log) {
         ArrayList<String> tags = new ArrayList<String>();
@@ -53,56 +55,33 @@ public class Subscribe {
 
                     subscribeList.add(userID, actualID, relay, resource);
 
-                    System.out.println("sub list size is" + subscribeList.size());
 
                     reply.put("response","success");
                     reply.put("id",userID);
                     out.writeUTF(reply.toString());
                     out.flush();
-                    Debug.printDebug('s',reply.toString() , debug, log);
+                    if (debug) {
+                        Debug.printDebug('s', reply.toString(), debug, log);
+                    }
+
                     int resultSize = 0;
+
+                    unsubThread ut = new unsubThread(debug, log, out, in, clientID, actualID,subscribeList);
+
+                    Thread thread = new Thread(ut);
+                    thread.start();
 
                     while(true) {
 
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
 
-                        if (in.available() > 0) {
-                            JsonElement jsonEle = new JsonParser().parse(in.readUTF());
-                            // Gson gs = new Gson();
-                            if (jsonEle.getAsJsonObject().has("command")) {
-                                String command = jsonEle.getAsJsonObject().get("command").getAsString();
-                                if (command.equals("SUBSCRIBE")) {
-                                    Resource r = new Resource("", "", tags, "", "", "", "");
-                                    object = jsonEle.getAsJsonObject().get("resourceTemplate").getAsJsonObject();
-                                    r = gson.fromJson(object, Resource.class);
-                                    userID = jsonEle.getAsJsonObject().get("id").getAsString();
-                                    actualID = userID + clientID;
-                                    subscribeList.add(userID,actualID,false,r);
-                                    JSONObject re = new JSONObject("{}");
-                                    re.put("response","success");
-                                    re.put("id",userID);
-                                    out.writeUTF(re.toString());
-                                    out.flush();
-
-
-
-                                } else if (command.equals("UNSUBSCRIBE")) {
-                                    userID = jsonEle.getAsJsonObject().get("id").getAsString();
-                                    actualID = userID + clientID;
-                                    JSONObject rep = new JSONObject("{}");
-                                    rep.put("resultSize",resultSize);
-                                    out.writeUTF(rep.toString());
-                                    out.flush();
-                                    subscribeList.remove(actualID);
-                                    break;
-
-                                }
-                            }
+                        if(!thread.isAlive()) {
+                            JSONObject rep = new JSONObject("{}");
+                            rep.put("resultSize", resultSize);
+                            Debug.printDebug('s', rep.toString(), debug, log);
+                            out.writeUTF(rep.toString());
+                            out.flush();
                         }
-
-
-
-
 
                         if (readyToSend.size() > 0) {
                             for (Iterator<JSONObject> iterator = readyToSend.getList().iterator(); iterator.hasNext();) {
@@ -122,7 +101,7 @@ public class Subscribe {
                                     } else {
                                         re.put("ezserver",ezserver);
                                     }
-
+                                    Debug.printDebug('s', re.toString(), debug ,log);
                                     out.writeUTF(re.toString());
                                     resultSize ++;
                                     out.flush();
@@ -136,6 +115,7 @@ public class Subscribe {
                     reply.put("response", "error");
                     reply.put("errorMessage", "invalid resourceTemplate");
                     out.writeUTF(reply.toString());
+                    Debug.printDebug('s', reply.toString(), debug ,log);
                 }
             }
             else{
@@ -155,10 +135,8 @@ public class Subscribe {
                 out.writeUTF(reply.toString());
                 Debug.printDebug('s',reply.toString(), debug, log );
             } catch (IOException e) {
-                System.out.println("IOException");
             }
         }catch(Exception e){
-            System.out.println(e.getMessage());
         }
     }
 }
