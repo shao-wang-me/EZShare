@@ -1,6 +1,7 @@
 package variable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class resourceList {
 
@@ -12,7 +13,15 @@ public class resourceList {
 		String key = r.getKey();
 		Resource temp = null ;
 		boolean flag = false;
-		for (Resource c : resourceList) {
+		Iterator<Resource> iter = this.resourceList.iterator();
+		while(iter.hasNext()){
+			Resource c = iter.next();
+			if(c.getKey().equals(r.getKey())
+					&& c.getOwner().equals(r.getOwner())){
+				iter.remove();
+			}
+		}
+		/*for (Resource c : resourceList) {
 			if (c.getKey().equals(key)) {
 				temp = c;
 				flag = true;
@@ -20,14 +29,22 @@ public class resourceList {
 		}
 		if( flag){
 			resourceList.remove(temp);
-		}
+		}*/
 		resourceList.add(r);
 	}
 
 	public synchronized void delete(Resource r){
 		Resource temp = null ;
 		boolean flag = true;
-		for (Resource c : resourceList) {
+		Iterator<Resource> iter = this.resourceList.iterator();
+		while(iter.hasNext()){
+			Resource c = iter.next();
+			if(c.getKey().equals(r.getKey())
+					&& c.getOwner().equals(r.getOwner())){
+				iter.remove();
+			}
+		}
+		/*for (Resource c : resourceList) {
 			if (c.getKey().equals(r.getKey())
 					&& c.getOwner().equals(r.getOwner())) {
 				temp = c;
@@ -36,10 +53,15 @@ public class resourceList {
 		}
 		if( flag){
 			resourceList.remove(temp);
-		}
+		}*/
 	}
 
-	public synchronized void delete(int index) { resourceList.remove(index); }
+	public synchronized void delete(int index) {
+		if(resourceList.size() > index +1){
+			resourceList.remove(index);
+
+		}
+	}
 
 	public boolean contains(Resource r){
 		String key = r.getKey();

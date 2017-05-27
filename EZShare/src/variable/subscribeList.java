@@ -3,6 +3,7 @@ package variable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * This class can create a list of JSON objects, which contain
@@ -32,11 +33,18 @@ public class subscribeList {
     }
 
     public synchronized void remove(String actualID) {
-        for (JSONObject temp : subList) {
+        Iterator<JSONObject> iter = this.subList.iterator();
+        while(iter.hasNext()){
+            JSONObject temp = iter.next();
+            if(temp.getString("actualID").equals(actualID)){
+                iter.remove();
+            }
+        }
+        /*for (JSONObject temp : subList) {
             if (temp.getString("actualID").equals(actualID)) {
                 this.subList.remove(temp);
             }
-        }
+        }*/
     }
 
     public boolean contain(JSONObject j) {
