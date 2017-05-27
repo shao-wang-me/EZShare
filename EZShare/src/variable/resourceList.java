@@ -14,14 +14,14 @@ public class resourceList {
 		Resource temp = null ;
 		boolean flag = false;
 		Iterator<Resource> iter = this.resourceList.iterator();
-		while(iter.hasNext()){
+		/*while(iter.hasNext()){
 			Resource c = iter.next();
 			if(c.getKey().equals(r.getKey())
 					&& c.getOwner().equals(r.getOwner())){
 				iter.remove();
 			}
-		}
-		/*for (Resource c : resourceList) {
+		}*/
+		for (Resource c : resourceList) {
 			if (c.getKey().equals(key)) {
 				temp = c;
 				flag = true;
@@ -29,7 +29,7 @@ public class resourceList {
 		}
 		if( flag){
 			resourceList.remove(temp);
-		}*/
+		}
 		resourceList.add(r);
 	}
 
@@ -37,14 +37,14 @@ public class resourceList {
 		Resource temp = null ;
 		boolean flag = true;
 		Iterator<Resource> iter = this.resourceList.iterator();
-		while(iter.hasNext()){
+		/*while(iter.hasNext()){
 			Resource c = iter.next();
 			if(c.getKey().equals(r.getKey())
 					&& c.getOwner().equals(r.getOwner())){
 				iter.remove();
 			}
-		}
-		/*for (Resource c : resourceList) {
+		}*/
+		for (Resource c : resourceList) {
 			if (c.getKey().equals(r.getKey())
 					&& c.getOwner().equals(r.getOwner())) {
 				temp = c;
@@ -53,14 +53,11 @@ public class resourceList {
 		}
 		if( flag){
 			resourceList.remove(temp);
-		}*/
+		}
 	}
 
 	public synchronized void delete(int index) {
-		if(resourceList.size() > index +1){
 			resourceList.remove(index);
-
-		}
 	}
 
 	public boolean contains(Resource r){

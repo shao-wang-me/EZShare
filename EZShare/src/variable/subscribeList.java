@@ -34,17 +34,17 @@ public class subscribeList {
 
     public synchronized void remove(String actualID) {
         Iterator<JSONObject> iter = this.subList.iterator();
-        while(iter.hasNext()){
+        /*while(iter.hasNext()){
             JSONObject temp = iter.next();
             if(temp.getString("actualID").equals(actualID)){
                 iter.remove();
             }
-        }
-        /*for (JSONObject temp : subList) {
+        }*/
+        for (JSONObject temp : subList) {
             if (temp.getString("actualID").equals(actualID)) {
                 this.subList.remove(temp);
             }
-        }*/
+        }
     }
 
     public boolean contain(JSONObject j) {
