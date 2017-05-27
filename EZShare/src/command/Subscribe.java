@@ -81,6 +81,7 @@ public class Subscribe {
                             Debug.printDebug('s', rep.toString(), debug, log);
                             out.writeUTF(rep.toString());
                             out.flush();
+                            break;
                         }
 
                         if (readyToSend.size() > 0) {
